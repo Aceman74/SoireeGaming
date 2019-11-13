@@ -1,11 +1,56 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeSG" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="colorError">@color/errorTextColor</item>
+        <item name="android:textColorSecondary">@color/greyTextColor</item>
+        <item name="colorControlHighlight">@color/primaryLightColor</item>
+    </style>
+
+    <style name="TitleFontMainPrimaryTxt" parent="AppThemeSG">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+    </style>
+
+    <style name="TitleFontSecondWhiteTxt" parent="AppThemeSG">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="TitleFontMainBlackTxt" parent="AppThemeSG">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="TitleFontSecondBlackTxt" parent="AppThemeSG">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="clickableForegroundBtn" parent="AppThemeSG">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?colorPrimary</item>
+    </style>
+
+    <style name="clickableForegroundTransparent" parent="AppThemeSG">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TitleFontMainPrimaryTxt.Red">
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
+    <style name="FormEditText">
+        <item name="android:layout_width">200dp</item>
     </style>
 
 </resources>

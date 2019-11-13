@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@android:color/darker_gray">
+
+    <TextView
+        android:id="@+id/main_login_title"
+        style="@style/TitleFontMainPrimaryTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Soirée Gaming"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155" />
+
+    <TextView
+        android:id="@+id/main_login_subtitle"
+        style="@style/TitleFontSecondWhiteTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Organisez vos soirées jeux vidéo !"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_login_title"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/main_login_title"
+        app:layout_constraintTop_toBottomOf="@+id/main_login_title"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <Button
+        android:id="@+id/main_login_bt"
+        android:background="@color/primaryColor"
+        style="@style/clickableForegroundBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:padding="20dp"
+        android:text="INSCRIPTION"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_login_subtitle"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <TextView
+        android:id="@+id/main_login_known_user_tv"
+        style="@style/clickableForegroundTransparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:text="Déja inscris? Je me connecte"
+        android:textColor="@color/primaryTextColor"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_login_bt"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/main_login_bt"
+        app:layout_constraintTop_toBottomOf="@+id/main_login_bt"
+        app:layout_constraintVertical_bias="0.117" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

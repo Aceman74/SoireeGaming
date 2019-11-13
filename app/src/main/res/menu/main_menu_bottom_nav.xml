@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 06/09/19 18:27
+  ~  */
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/bot_accueil"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="Accueil"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/bot_explorer"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="Explorer"
+        app:showAsAction="always" />
+    <item
+    android:id="@+id/bot_notifications"
+    android:enabled="true"
+        android:icon="@drawable/ic_notification"
+    android:title="Notifications"
+    app:showAsAction="always" />
+    <item
+        android:id="@+id/bot_messages"
+        android:enabled="true"
+        android:icon="@drawable/ic_message"
+        android:title="Messages"
+        app:showAsAction="always" />
+
+</menu>

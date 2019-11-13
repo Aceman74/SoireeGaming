@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
+
+
+    <ImageView
+        android:id="@+id/perm_iv"
+        android:layout_width="150dp"
+        android:layout_height="161dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198"
+        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+    <TextView
+        android:id="@+id/perm_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Pour améliorer ton experience Soirée Gaming, l'application a besoin de ta permission pour la géo localisation.\n\n Tu trouvera plus facilement les événements a proximité !"
+        android:textColor="@color/primaryTextColor"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/perm_iv"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/perm_iv"
+        app:layout_constraintTop_toBottomOf="@+id/perm_iv"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <Button
+        android:id="@+id/perm_validate_btn"
+        style="@style/clickableForegroundBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="20dp"
+        android:text="Autoriser la localisation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/perm_tv"
+        app:layout_constraintVertical_bias="0.593" />
+
+    <TextView
+        android:id="@+id/perm_later_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plus tard"
+        android:textColor="@color/primaryTextColor"
+        style="@style/clickableForegroundTransparent"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/perm_validate_btn"
+        app:layout_constraintStart_toStartOf="@+id/perm_validate_btn"
+        app:layout_constraintTop_toBottomOf="@+id/perm_validate_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
