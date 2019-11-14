@@ -4,18 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.FollowedEventsFragment"
-    android:background="@color/primaryDarkColor">
+    tools:context=".view.fragments.NotificationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/notifications_tb"
+        style="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FOLLOWED EVENTS"
-        style="@style/TitleFontSecondWhiteTxt"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="?colorPrimary"
+        android:minHeight="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/notifications_menu_tb"
+        app:title="Notifications" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

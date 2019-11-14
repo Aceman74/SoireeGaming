@@ -3,20 +3,26 @@
     package="com.aceman.soireegaming">
 
     <application
-        android:name=".SoireeGamingApp"
+        android:name="com.aceman.utils.SoireeGamingApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeSG">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".view.activities.SearchActivity"></activity>
+        <activity android:name=".view.activities.AboutActivity" />
+        <activity
+            android:name=".view.activities.ProfileActivity"
+            android:parentActivityName=".view.activities.MainActivity" />
+        <activity android:name=".view.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".view.activities.MainActivity" />
     </application>
 
 </manifest>

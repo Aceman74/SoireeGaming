@@ -48,6 +48,7 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     //Dexter//
     implementation 'com.karumi:dexter:5.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
 repositories {
     mavenCentral()

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.ProfileActivity">
+
+    <TextView
+        android:id="@+id/profile_rating_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Avis des Gamers :"
+        android:padding="5dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/profile_rating_rv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView2" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/profile_tb"
+        style="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:minHeight="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/profile_menu_tb"
+        app:title="Mon Profil" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_tb"
+        app:layout_constraintVertical_weight="0.4"
+        app:cardElevation="2dp"
+        android:layout_marginBottom="2dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/profile_picture_iv"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.846"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.34"
+                tools:srcCompat="@tools:sample/avatars"
+                android:src="@android:drawable/star_big_on"/>
+
+            <Button
+                android:id="@+id/profile_edit_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifier Profil"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/profile_picture_iv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/profile_picture_iv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_picture_iv"
+                app:layout_constraintVertical_bias="0.47" />
+
+            <TextView
+                android:id="@+id/profile_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Prenom"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/profile_age_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.186"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/profile_picture_iv" />
+
+            <TextView
+                android:id="@+id/profile_city_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Ville"
+                app:layout_constraintBottom_toTopOf="@+id/profile_reputation_tv"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_gender_tv" />
+
+            <TextView
+                android:id="@+id/profile_age_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Age"
+                app:layout_constraintBottom_toTopOf="@+id/profile_gender_tv"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_name_tv" />
+
+            <TextView
+                android:id="@+id/profile_gender_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Genre"
+                app:layout_constraintBottom_toTopOf="@+id/profile_city_tv"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_age_tv" />
+
+            <TextView
+                android:id="@+id/profile_reputation_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:padding="5dp"
+                android:text="Réputation"
+                android:textStyle="bold"
+                android:textColor="@color/primaryColor"
+                app:layout_constraintBottom_toTopOf="@+id/profile_edit_btn"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintHorizontal_bias="0.526"
+                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_city_tv" />
+
+            <RatingBar
+                android:id="@+id/profile_rating_bar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:numStars="4"
+                app:layout_constraintEnd_toEndOf="@+id/profile_reputation_tv"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/profile_reputation_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_reputation_tv" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_rating_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_weight="0.3"
+        android:layout_marginBottom="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_linear_ly_1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/profile_linear_ly_2"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardElevation="2dp"
+                android:layout_margin="1dp">
+
+                <TextView
+                    android:id="@+id/profile_support_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Console(s)/ PC :"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:padding="5dp"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/profile_console_chipgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_linear_ly_2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="1dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="0.5"
+                app:layout_constraintStart_toEndOf="@+id/profile_linear_ly_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:cardElevation="2dp"
+                android:layout_margin="1dp">
+
+                <TextView
+                    android:id="@+id/profile_gamertags_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GamerTags :"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:padding="5dp"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/profile_gamertag_chipgroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profile_rating_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_rating_title_tv"
+        app:layout_constraintVertical_weight="0.3" />
+</androidx.constraintlayout.widget.ConstraintLayout>

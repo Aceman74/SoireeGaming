@@ -1,12 +1,14 @@
-package com.aceman.soireegaming
+package com.aceman.soireegaming.view.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.aceman.soireegaming.view.fragments.MainFragment
+import com.aceman.soireegaming.R
+import com.aceman.soireegaming.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -19,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         supportFragmentManager.beginTransaction()
-            .add(android.R.id.content,MainFragment())
+            .add(android.R.id.content, MainFragment())
             .commit()
 
         viewModel = ViewModelProviders.of(this)
@@ -29,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
             Log.i("LoginActivity", "User = ${it.name}, age = ${it.age}, ID = ${it.id}")
         })
         main_login_bt.setOnClickListener {
-           var intent = Intent(this,MainActivity::class.java)
+           var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
 
         }

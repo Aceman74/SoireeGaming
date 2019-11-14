@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComingEventsFragment"
+    tools:context=".view.fragments.ComingEventsFragment"
     android:background="@color/primaryLightColor">
 
     <!-- TODO: Update blank fragment layout -->

@@ -9,6 +9,8 @@
         <item name="colorError">@color/errorTextColor</item>
         <item name="android:textColorSecondary">@color/greyTextColor</item>
         <item name="colorControlHighlight">@color/primaryLightColor</item>
+        <item name="colorControlNormal">@color/primaryTextColor</item>
+        <item name="android:textColorHint">@color/primaryTextColor</item>
     </style>
 
     <style name="TitleFontMainPrimaryTxt" parent="AppThemeSG">

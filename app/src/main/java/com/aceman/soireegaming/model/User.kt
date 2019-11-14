@@ -1,4 +1,4 @@
-package com.aceman.soireegaming
+package com.aceman.soireegaming.model
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.

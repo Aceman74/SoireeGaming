@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:title="Gérer Notifications"
+        android:id="@+id/profile_tb_notifications"
+        android:enabled="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:title="A propos de Soirée Gaming"
+        android:id="@+id/profile_tb_about"
+        android:enabled="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:title="Déconnexion"
+        android:id="@+id/profile_tb_logout"
+        android:enabled="true"
+        app:showAsAction="never"
+        />
+</menu>

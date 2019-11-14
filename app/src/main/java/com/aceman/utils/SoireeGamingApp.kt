@@ -1,6 +1,7 @@
-package com.aceman.soireegaming
+package com.aceman.utils
 
 import androidx.multidex.MultiDexApplication
+import com.aceman.soireegaming.BuildConfig
 import timber.log.Timber
 
 /**
