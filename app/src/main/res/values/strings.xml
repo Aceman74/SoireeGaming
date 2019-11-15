@@ -3,4 +3,22 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="gender">
+        <item>Masculin</item>
+        <item>Féminin</item>
+        <item>Non Binaire</item>
+    </string-array>
+
+    <array name="age">
+        <item>"18-25 ans"</item>
+        <item>"26-30 ans"</item>
+        <item>"31-35 ans"</item>
+        <item>"36-40 ans"</item>
+        <item>"40-45 ans"</item>
+        <item>"46-50 ans"</item>
+        <item>"51-55 ans"</item>
+        <item>"26-60 ans"</item>
+        <item>"+60 ans"</item>
+    </array>
 </resources>

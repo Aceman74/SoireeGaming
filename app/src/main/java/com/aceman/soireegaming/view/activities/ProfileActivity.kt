@@ -1,12 +1,17 @@
 package com.aceman.soireegaming.view.activities
 
+import android.annotation.TargetApi
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.provider.Settings.EXTRA_APP_PACKAGE
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.aceman.soireegaming.R
 import kotlinx.android.synthetic.main.activity_profile.*
+
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -16,6 +21,10 @@ class ProfileActivity : AppCompatActivity() {
 
         setSupportActionBar(profile_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        profile_edit_btn.setOnClickListener {
+            val intent = Intent(this, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     /**
@@ -30,6 +39,7 @@ class ProfileActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.profile_tb_notifications -> {
                 //GO TO PUSH NOTIFICATIONS
+                openAppNotifications()
                 true
             }
             R.id.profile_tb_about -> {
@@ -42,4 +52,14 @@ class ProfileActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private fun openAppNotifications() {
+        val settingsIntent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(EXTRA_APP_PACKAGE, packageName)
+            .putExtra(Settings.EXTRA_CHANNEL_ID, 44)
+        startActivity(settingsIntent)
+    }
 }

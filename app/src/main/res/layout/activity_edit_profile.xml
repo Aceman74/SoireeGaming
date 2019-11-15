@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.EditProfileActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_profile_tb"
+        style="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:minHeight="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/edit_profile_menu_tb"
+        app:title="Profil" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/edit_first_cv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_second_cv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_tb"
+        app:layout_constraintVertical_weight="0.5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_cly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/edit_profile_picture_iv"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.076"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="5dp"
+                android:text="Nom :"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture_iv" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="5dp"
+                android:text="Email :"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.141"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/edit_profile_picture_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_add_pic"
+                app:backgroundTint="@color/primaryColor"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintEnd_toEndOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintStart_toStartOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="Membre depuis :"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.054"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+            <EditText
+                android:id="@+id/edit_profile_email_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="test@hotmail.fr"
+                android:textSize="15sp"
+                android:maxLines="1"
+                android:theme="@style/EditTextStyle"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.326"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+            <TextView
+                android:id="@+id/edit_member_since_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="date"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.341"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="@+id/textView5"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_profile_name_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="nom"
+                android:maxLines="1"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:theme="@style/EditTextStyle"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.344"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/edit_second_cv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_first_cv"
+        app:layout_constraintVertical_weight="0.5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_cly_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/edit_profile_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Informations Personnelles"
+                android:background="@color/lightGrey"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/edit_profile_gender_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Genre: "
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.09"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_title" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/edit_profile_gender_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:minWidth="150dp"
+                android:entries="@array/gender"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_gender_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.184"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_gender_title"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_gender_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/edit_profile_gender_switch"
+                android:theme="@style/SwitchTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="afficher?"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_gender_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.55"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_gender_spinner"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_gender_spinner" />
+
+            <TextView
+                android:id="@+id/edit_profile_age_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Age :"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_gender_title" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/edit_profile_age_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/age"
+                android:minWidth="150dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_age_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.219"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_age_title"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_age_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/edit_profile_age_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="afficher?"
+                android:theme="@style/SwitchTheme"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_age_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_age_spinner"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_age_spinner"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supprimer mon compte :"
+                android:padding="5dp"
+                android:textColor="@color/errorTextColor"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_title"
+                app:layout_constraintVertical_bias="0.375" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Attention, toute suppression de compte est IRREVERSIBLE, vous perdrez tout vos historiques de soirées et messages."
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            <Button
+                android:id="@+id/edit_profile_delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Supprimer"
+                android:background="@color/greyTextColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_checkbox"
+                app:layout_constraintVertical_bias="0.18"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/edit_profile_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="J'ai bien compris !"
+                android:buttonTint="@color/errorTextColor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,5 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="greyTextColor">#727070</color>
     <color name="errorTextColor">#FF0000</color>
+    <color name="lightGrey">#F7F7F7</color>
 </resources>

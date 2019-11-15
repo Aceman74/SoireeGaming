@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeSG">
-        <activity android:name=".view.activities.SearchActivity"></activity>
+        <activity android:name=".view.activities.EditProfileActivity"
+            android:parentActivityName=".view.activities.ProfileActivity"/>
         <activity android:name=".view.activities.AboutActivity" />
         <activity
             android:name=".view.activities.ProfileActivity"

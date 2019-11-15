@@ -106,7 +106,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/main_tab_ly"
                 style="@style/AppThemeSG"
-                android:layout_width="409dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

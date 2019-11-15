@@ -40,7 +40,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/explore_cv_2"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/explore_cv_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -54,13 +54,230 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/advance_search_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/lightGrey"
+                app:layout_constraintBottom_toTopOf="@+id/distance_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Recherche Avancée"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/date_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CRITERES"
-                tools:layout_editor_absoluteX="173dp"
-                tools:layout_editor_absoluteY="91dp" />
+                android:text="Date ( Jusqu'au )  :"
+                android:padding="2dp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/console_title" />
+
+            <TextView
+                android:id="@+id/food_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Repas :"
+                android:padding="2dp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/distance_title" />
+
+            <TextView
+                android:id="@+id/sleep_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="Dormir :"
+                android:padding="2dp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.002"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/food_title" />
+
+            <TextView
+                android:id="@+id/explore_food_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Choisis un critère"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/food_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.389"
+                app:layout_constraintStart_toEndOf="@+id/food_title"
+                app:layout_constraintTop_toBottomOf="@+id/distance_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.AppCompatSeekBar
+                android:id="@+id/explore_seekbar"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:max="50"
+                android:theme="@style/SeekBarSG"
+                app:layout_constraintBottom_toBottomOf="@+id/distance_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.31"
+                app:layout_constraintStart_toEndOf="@+id/distance_title"
+                app:layout_constraintTop_toTopOf="@+id/distance_title"
+                app:layout_constraintVertical_bias="0.6" />
+
+            <TextView
+                android:id="@+id/gender_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Genre :"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.016"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sleep_title" />
+
+            <TextView
+                android:id="@+id/explore_sleep_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Choisis un critère"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/sleep_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.376"
+                app:layout_constraintStart_toEndOf="@+id/sleep_title"
+                app:layout_constraintTop_toBottomOf="@+id/food_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/explore_gender_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Choisis un critère"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/gender_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.386"
+                app:layout_constraintStart_toEndOf="@+id/gender_title"
+                app:layout_constraintTop_toBottomOf="@+id/sleep_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/distance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance  :"
+                android:padding="2dp"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_title" />
+
+            <TextView
+                android:id="@+id/explore_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Choisis la date"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/date_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.194"
+                app:layout_constraintStart_toEndOf="@+id/date_title"
+                app:layout_constraintTop_toTopOf="@+id/date_title"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/console_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="2dp"
+                android:text="Console :"
+                android:textColor="@color/primaryColor"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.005"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advance_search_title" />
+
+            <TextView
+                android:id="@+id/explore_console_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="Choisis une console"
+                android:padding="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/console_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.351"
+                app:layout_constraintStart_toEndOf="@+id/console_title"
+                app:layout_constraintTop_toTopOf="@+id/console_title"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/search_btn"
+                style="@style/clickableForegroundBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:layout_gravity="center|top"
+                android:src="@drawable/ic_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.95"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/advance_search_title"
+                app:layout_constraintVertical_bias="0.439" />
+
+            <TextView
+                android:id="@+id/explore_km_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50 Km"
+                app:layout_constraintBottom_toTopOf="@+id/explore_food_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/explore_seekbar"
+                app:layout_constraintTop_toBottomOf="@+id/explore_date_tv"
+                app:layout_constraintVertical_bias="0.833" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -80,16 +297,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Resultat :"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:layout_gravity="center|top"
-                android:padding="5dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
