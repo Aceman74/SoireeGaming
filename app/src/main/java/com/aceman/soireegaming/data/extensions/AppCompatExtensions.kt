@@ -1,6 +1,5 @@
-package com.aceman.soireegaming.extensions
+package com.aceman.soireegaming.data.extensions
 
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -23,7 +22,7 @@ fun AppCompatActivity.showFragment(id: Int, name: String): Boolean {
 }
 
 fun <T> getInstanceByString(name: String): T {
-    val myClass = Class.forName("com.aceman.soireegaming.view.fragments.$name")
+    val myClass = Class.forName("com.aceman.soireegaming.ui.home.$name")
     val constructor = myClass.getConstructor()
     return constructor.newInstance() as T
 }

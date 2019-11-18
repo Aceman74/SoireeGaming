@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.view.fragments
+package com.aceman.soireegaming.ui.home
 
 
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.aceman.soireegaming.PagerAdapter
 import com.aceman.soireegaming.PassedEventsFragment
 import com.aceman.soireegaming.R
-import com.aceman.soireegaming.view.activities.ProfileActivity
+import com.aceman.soireegaming.ui.profile.ProfileActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**

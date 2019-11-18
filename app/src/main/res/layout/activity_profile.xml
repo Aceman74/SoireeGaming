@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.ProfileActivity">
+    tools:context=".ui.profile.ProfileActivity">
 
     <TextView
         android:id="@+id/profile_rating_title_tv"
@@ -97,6 +97,7 @@
                 android:text="Ville"
                 app:layout_constraintBottom_toTopOf="@+id/profile_reputation_tv"
                 app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
                 app:layout_constraintTop_toBottomOf="@+id/profile_gender_tv" />
 
@@ -108,6 +109,7 @@
                 android:text="Age"
                 app:layout_constraintBottom_toTopOf="@+id/profile_gender_tv"
                 app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
                 app:layout_constraintTop_toBottomOf="@+id/profile_name_tv" />
 
@@ -119,6 +121,7 @@
                 android:text="Genre"
                 app:layout_constraintBottom_toTopOf="@+id/profile_city_tv"
                 app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
                 app:layout_constraintTop_toBottomOf="@+id/profile_age_tv" />
 

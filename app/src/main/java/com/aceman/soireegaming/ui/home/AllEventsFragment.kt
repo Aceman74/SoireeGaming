@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.view.fragments
+package com.aceman.soireegaming.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

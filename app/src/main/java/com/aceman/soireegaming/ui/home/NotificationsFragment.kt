@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.view.fragments
+package com.aceman.soireegaming.ui.home
 
 
 import android.os.Bundle
@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 import com.aceman.soireegaming.R
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 /**

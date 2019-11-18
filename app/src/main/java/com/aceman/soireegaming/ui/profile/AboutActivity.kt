@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.view.activities
+package com.aceman.soireegaming.ui.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
