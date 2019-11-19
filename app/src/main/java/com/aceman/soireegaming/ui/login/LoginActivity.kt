@@ -166,7 +166,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
 
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
-                val user = FirebaseAuth.getInstance().currentUser
+                val user = mPresenter.getCurrentUser()
                 if (user != null)
                     mPresenter.saveUserToFirebase(
                         User(

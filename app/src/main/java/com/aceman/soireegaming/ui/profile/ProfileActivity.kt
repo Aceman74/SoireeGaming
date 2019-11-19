@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -18,6 +19,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_profile.*
+import org.jetbrains.annotations.Async
+import timber.log.Timber
 
 
 class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) : BaseActivity(), BaseView, ProfileContract.ProfileViewInterface {
@@ -56,8 +59,10 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                 latitude =  location.latitude
                 longitude = location.longitude
             }
-        val city: String = mPresenter.hereLocation(latitude,longitude,this)
-        Toast.makeText(this,city,Toast.LENGTH_LONG).show()
+        AsyncTask.execute {
+            val city: String = mPresenter.hereLocation(latitude,longitude,this)
+            Timber.tag("CITY: ").i(city)
+        }
     }
 
     override fun signOutUserFromFirebase(){

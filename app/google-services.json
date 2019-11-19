@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "600900926103",
+    "firebase_url": "https://soireegaming-ccde4.firebaseio.com",
+    "project_id": "soireegaming-ccde4",
+    "storage_bucket": "soireegaming-ccde4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600900926103:android:cc88f614de28ae6700c7d2",
+        "android_client_info": {
+          "package_name": "com.aceman.soireegaming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600900926103-ov344uao7oqde7u1o3fg45n48h6srrb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aceman.soireegaming",
+            "certificate_hash": "1925843f6777e7b752ddf9403dcdded9cddfe3ee"
+          }
+        },
+        {
+          "client_id": "600900926103-405vvs128unsrdg5kmq3ovtdec8li3m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByY3UIeNU_EdEWIH3zt3MEF3bmLkN-37I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "600900926103-405vvs128unsrdg5kmq3ovtdec8li3m2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
