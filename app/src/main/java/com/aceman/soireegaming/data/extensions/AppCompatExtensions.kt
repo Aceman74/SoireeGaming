@@ -8,12 +8,11 @@ import androidx.fragment.app.Fragment
  */
 
 
-fun AppCompatActivity.showFragment(id: Int, name: String): Boolean {
+fun AppCompatActivity.showFragment(id: Int, name: Fragment): Boolean {
     return try {
-        val fragment = getInstanceByString<Fragment>(name + "Fragment")
         supportFragmentManager
             .beginTransaction()
-            .replace(id, fragment)
+            .replace(id, name)
             .commit()
         true
     } catch (e: Exception) {
@@ -21,8 +20,3 @@ fun AppCompatActivity.showFragment(id: Int, name: String): Boolean {
     }
 }
 
-fun <T> getInstanceByString(name: String): T {
-    val myClass = Class.forName("com.aceman.soireegaming.ui.home.$name")
-    val constructor = myClass.getConstructor()
-    return constructor.newInstance() as T
-}

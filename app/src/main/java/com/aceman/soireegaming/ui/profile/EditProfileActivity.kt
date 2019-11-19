@@ -1,20 +1,24 @@
 package com.aceman.soireegaming.ui.profile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.ui.bottomnavigation.messages.EditProfileContract
+import com.aceman.soireegaming.ui.bottomnavigation.messages.EditProfilePresenter
+import com.aceman.soireegaming.utils.base.BaseActivity
+import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) : BaseActivity(), BaseView, EditProfileContract.EditProfileViewInterface {
+    private val mPresenter: EditProfilePresenter = EditProfilePresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile)
         setSupportActionBar(edit_profile_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        mPresenter.attachView(this)
 
         deleteCheckBox()
     }

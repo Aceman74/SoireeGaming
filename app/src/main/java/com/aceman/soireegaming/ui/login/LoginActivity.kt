@@ -6,16 +6,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProviders
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.ui.home.MainActivity
-import com.aceman.soireegaming.ui.viewmodel.LoginViewModel
+import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
+import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -24,38 +21,38 @@ import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsList
 import kotlinx.android.synthetic.main.activity_login.*
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
-class LoginActivity : AppCompatActivity() {
+class LoginActivity(override val activityLayout: Int = R.layout.activity_login) : BaseActivity(),
+    LoginContract.LoginViewInterface {
 
-    private lateinit var viewModel: LoginViewModel
+    private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        mPresenter.attachView(this)
         checkPermission()
-        viewModel = ViewModelProviders.of(this)
-            .get(LoginViewModel::class.java)
         isLoggedUser()
-
-        main_login_bt.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        main_login_known_user_tv.setOnClickListener {
-            startSignInActivity()
-        }
     }
 
-    private fun isLoggedUser() {
-        when (viewModel.isCurrentlyLogged()) {
-            false -> {
+    override fun isLoggedUser() {
+        when (mPresenter.getCurrentUser()) {
+            null -> {
+                main_login_bt.text = "Créer un compte / Se connecter"
+                main_login_known_user_tv.visibility = View.INVISIBLE
+                main_login_bt.setOnClickListener {
+                    startSignInActivity()
+                }
+            }
+            else -> {
                 main_login_bt.text = "Continuer"
                 main_login_known_user_tv.text = "Créer un nouveau compte ?"
-            }
-            true -> {
-                main_login_bt.text = "Se connecter"
-                main_login_known_user_tv.visibility = View.INVISIBLE
+                main_login_known_user_tv.setOnClickListener {
+                    startSignInActivity()
+                }
+                main_login_bt.setOnClickListener {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
     }
@@ -66,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Check if user already grant permission.
      */
-    private fun checkPermission() {
+    override fun checkPermission() {
         if (ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -86,24 +83,23 @@ class LoginActivity : AppCompatActivity() {
      *
      * @see Dexter
      */
-    fun askPermission() {
+    override fun askPermission() {
         val alertDialog = AlertDialog.Builder(this@LoginActivity)
         alertDialog.setTitle("Soirée Gaming")
         alertDialog.setMessage("For fully working features, this application needs some permissions from you.")
         alertDialog.setPositiveButton(
             android.R.string.yes
-        ) { dialog, which ->
+        ) { dialog, _ ->
             dialog.dismiss()
             dexterInit()
         }
         alertDialog.show()
-
     }
 
     /**
      * Launch the sign in Activity for result.
      */
-    fun startSignInActivity() {
+    override fun startSignInActivity() {
 
         startActivityForResult(
             AuthUI.getInstance()
@@ -127,7 +123,7 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Sign out user from firebase method.
      */
-    fun signOutUserFromFirebase() {
+    override fun signOutUserFromFirebase() {
         AuthUI.getInstance()
             .signOut(this)
         val start = Intent(applicationContext, LoginActivity::class.java)
@@ -138,14 +134,13 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Dexter library used for permissions.
      */
-    private fun dexterInit() {
+    override fun dexterInit() {
         val dialogMultiplePermissionsListener = DialogOnAnyDeniedMultiplePermissionsListener.Builder
             .withContext(this)
             .withTitle("Permissions denied")
             .withMessage("Unfortunately, you cannot run the application without these permissions.")
             .withButtonText(android.R.string.ok)
             .build()
-
         Dexter.withActivity(this)
             .withPermissions(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -173,7 +168,7 @@ class LoginActivity : AppCompatActivity() {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user != null)
-                    viewModel.saveUserToFirebase(
+                    mPresenter.saveUserToFirebase(
                         User(
                             user.uid,
                             user.displayName!!,
@@ -191,10 +186,5 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("LoginActivity", "onDestroy()")
     }
 }

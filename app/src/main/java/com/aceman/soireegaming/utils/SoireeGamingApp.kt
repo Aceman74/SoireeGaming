@@ -1,4 +1,4 @@
-package com.aceman.utils
+package com.aceman.soireegaming.utils
 
 import androidx.multidex.MultiDexApplication
 import com.aceman.soireegaming.BuildConfig

@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.home
+package com.aceman.soireegaming.ui.bottomnavigation.notifications
 
 
 import android.os.Bundle
@@ -7,12 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.ui.bottomnavigation.messages.NotificationsContract
+import com.aceman.soireegaming.ui.bottomnavigation.messages.NotificationsPresenter
+import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class NotificationsFragment : Fragment() {
+class NotificationsFragment : Fragment(), BaseView, NotificationsContract.NotificationsViewInterface {
+    private val mPresenter: NotificationsPresenter = NotificationsPresenter()
     companion object {
         fun newInstance(): NotificationsFragment {
             return NotificationsFragment()
@@ -24,7 +28,9 @@ class NotificationsFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).setSupportActionBar(notifications_tb)
-        return inflater.inflate(R.layout.fragment_notifications, container, false)
+        val mView = inflater.inflate(R.layout.fragment_notifications, container, false)
+        mPresenter.attachView(this)
+        return mView
     }
 
     /**

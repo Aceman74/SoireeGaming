@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name="com.aceman.utils.SoireeGamingApp"
+        android:name="com.aceman.soireegaming.utils.SoireeGamingApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,10 +17,10 @@
         android:theme="@style/AppThemeSG">
         <activity android:name="com.aceman.soireegaming.ui.profile.EditProfileActivity"
             android:parentActivityName="com.aceman.soireegaming.ui.profile.ProfileActivity"/>
-        <activity android:name="com.aceman.soireegaming.ui.profile.AboutActivity" />
+        <activity android:name="com.aceman.soireegaming.ui.about.AboutActivity" />
         <activity
             android:name="com.aceman.soireegaming.ui.profile.ProfileActivity"
-            android:parentActivityName="com.aceman.soireegaming.ui.home.MainActivity" />
+            android:parentActivityName="com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity" />
         <activity android:name="com.aceman.soireegaming.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.aceman.soireegaming.ui.home.MainActivity" />
+        <activity android:name="com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity" />
     </application>
 
 </manifest>

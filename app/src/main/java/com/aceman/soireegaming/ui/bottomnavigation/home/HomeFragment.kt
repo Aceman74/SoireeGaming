@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.home
+package com.aceman.soireegaming.ui.bottomnavigation.home
 
 
 import android.content.Intent
@@ -7,15 +7,20 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aceman.soireegaming.PagerAdapter
-import com.aceman.soireegaming.PassedEventsFragment
+import com.aceman.soireegaming.ui.tablayout.passedevents.PassedEventsFragment
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.ui.profile.ProfileActivity
+import com.aceman.soireegaming.ui.tablayout.allevents.AllEventsFragment
+import com.aceman.soireegaming.ui.tablayout.comingevents.ComingEventsFragment
+import com.aceman.soireegaming.ui.tablayout.followedevents.FollowedEventsFragment
+import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), BaseView, HomeContract.HomeViewInterface {
+    private val mPresenter: HomePresenter = HomePresenter()
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -29,6 +34,7 @@ class HomeFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
        val mView = inflater.inflate(R.layout.fragment_home, container, false)
+        mPresenter.attachView(this)
         return mView
     }
 

@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.home
+package com.aceman.soireegaming.ui.bottomnavigation.explore
 
 
 import android.os.Bundle
@@ -8,13 +8,18 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.ui.login.ExploreContract
+import com.aceman.soireegaming.ui.login.ExplorePresenter
+import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_explore.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class ExploreFragment : Fragment() {
+class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterface {
+    private val mPresenter: ExplorePresenter = ExplorePresenter()
+
     companion object {
         fun newInstance(): ExploreFragment {
             return ExploreFragment()
@@ -26,7 +31,9 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        val mView = inflater.inflate(R.layout.fragment_explore, container, false)
+        mPresenter.attachView(this)
+        return mView
     }
 
 

@@ -1,4 +1,4 @@
-package com.aceman.utils
+package com.aceman.soireegaming.utils
 
 import android.view.View
 import android.widget.TextView

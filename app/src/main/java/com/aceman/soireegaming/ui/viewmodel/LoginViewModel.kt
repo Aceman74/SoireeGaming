@@ -18,7 +18,7 @@ import timber.log.Timber
  */
 class LoginViewModel : ViewModel() {
 
-    val TAG = "FIRESTORE_VIEW_MODEL"
+    val TAG = "LOGIN_VIEW_MODEL"
     var firebaseRepository = FirestoreRepository()
     var user: MutableLiveData<List<User>> = MutableLiveData()
 
@@ -31,7 +31,6 @@ class LoginViewModel : ViewModel() {
         return FirebaseAuth.getInstance().currentUser != null
     }
 
-    // save address to firebase
     fun saveUserToFirebase(userItem: User) {
 
         getUserFromFirestore(userItem.uId).addOnSuccessListener { documentSnapshot ->

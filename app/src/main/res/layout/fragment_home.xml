@@ -9,7 +9,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_ly"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:background="@color/lightGrey">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -17,14 +17,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleMarginStart="400dp"
-                app:expandedTitleMarginEnd="400dp"
+                app:expandedTitleMarginStart="40dp"
+                app:expandedTitleMarginEnd="40dp"
                 android:fitsSystemWindows="true">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:id="@+id/const_first"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="parallax">
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/main_tb"
@@ -32,27 +34,19 @@
                         android:layout_height="wrap_content"
                         android:background="?colorPrimary"
                         android:minHeight="?actionBarSize"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:menu="@menu/main_menu_tb"
                         app:title="Soirée Gaming" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/my_event_cv"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         app:cardElevation="2dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/main_tb"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:layout_constraintVertical_weight="0.5">
+                        app:layout_constraintEnd_toEndOf="parent">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -62,117 +56,83 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="10dp"
-                                android:text="Mes Events"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="0.003"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintVertical_bias="0.0" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/main_my_events_rv"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/my_events_title" />
+                                android:text="Mes Events" />
 
                             <TextView
                                 android:id="@+id/create_event_tv"
                                 style="@style/clickableForegroundTransparent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="-1dp"
                                 android:clickable="true"
                                 android:focusable="true"
+                                android:gravity="center"
                                 android:padding="10dp"
                                 android:text="+ Créer un évenement"
-                                android:textColor="@color/primaryColor"
-                                app:layout_constraintBottom_toBottomOf="@+id/my_events_title"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toEndOf="@+id/my_events_title"
-                                app:layout_constraintTop_toTopOf="@+id/my_events_title"
-                                app:layout_constraintVertical_bias="0.5" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                                android:textColor="@color/primaryColor" />
 
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:background="@drawable/test_background"
+                                android:id="@+id/main_my_events_rv"
+                                android:layout_width="match_parent"
+                                android:layout_height="300dp"
+                                android:layout_below="@id/my_events_title"/>
+                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/TitleFontMainBlackTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Mon Calendrier"/>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/main_tab_ly"
+                style="@style/AppThemeSG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/primaryColor"
+                app:tabSelectedTextColor="@android:color/black">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tuesday" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wednesday" />
+            </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/events_around_cv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        style="@style/TitleFontMainBlackTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:padding="10dp"
-                        android:text="Mon Calendrier"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.002"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/main_tab_ly"
-                        style="@style/AppThemeSG"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/main_vp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3"
-                        app:tabIndicatorColor="@color/primaryColor"
-                        app:tabSelectedTextColor="@android:color/black">
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Monday" />
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tuesday" />
-
-                        <com.google.android.material.tabs.TabItem
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Wednesday" />
-                    </com.google.android.material.tabs.TabLayout>
+                android:layout_height="wrap_content">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/main_vp"
                         android:layout_width="match_parent"
-                        android:layout_height="500dp"
-                        android:background="@color/greyTextColor"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/main_tab_ly" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="1000dp"
+                        android:background="@color/greyTextColor" />
 
             </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>
