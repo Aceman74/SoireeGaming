@@ -7,4 +7,15 @@
     <color name="greyTextColor">#727070</color>
     <color name="errorTextColor">#FF0000</color>
     <color name="lightGrey">#F7F7F7</color>
+    <color name="yellow">#F7EB0E</color>
+    <color name="playstation">#003087</color>
+    <color name="xbox">#107C10</color>
+    <color name="gamecube">#645097</color>
+    <color name="wii">#9a9a9a</color>
+    <color name="android">#78C257</color>
+    <color name="dreamcast">#17569b</color>
+    <color name="pc">#DA1010</color>
+    <color name="autre">#FF5722</color>
+
+
 </resources>

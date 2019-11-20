@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/pb_background_ly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightGrey"
+        android:alpha="0.7"/>
+
+    <TextView
+        android:id="@+id/pb_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:background="@color/lightGrey"
+        android:padding="10dp"
+        android:text="Chargement utilisateur \n en cours..."
+        />
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/main_pb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:theme="@style/SeekBarSG" />
+</FrameLayout>

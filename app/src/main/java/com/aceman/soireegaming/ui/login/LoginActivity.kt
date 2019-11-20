@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.UserInfos
+import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
@@ -35,7 +37,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     }
 
     override fun isLoggedUser() {
-        when (mPresenter.getCurrentUser()) {
+        when (mPresenter.getCurrentUser()?.uid) {
             null -> {
                 main_login_bt.text = "Créer un compte / Se connecter"
                 main_login_known_user_tv.visibility = View.INVISIBLE
@@ -121,17 +123,6 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     }
 
     /**
-     * Sign out user from firebase method.
-     */
-    override fun signOutUserFromFirebase() {
-        AuthUI.getInstance()
-            .signOut(this)
-        val start = Intent(applicationContext, LoginActivity::class.java)
-        startActivity(start)
-        isLoggedUser()
-    }
-
-    /**
      * Dexter library used for permissions.
      */
     override fun dexterInit() {
@@ -167,20 +158,26 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = mPresenter.getCurrentUser()
-                if (user != null)
+                if (user != null ){
                     mPresenter.saveUserToFirebase(
                         User(
                             user.uid,
                             user.displayName!!,
                             user.email!!,
-                            user.photoUrl.toString()
+                            user.photoUrl.toString(),
+                            UserLocation(),
+                            UserInfos()
                         )
                     )
+                mPresenter.saveDate()
+                }
+                isLoggedUser()
                 main_login_bt.text = "Continuer"
 
             } else { // ERRORS
                 if (response == null) {
                     signOutUserFromFirebase()
+                    isLoggedUser()
                     Toast.makeText(this, "Annulation", Toast.LENGTH_SHORT).show()
 
                 }

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppThemeSG" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppThemeSG" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
@@ -74,6 +74,11 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#42221f1f
         </item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/lightGrey</item>
+        <item name="colorControlActivated">@color/yellow</item>
     </style>
 
     <style name="SeekBarSG" parent="Widget.AppCompat.SeekBar">

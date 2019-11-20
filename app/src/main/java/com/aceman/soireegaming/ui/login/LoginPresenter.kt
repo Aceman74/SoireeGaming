@@ -3,9 +3,11 @@ package com.aceman.soireegaming.ui.login
 import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.repositories.FirestoreRepository
+import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import okhttp3.internal.Util
 import timber.log.Timber
 
 /**
@@ -13,7 +15,7 @@ import timber.log.Timber
  */
 class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
     var firebaseRepository = FirestoreRepository()
-    var user: MutableLiveData<List<User>> = MutableLiveData()
+    // var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
      * Getting current user check.
@@ -22,6 +24,16 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
+    }
+
+    override fun saveDate(){
+       val mUser = getCurrentUser()!!
+        val date = Utils.todayDate
+        firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
+            firebaseRepository.saveDate(date).addOnSuccessListener {
+                }.addOnFailureListener {
+                }
+        }
     }
 
     override fun saveUserToFirebase(userItem: User) {
@@ -36,7 +48,6 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
             } else {
                 Timber.i("Already Registered !")
             }
-
         }
     }
 }

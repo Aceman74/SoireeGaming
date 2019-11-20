@@ -14,6 +14,7 @@ interface LoginPresenterInterface {
 
     fun getCurrentUser(): FirebaseUser?
     fun saveUserToFirebase(userItem: User)
+    fun saveDate()
 }
 
     interface LoginViewInterface : BaseView {
@@ -22,7 +23,6 @@ interface LoginPresenterInterface {
         fun checkPermission()
         fun askPermission()
         fun startSignInActivity()
-        fun signOutUserFromFirebase()
         fun dexterInit()
 
 

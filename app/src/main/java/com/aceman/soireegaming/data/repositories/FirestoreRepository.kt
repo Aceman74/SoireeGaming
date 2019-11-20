@@ -1,6 +1,8 @@
 package com.aceman.soireegaming.data.repositories
 
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.UserInfos
+import com.aceman.soireegaming.data.models.UserLocation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -27,9 +29,25 @@ class FirestoreRepository {
         return documentReference.set(userItem)
     }
 
+    fun updateName(name: String): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("name", name)
+    }
+    fun updateEmail(email: String): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("email", email)
+    }
+    fun saveUserLocation(userLoc: UserLocation): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("userLocation", userLoc)
+    }
+    fun saveDate(date: String): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("Date", date)
+    }
+
+    fun saveUserInfos(userInfos: UserInfos): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("userInfos", userInfos)
+    }
+
     fun getUserList(): CollectionReference {
-        val collectionReference = firestoreDB.collection("users/${user!!.email.toString()}/saved_addresses")
-        return collectionReference
+        return firestoreDB.collection("users/${user!!.email.toString()}/saved_addresses")
     }
 
     fun deleteUser(userItem: User): Task<Void> {
