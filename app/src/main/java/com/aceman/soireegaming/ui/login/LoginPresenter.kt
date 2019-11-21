@@ -1,13 +1,11 @@
 package com.aceman.soireegaming.ui.login
 
-import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import okhttp3.internal.Util
 import timber.log.Timber
 
 /**
@@ -40,7 +38,7 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
 
         firebaseRepository.getUser(userItem.uId).addOnSuccessListener { documentSnapshot ->
             if (!documentSnapshot.exists()) {
-                firebaseRepository.saveUser(userItem).addOnSuccessListener {
+                firebaseRepository.saveUser(userItem,userItem.uId).addOnSuccessListener {
                     Timber.i("New User saved!")
                 }.addOnFailureListener {
                     Timber.e("Failed to save User!")

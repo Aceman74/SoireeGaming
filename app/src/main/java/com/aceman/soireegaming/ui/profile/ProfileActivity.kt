@@ -9,10 +9,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.transition.TransitionManager
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.ui.about.AboutActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
@@ -52,65 +52,87 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         if(currentUser.userInfos.showGender)
             profile_gender_tv.text = resources.getStringArray(R.array.gender)[currentUser.userInfos.gender]
         profile_rating_bar.rating = 2.0f
+        currentUser
+        var i = 0
     }
 
     fun chipTest() {
-        profile_add_console_bt.setOnClickListener {
-            console_ac.visibility = View.VISIBLE
 
             val console = Utils.ListOfString.listOfConsole()
-            // Initialize a new array adapter object
             val consoleAdapter = ArrayAdapter<String>(
-                applicationContext, // Context
-                android.R.layout.simple_dropdown_item_1line, // Layout
-                console // Array
+                applicationContext,
+                android.R.layout.simple_dropdown_item_1line,
+                console
             )
             console_ac.setAdapter(consoleAdapter)
             console_ac.threshold = 1
             console_ac.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id ->
                     val selectedItem = parent.getItemAtPosition(position).toString()
-                    Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                    addChip(selectedItem,"Console")
+                    var i = 0
+                    if(profile_console_chipgroup.childCount == 0 ){
+                        Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
+                        addChip(selectedItem,"Console")
+                    }else{
+                        while( i < profile_console_chipgroup.childCount){
+                            var chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
+                            if(chip.text == selectedItem){
+                                Toast.makeText(applicationContext, "Console $selectedItem déjà ajoutée !", Toast.LENGTH_SHORT).show()
+                                clearAutocomplete()
+                                break
+                            }
+                            if (i == profile_console_chipgroup.childCount -1){
+                                Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
+                                addChip(selectedItem,"Console")
+                                break
+                            }
+                            i++
+                        }
+                    }
                 }
-
-            // Set a focus change listener for auto complete text view
             console_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
                 if (b) {
-                    // Display the suggestion dropdown on focus
                     console_ac.showDropDown()
                 }
             }
-        }
-
-        profile_add_style_bt.setOnClickListener {
-            style_ac.visibility = View.VISIBLE
 
             val style = Utils.ListOfString.listOfStyle()
-
             val styleAdapter = ArrayAdapter<String>(
-                applicationContext, // Context
-                android.R.layout.simple_dropdown_item_1line, // Layout
-                style // Array
+                applicationContext,
+                android.R.layout.simple_dropdown_item_1line,
+                style
             )
             style_ac.setAdapter(styleAdapter)
             style_ac.threshold = 1
             style_ac.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id ->
                     val selectedItem = parent.getItemAtPosition(position).toString()
-                    Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                    addChip(selectedItem,"Style")
+                    var j = 0
+                    if(style_chipgroup.childCount == 0 ){
+                        Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
+                        addChip(selectedItem,"Style")
+                    }else{
+                        while( j < style_chipgroup.childCount){
+                            var chip: Chip = style_chipgroup.getChildAt(j) as Chip
+                            if(chip.text == selectedItem){
+                                Toast.makeText(applicationContext, "Style $selectedItem déjà ajouté !", Toast.LENGTH_SHORT).show()
+                                clearAutocomplete()
+                                break
+                            }
+                            if (j == style_chipgroup.childCount -1){
+                                Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
+                                addChip(selectedItem,"Style")
+                                break
+                            }
+                            j++
+                        }
+                    }
                 }
-
-            // Set a focus change listener for auto complete text view
             style_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
                 if (b) {
-                    // Display the suggestion dropdown on focus
                     style_ac.showDropDown()
                 }
             }
-        }
-
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -125,10 +147,12 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     private fun clearAutocomplete() {
         console_ac.clearFocus()
         console_ac.text.clear()
-        console_ac.visibility = View.GONE
         style_ac.clearFocus()
         style_ac.text.clear()
-        style_ac.visibility = View.GONE
+    }
+
+    fun getUserChips(){
+
     }
 
     fun addChip(chipName: String,group:String){
@@ -136,9 +160,8 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         val chip = Chip(this)
         chip.text = chipName
         chip.tag = group
-
         // Set the chip icon
-        chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_add_pic)
+       // chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_add_pic)
         when(chip.text){
             "PS4","PS3" -> { chip.setChipBackgroundColorResource(R.color.playstation)}
             "Xbox 360", "Xbox One" -> {chip.setChipBackgroundColorResource(R.color.xbox)}
@@ -154,27 +177,31 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
 
         chip.isClickable = true
         chip.isCheckable = false
-
         chip.isCloseIconVisible = true
 
+       saveToFirestore(chip)
+    }
+
+    override fun saveToFirestore(chip : Chip) {
         if (chip.tag == "Console"){
-        chip.setOnCloseIconClickListener{
-            // Smoothly remove chip from chip group
-            TransitionManager.beginDelayedTransition(profile_console_chipgroup)
-            profile_console_chipgroup.removeView(chip)
-        }
-        // Finally, add the chip to chip group
-        profile_console_chipgroup.addView(chip)
-        clearAutocomplete()
-        hideKeyboard(console_ac)
-        }else{
             chip.setOnCloseIconClickListener{
-            // Smoothly remove chip from chip group
-            TransitionManager.beginDelayedTransition(style_chipgroup)
-                style_chipgroup.removeView(chip)
+                TransitionManager.beginDelayedTransition(profile_console_chipgroup)
+                profile_console_chipgroup.removeView(chip)
+                mPresenter.updateChip(chip.text as String, chip.tag as String,false)
+            }
+            profile_console_chipgroup.addView(chip)
+            mPresenter.updateChip(chip.text as String, chip.tag as String,true)
+            clearAutocomplete()
+            hideKeyboard(console_ac)
         }
-            // Finally, add the chip to chip group
+        if(chip.tag == "Style"){
+            chip.setOnCloseIconClickListener{
+                TransitionManager.beginDelayedTransition(style_chipgroup)
+                style_chipgroup.removeView(chip)
+                mPresenter.updateChip(chip.text as String, chip.tag as String,false)
+            }
             style_chipgroup.addView(chip)
+            mPresenter.updateChip(chip.text as String, chip.tag as String,true)
             clearAutocomplete()
             hideKeyboard(style_ac)
 

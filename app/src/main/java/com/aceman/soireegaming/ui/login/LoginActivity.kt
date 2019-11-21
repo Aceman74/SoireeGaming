@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
@@ -70,6 +71,11 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) !== PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            !== PackageManager.PERMISSION_GRANTED &&
             ContextCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -137,7 +143,10 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+
             ).withListener(dialogMultiplePermissionsListener)
             .check()
     }
@@ -166,7 +175,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                             user.email!!,
                             user.photoUrl.toString(),
                             UserLocation(),
-                            UserInfos()
+                            UserInfos(),
+                            UserChip()
                         )
                     )
                 mPresenter.saveDate()

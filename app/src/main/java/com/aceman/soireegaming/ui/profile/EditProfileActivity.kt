@@ -1,5 +1,8 @@
 package com.aceman.soireegaming.ui.profile
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,7 +14,11 @@ import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
+import timber.log.Timber
 
 class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) : BaseActivity(), BaseView, EditProfileContract.EditProfileViewInterface {
     private val mPresenter: EditProfilePresenter = EditProfilePresenter()
@@ -23,8 +30,18 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         mPresenter.attachView(this)
         mPresenter.getUserDataFromFirestore()
         deleteCheckBox()
+        changeProfilePicture()
     }
 
+    private fun changeProfilePicture() {
+
+        edit_profile_picture_iv.setOnClickListener {
+            imagePicker()
+        }
+        edit_profile_picture_btn.setOnClickListener {
+            imagePicker()
+        }
+    }
 
 
     override fun deleteCheckBox() {
@@ -40,6 +57,47 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                 else
                     Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show()
             }
+    }
+
+    /**
+     * This method start an image picker library for the user. Opens gallery.
+     */
+    fun imagePicker() {
+        ImagePicker.with(this)
+            .galleryOnly()
+            .start()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+             val fileUri = data!!.data!!
+
+            //You can get File object from intent
+            val file = ImagePicker.getFile(data)
+
+            Glide.with(this)
+                .load(file)
+                .circleCrop()
+                .into(edit_profile_picture_iv)
+            saveToStorage(fileUri)
+            //You can also get File Path from intent
+            val filePath:String = ImagePicker.getFilePath(data)!!
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Timber.tag("PICKER ERROR :").e(ImagePicker.getError(data))
+        } else {
+            Toast.makeText(this, "Annulation", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveToStorage(fileUri: Uri) {
+        val storage = FirebaseStorage.getInstance()
+        val storageRef = storage.reference
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        var spaceRef = storageRef.child("$uid/profile_picture.jpg")
+        spaceRef.putFile(fileUri)
+
     }
 
     override fun loadUserInfos(currentUser: User) {

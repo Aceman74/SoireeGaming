@@ -6,11 +6,14 @@ import android.os.Build
 import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import timber.log.Timber
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
@@ -35,6 +38,15 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
     fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
+
+    override fun updateChip(name: String,group: String, check: Boolean) {
+        firebaseRepository.getUser(getCurrentUser()!!.uid)
+            .addOnSuccessListener { documentSnapshot ->
+                firebaseRepository.updateChip(UserChip(name,group , check)).addOnSuccessListener {
+                }
+            }
+    }
+
     override fun getUserDataFromFirestore() {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)

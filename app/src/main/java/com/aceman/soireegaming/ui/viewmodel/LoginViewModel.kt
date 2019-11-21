@@ -35,7 +35,7 @@ class LoginViewModel : ViewModel() {
 
         getUserFromFirestore(userItem.uId).addOnSuccessListener { documentSnapshot ->
             if (!documentSnapshot.exists()) {
-                firebaseRepository.saveUser(userItem).addOnSuccessListener {
+                firebaseRepository.saveUser(userItem, userItem.uId).addOnSuccessListener {
                     Timber.i("New User saved!")
                 }.addOnFailureListener {
                     Timber.e("Failed to save User!")

@@ -1,8 +1,6 @@
 package com.aceman.soireegaming.data.repositories
 
-import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.models.UserInfos
-import com.aceman.soireegaming.data.models.UserLocation
+import com.aceman.soireegaming.data.models.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -24,8 +22,8 @@ class FirestoreRepository {
         return firestoreDB.collection("user").document(uid).get()
     }
 
-    fun saveUser(userItem: User): Task<Void> {
-        val documentReference = firestoreDB.collection("user").document(user!!.uid)
+    fun saveUser(userItem: User, uId: String): Task<Void> {
+        val documentReference = firestoreDB.collection("user").document(uId)
         return documentReference.set(userItem)
     }
 
@@ -42,12 +40,16 @@ class FirestoreRepository {
         return firestoreDB.collection("user").document(user!!.uid).update("Date", date)
     }
 
+    fun updateChip(chip: UserChip): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("chip ${chip.name}",chip)
+    }
+
     fun saveUserInfos(userInfos: UserInfos): Task<Void> {
         return firestoreDB.collection("user").document(user!!.uid).update("userInfos", userInfos)
     }
 
     fun getUserList(): CollectionReference {
-        return firestoreDB.collection("users/${user!!.email.toString()}/saved_addresses")
+        return firestoreDB.collection("user").document(user!!.uid).parent
     }
 
     fun deleteUser(userItem: User): Task<Void> {

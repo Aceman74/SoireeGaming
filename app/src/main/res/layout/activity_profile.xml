@@ -199,26 +199,17 @@
                         android:orientation="horizontal">
                     <TextView
                         android:id="@+id/profile_support_tv"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Console(s)/ PC :"
                         android:textColor="@android:color/black"
                         android:textStyle="bold"
-                        android:padding="5dp"
-                        android:layout_weight="0.8"/>
+                        android:padding="5dp"/>
 
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/profile_add_console_bt"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_validate"
-                            android:background="@color/primaryColor"
-                            android:layout_weight="0.2"/>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
                     <AutoCompleteTextView
                         android:id="@+id/console_ac"
-                        android:visibility="gone"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/darker_gray"
                         android:background="@color/lightGrey"
@@ -269,28 +260,18 @@
                     android:orientation="horizontal">
                 <TextView
                     android:id="@+id/profile_gamertags_tv"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Style de jeu :"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
-                    android:padding="5dp"
-                    android:layout_weight="0.8"/>
+                    android:padding="5dp"/>
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/profile_add_style_bt"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_validate"
-                        android:background="@color/primaryColor"
-                        android:layout_weight="0.2"
-                        android:layout_gravity="center"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                     <AutoCompleteTextView
                         android:id="@+id/style_ac"
-                        android:visibility="gone"
                         android:textColor="@android:color/black"
                         android:textColorHint="@android:color/darker_gray"
                         android:background="@color/lightGrey"
