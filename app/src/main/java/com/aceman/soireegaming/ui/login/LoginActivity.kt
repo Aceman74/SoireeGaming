@@ -15,6 +15,7 @@ import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
+import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -29,12 +30,30 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
 
     private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
+    val chipList:MutableList<UserChip> = mutableListOf<UserChip>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
         checkPermission()
         isLoggedUser()
+        initListOfChip()
+    }
+
+    private fun initListOfChip() {
+       val chipsConsole: Array<String> = Utils.ListOfString.listOfConsole()
+        val chipStyle : Array<String> = Utils.ListOfString.listOfStyle()
+        var i = 0
+        var j = 0
+        for(item in chipsConsole){
+            chipList.add(i, UserChip(chipsConsole[i],"Console",false))
+            i++
+        }
+        for(item in chipStyle){
+            chipList.add(i, UserChip(chipStyle[j],"Style",false))
+            j++
+            i++
+        }
     }
 
     override fun isLoggedUser() {
@@ -176,7 +195,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                             user.photoUrl.toString(),
                             UserLocation(),
                             UserInfos(),
-                            UserChip()
+                            chipList
                         )
                     )
                 mPresenter.saveDate()

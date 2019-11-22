@@ -40,8 +40,8 @@ class FirestoreRepository {
         return firestoreDB.collection("user").document(user!!.uid).update("Date", date)
     }
 
-    fun updateChip(chip: UserChip): Task<Void> {
-        return firestoreDB.collection("user").document(user!!.uid).update("chip ${chip.name}",chip)
+    fun updateChip(chipList: MutableList<UserChip>): Task<Void> {
+        return firestoreDB.collection("user").document(user!!.uid).update("chipList",chipList)
     }
 
     fun saveUserInfos(userInfos: UserInfos): Task<Void> {

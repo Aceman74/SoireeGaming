@@ -23,9 +23,13 @@ import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
-class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) : BaseActivity(), BaseView, ProfileContract.ProfileViewInterface {
+class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) :
+    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface {
 
     private val mPresenter: ProfilePresenter = ProfilePresenter()
+    lateinit var chipList: MutableList<UserChip>
+    var itemPos: Int = -1
+    lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,98 +45,126 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     }
 
     override fun updateUI(currentUser: User) {
+        user = currentUser
         Glide.with(this)
             .load(currentUser.urlPicture)
             .apply(RequestOptions.circleCropTransform())
             .into(profile_picture_iv)
         profile_name_tv.text = currentUser.name
         profile_city_tv.text = currentUser.userLocation.city
-        if(currentUser.userInfos.showAge)
-            profile_age_tv.text =  resources.getStringArray(R.array.age)[currentUser.userInfos.age]
-        if(currentUser.userInfos.showGender)
-            profile_gender_tv.text = resources.getStringArray(R.array.gender)[currentUser.userInfos.gender]
+        if (currentUser.userInfos.showAge)
+            profile_age_tv.text = resources.getStringArray(R.array.age)[currentUser.userInfos.age]
+        if (currentUser.userInfos.showGender)
+            profile_gender_tv.text =
+                resources.getStringArray(R.array.gender)[currentUser.userInfos.gender]
         profile_rating_bar.rating = 2.0f
-        currentUser
-        var i = 0
+        mPresenter.getChipList()
+    }
+
+    override fun updateList(currentUser: User) {
+        chipList = currentUser.chipList as MutableList<UserChip>
+        for (item in chipList) {
+            if (item.check)
+                addChip(item.name, item.group)
+        }
     }
 
     fun chipTest() {
 
-            val console = Utils.ListOfString.listOfConsole()
-            val consoleAdapter = ArrayAdapter<String>(
-                applicationContext,
-                android.R.layout.simple_dropdown_item_1line,
-                console
-            )
-            console_ac.setAdapter(consoleAdapter)
-            console_ac.threshold = 1
-            console_ac.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
-                    val selectedItem = parent.getItemAtPosition(position).toString()
-                    var i = 0
-                    if(profile_console_chipgroup.childCount == 0 ){
-                        Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                        addChip(selectedItem,"Console")
-                    }else{
-                        while( i < profile_console_chipgroup.childCount){
-                            var chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
-                            if(chip.text == selectedItem){
-                                Toast.makeText(applicationContext, "Console $selectedItem déjà ajoutée !", Toast.LENGTH_SHORT).show()
-                                clearAutocomplete()
-                                break
-                            }
-                            if (i == profile_console_chipgroup.childCount -1){
-                                Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                                addChip(selectedItem,"Console")
-                                break
-                            }
-                            i++
+        val console = Utils.ListOfString.listOfConsole()
+        val consoleAdapter = ArrayAdapter<String>(
+            applicationContext,
+            android.R.layout.simple_dropdown_item_1line,
+            console
+        )
+        console_ac.setAdapter(consoleAdapter)
+        console_ac.threshold = 1
+        console_ac.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                var i = 0
+                if (profile_console_chipgroup.childCount == 0) {
+                    Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT)
+                        .show()
+                    addChip(selectedItem, "Console")
+                } else {
+                    while (i < profile_console_chipgroup.childCount) {
+                        var chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
+                        if (chip.text == selectedItem) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Console $selectedItem déjà ajoutée !",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            clearAutocomplete()
+                            break
                         }
+                        if (i == profile_console_chipgroup.childCount - 1) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Ajout $selectedItem",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            itemPos = i
+                            addChip(selectedItem, "Console")
+                            break
+                        }
+                        i++
                     }
                 }
-            console_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
-                if (b) {
-                    console_ac.showDropDown()
-                }
             }
+        console_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
+            if (b) {
+                console_ac.showDropDown()
+            }
+        }
 
-            val style = Utils.ListOfString.listOfStyle()
-            val styleAdapter = ArrayAdapter<String>(
-                applicationContext,
-                android.R.layout.simple_dropdown_item_1line,
-                style
-            )
-            style_ac.setAdapter(styleAdapter)
-            style_ac.threshold = 1
-            style_ac.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, view, position, id ->
-                    val selectedItem = parent.getItemAtPosition(position).toString()
-                    var j = 0
-                    if(style_chipgroup.childCount == 0 ){
-                        Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                        addChip(selectedItem,"Style")
-                    }else{
-                        while( j < style_chipgroup.childCount){
-                            var chip: Chip = style_chipgroup.getChildAt(j) as Chip
-                            if(chip.text == selectedItem){
-                                Toast.makeText(applicationContext, "Style $selectedItem déjà ajouté !", Toast.LENGTH_SHORT).show()
-                                clearAutocomplete()
-                                break
-                            }
-                            if (j == style_chipgroup.childCount -1){
-                                Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT).show()
-                                addChip(selectedItem,"Style")
-                                break
-                            }
-                            j++
+        val style = Utils.ListOfString.listOfStyle()
+        val styleAdapter = ArrayAdapter<String>(
+            applicationContext,
+            android.R.layout.simple_dropdown_item_1line,
+            style
+        )
+        style_ac.setAdapter(styleAdapter)
+        style_ac.threshold = 1
+        style_ac.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                var j = 0
+                if (style_chipgroup.childCount == 0) {
+                    Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT)
+                        .show()
+                    addChip(selectedItem, "Style")
+                } else {
+                    while (j < style_chipgroup.childCount) {
+                        var chip: Chip = style_chipgroup.getChildAt(j) as Chip
+                        if (chip.text == selectedItem) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Style $selectedItem déjà ajouté !",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            clearAutocomplete()
+                            break
                         }
+                        if (j == style_chipgroup.childCount - 1) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Ajout $selectedItem",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            addChip(selectedItem, "Style")
+                            break
+                        }
+                        j++
                     }
                 }
-            style_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
-                if (b) {
-                    style_ac.showDropDown()
-                }
             }
+        style_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
+            if (b) {
+                style_ac.showDropDown()
+            }
+        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
@@ -151,27 +183,41 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         style_ac.text.clear()
     }
 
-    fun getUserChips(){
-
-    }
-
-    fun addChip(chipName: String,group:String){
+    fun addChip(chipName: String, group: String) {
         // Initialize a new chip instance
         val chip = Chip(this)
         chip.text = chipName
         chip.tag = group
         // Set the chip icon
-       // chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_add_pic)
-        when(chip.text){
-            "PS4","PS3" -> { chip.setChipBackgroundColorResource(R.color.playstation)}
-            "Xbox 360", "Xbox One" -> {chip.setChipBackgroundColorResource(R.color.xbox)}
-            "PS2", "Xbox" -> {chip.setChipBackgroundColorResource(android.R.color.black)}
-            "Dreamcast" -> {chip.setChipBackgroundColorResource(R.color.dreamcast)}
-            "Gamecube" -> {chip.setChipBackgroundColorResource(R.color.gamecube)}
-            "Wii", "Wii U", "3DS", "Switch" -> {chip.setChipBackgroundColorResource(R.color.wii)}
-            "Android" -> {chip.setChipBackgroundColorResource(R.color.android)}
-            "PC" -> {chip.setChipBackgroundColorResource(R.color.pc)}
-            "Autre" -> {chip.setChipBackgroundColorResource(R.color.autre)}
+        // chip.chipIcon = ContextCompat.getDrawable(this,R.drawable.ic_add_pic)
+        when (chip.text) {
+            "PS4", "PS3" -> {
+                chip.setChipBackgroundColorResource(R.color.playstation)
+            }
+            "Xbox 360", "Xbox One" -> {
+                chip.setChipBackgroundColorResource(R.color.xbox)
+            }
+            "PS2", "Xbox" -> {
+                chip.setChipBackgroundColorResource(android.R.color.black)
+            }
+            "Dreamcast" -> {
+                chip.setChipBackgroundColorResource(R.color.dreamcast)
+            }
+            "Gamecube" -> {
+                chip.setChipBackgroundColorResource(R.color.gamecube)
+            }
+            "Wii", "Wii U", "3DS", "Switch" -> {
+                chip.setChipBackgroundColorResource(R.color.wii)
+            }
+            "Android" -> {
+                chip.setChipBackgroundColorResource(R.color.android)
+            }
+            "PC" -> {
+                chip.setChipBackgroundColorResource(R.color.pc)
+            }
+            "Autre" -> {
+                chip.setChipBackgroundColorResource(R.color.autre)
+            }
         }
         chip.setTextColor(resources.getColor(R.color.primaryTextColor))
 
@@ -179,32 +225,56 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         chip.isCheckable = false
         chip.isCloseIconVisible = true
 
-       saveToFirestore(chip)
+        saveToFirestore(chip)
     }
 
-    override fun saveToFirestore(chip : Chip) {
-        if (chip.tag == "Console"){
-            chip.setOnCloseIconClickListener{
+    override fun saveToFirestore(chip: Chip) {
+        if (chip.tag == "Console") {
+            chip.setOnCloseIconClickListener {
                 TransitionManager.beginDelayedTransition(profile_console_chipgroup)
                 profile_console_chipgroup.removeView(chip)
-                mPresenter.updateChip(chip.text as String, chip.tag as String,false)
+                for (item in chipList) {
+                    if (item.name == chip.text){
+                        chipList[chipList.indexOf(item)].check = false
+                        break
+                    }
+                }
+                mPresenter.updateChip(chipList)
             }
             profile_console_chipgroup.addView(chip)
-            mPresenter.updateChip(chip.text as String, chip.tag as String,true)
+            for (item in chipList) {
+                if (item.name == chip.text){
+                    chipList[chipList.indexOf(item)].check = true
+                    break
+                }
+            }
+            mPresenter.updateChip(chipList)
             clearAutocomplete()
             hideKeyboard(console_ac)
         }
-        if(chip.tag == "Style"){
-            chip.setOnCloseIconClickListener{
+
+        if (chip.tag == "Style") {
+            chip.setOnCloseIconClickListener {
                 TransitionManager.beginDelayedTransition(style_chipgroup)
                 style_chipgroup.removeView(chip)
-                mPresenter.updateChip(chip.text as String, chip.tag as String,false)
+                for (item in chipList) {
+                    if (item.name == chip.text){
+                        chipList[chipList.indexOf(item)].check = false
+                        break
+                    }
+                }
+                mPresenter.updateChip(chipList)
             }
             style_chipgroup.addView(chip)
-            mPresenter.updateChip(chip.text as String, chip.tag as String,true)
+            for (item in chipList) {
+                if (item.name == chip.text){
+                    chipList[chipList.indexOf(item)].check = true
+                    break
+                }
+            }
+            mPresenter.updateChip(chipList)
             clearAutocomplete()
             hideKeyboard(style_ac)
-
         }
     }
 

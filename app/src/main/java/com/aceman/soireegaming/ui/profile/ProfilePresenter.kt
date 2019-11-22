@@ -9,11 +9,8 @@ import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
@@ -39,12 +36,19 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
         return FirebaseAuth.getInstance().currentUser
     }
 
-    override fun updateChip(name: String,group: String, check: Boolean) {
+    override fun updateChip(chipList: MutableList<UserChip>) {
         firebaseRepository.getUser(getCurrentUser()!!.uid)
             .addOnSuccessListener { documentSnapshot ->
-                firebaseRepository.updateChip(UserChip(name,group , check)).addOnSuccessListener {
-                }
+                firebaseRepository.updateChip(chipList)
             }
+    }
+
+    override fun getChipList(){
+            firebaseRepository.getUser(getCurrentUser()!!.uid)
+                .addOnSuccessListener { documentSnapshot ->
+                    val currentUser = documentSnapshot.toObject<User>(User::class.java)!!
+                        (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
+                    }
     }
 
     override fun getUserDataFromFirestore() {
