@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.aceman.soireegaming.PagerAdapter
 import com.aceman.soireegaming.ui.tablayout.passedevents.PassedEventsFragment
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.ui.event.CreateEventActivity
 import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.ui.tablayout.allevents.AllEventsFragment
 import com.aceman.soireegaming.ui.tablayout.comingevents.ComingEventsFragment
@@ -41,6 +42,8 @@ class HomeFragment : Fragment(), BaseView, HomeContract.HomeViewInterface {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu_tb, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        create_event_tv.setOnClickListener { val intent = Intent(this.requireContext(), CreateEventActivity::class.java)
+            startActivity(intent)}
     }
 
     /**

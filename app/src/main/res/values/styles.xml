@@ -57,6 +57,7 @@
 
     <style name="EditTextStyle" parent="@android:style/Theme.Holo">
         <item name="editTextStyle">@style/App_EditTextStyle</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">

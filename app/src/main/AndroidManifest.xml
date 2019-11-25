@@ -10,30 +10,31 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.aceman.soireegaming.utils.SoireeGamingApp"
+        android:name=".utils.SoireeGamingApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeSG"
-        android:requestLegacyExternalStorage="true">
-
+        android:theme="@style/AppThemeSG">
+        <activity android:name=".ui.event.CreateEventActivity"
+            android:parentActivityName=".ui.bottomnavigation.home.MainActivity"/>
         <activity
-            android:name="com.aceman.soireegaming.ui.profile.EditProfileActivity"
-            android:parentActivityName="com.aceman.soireegaming.ui.profile.ProfileActivity" />
-        <activity android:name="com.aceman.soireegaming.ui.about.AboutActivity" />
+            android:name=".ui.profile.EditProfileActivity"
+            android:parentActivityName=".ui.profile.ProfileActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
         <activity
-            android:name="com.aceman.soireegaming.ui.profile.ProfileActivity"
-            android:parentActivityName="com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity" />
-        <activity android:name="com.aceman.soireegaming.ui.login.LoginActivity">
+            android:name=".ui.profile.ProfileActivity"
+            android:parentActivityName=".ui.bottomnavigation.home.MainActivity" />
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity" />
+        <activity android:name=".ui.bottomnavigation.home.MainActivity" />
     </application>
 
 </manifest>

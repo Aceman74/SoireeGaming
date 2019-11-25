@@ -1,15 +1,18 @@
 package com.aceman.soireegaming.ui.bottomnavigation.home
 
+import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.extensions.showFragment
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.explore.ExploreFragment
 import com.aceman.soireegaming.ui.bottomnavigation.messages.MessagesFragment
 import com.aceman.soireegaming.ui.bottomnavigation.notifications.NotificationsFragment
+import com.aceman.soireegaming.ui.event.CreateEventActivity
 import com.aceman.soireegaming.ui.login.MainContract
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView

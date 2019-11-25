@@ -24,10 +24,9 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
         return FirebaseAuth.getInstance().currentUser
     }
 
-    override fun saveDate(){
-       val mUser = getCurrentUser()!!
+    override fun saveDate(user: FirebaseUser) {
         val date = Utils.todayDate
-        firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
+        firebaseRepository.getUser(user.uid).addOnSuccessListener {
             firebaseRepository.saveDate(date).addOnSuccessListener {
                 }.addOnFailureListener {
                 }

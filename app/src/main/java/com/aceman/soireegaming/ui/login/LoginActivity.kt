@@ -15,11 +15,11 @@ import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
+import com.aceman.soireegaming.utils.ChipsManager
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_login.*
@@ -37,23 +37,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         mPresenter.attachView(this)
         checkPermission()
         isLoggedUser()
-        initListOfChip()
-    }
-
-    private fun initListOfChip() {
-       val chipsConsole: Array<String> = Utils.ListOfString.listOfConsole()
-        val chipStyle : Array<String> = Utils.ListOfString.listOfStyle()
-        var i = 0
-        var j = 0
-        for(item in chipsConsole){
-            chipList.add(i, UserChip(chipsConsole[i],"Console",false))
-            i++
-        }
-        for(item in chipStyle){
-            chipList.add(i, UserChip(chipStyle[j],"Style",false))
-            j++
-            i++
-        }
+        ChipsManager.initListOfChip(chipList)
     }
 
     override fun isLoggedUser() {
@@ -187,18 +171,21 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 // Successfully signed in
                 val user = mPresenter.getCurrentUser()
                 if (user != null ){
+                    var photoUrl = user.photoUrl.toString()
+                    if(user.photoUrl == null)
+                         photoUrl = "https://firebasestorage.googleapis.com/v0/b/soireegaming-ccde4.appspot.com/o/profile_default%2Flogo_SG.png?alt=media&token=9e9c6564-a5c6-4759-91a0-04922e8f8840"
                     mPresenter.saveUserToFirebase(
                         User(
                             user.uid,
                             user.displayName!!,
                             user.email!!,
-                            user.photoUrl.toString(),
+                            photoUrl,
                             UserLocation(),
                             UserInfos(),
                             chipList
                         )
                     )
-                mPresenter.saveDate()
+                    mPresenter.saveDate(user)
                 }
                 isLoggedUser()
                 main_login_bt.text = "Continuer"

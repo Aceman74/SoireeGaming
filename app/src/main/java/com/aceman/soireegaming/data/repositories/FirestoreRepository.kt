@@ -59,6 +59,9 @@ class FirestoreRepository {
         return documentReference.delete()
     }
 
+    fun saveEvent(eventInfos: EventInfos, uid: String): Task<Void> {
+        return firestoreDB.collection("event").document(uid).set(eventInfos)
+    }
 }
 
 

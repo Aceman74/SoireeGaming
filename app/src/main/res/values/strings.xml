@@ -10,6 +10,30 @@
         <item>Non Binaire</item>
     </string-array>
 
+    <string-array name="gender_alt">
+        <item>Tous !</item>
+        <item>Hommes</item>
+        <item>Femmes</item>
+        <item>Non Binaires</item>
+    </string-array>
+
+    <string-array name="eat">
+        <item>Pas de nourriture/bois.</item>
+        <item>Inclus</item>
+        <item>Chacun Apporte</item>
+        <item>Pot Commun</item>
+    </string-array>
+
+    <string-array name="private_event">
+        <item>Non</item>
+        <item>Oui</item>
+    </string-array>
+
+    <string-array name="sleep">
+        <item>Non</item>
+        <item>Oui</item>
+    </string-array>
+
     <array name="age">
         <item>"18-25 ans"</item>
         <item>"26-30 ans"</item>

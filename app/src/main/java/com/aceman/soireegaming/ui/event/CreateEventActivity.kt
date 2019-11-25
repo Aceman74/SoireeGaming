@@ -1,6 +1,8 @@
-package com.aceman.soireegaming.ui.profile
+package com.aceman.soireegaming.ui.event
 
-import android.content.Intent
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.location.Location
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,61 +15,117 @@ import androidx.transition.TransitionManager
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
-import com.aceman.soireegaming.ui.about.AboutActivity
+import com.aceman.soireegaming.utils.ChipsManager
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
-import com.aceman.soireegaming.utils.base.BaseView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_create_event.*
-import kotlinx.android.synthetic.main.activity_profile.*
+import java.util.*
 
 
-class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) :
-    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface {
-
-    private val mPresenter: ProfilePresenter = ProfilePresenter()
-    lateinit var chipList: MutableList<UserChip>
+class CreateEventActivity(override val activityLayout: Int = R.layout.activity_create_event) :
+    BaseActivity(),
+    CreateEventActivityContract.CreateEventActivityViewInterface {
+    private val mPresenter: CreateEventActivityPresenter = CreateEventActivityPresenter()
+    lateinit var mPicture: String
+    var mLocation: Location = Location("init")
     var itemPos: Int = -1
-    lateinit var user: User
+    var chipList: MutableList<UserChip> = mutableListOf<UserChip>()
+    var beginDate = ""
+    var endDate = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
-        setSupportActionBar(profile_tb)
+        setSupportActionBar(create_event_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mPresenter.getUserDataFromFirestore()
+        datePicker()
+        ChipsManager.initListOfChip(chipList)
         chipTest()
-        profile_edit_btn.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity::class.java)
-            startActivity(intent)
-        }
+
     }
+
+    private fun datePicker() {
+
+        date_event_picker.setOnClickListener {
+            val cldr: Calendar = Calendar.getInstance()
+            val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
+            val month: Int = cldr.get(Calendar.MONTH)
+            val year: Int = cldr.get(Calendar.YEAR)
+            val picker = DatePickerDialog(
+                this,
+                OnDateSetListener { _, year, monthOfYear, dayOfMonth -> date_event_picker.text =
+                    dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year },
+                year,
+                month,
+                day
+            )
+            picker.datePicker.minDate = System.currentTimeMillis() - 1000
+            picker.show()
+        }
+        date_event_picker_2.setOnClickListener {
+            beginDate = date_event_picker.text.toString()
+            val cldr: Calendar = Calendar.getInstance()
+            val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
+            val month: Int = cldr.get(Calendar.MONTH)
+            val year: Int = cldr.get(Calendar.YEAR)
+            val picker2 = DatePickerDialog(
+                this,
+                OnDateSetListener { _, year, monthOfYear, dayOfMonth -> date_event_picker_2.text =
+                    dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year },
+                year,
+                month,
+                day
+            )
+            picker2.datePicker.minDate = Utils.dateWithBSToMillis(beginDate)
+            picker2.show()
+        }
+        endDate = date_event_picker_2.text.toString()
+    }
+
+    /**
+     * Inflate the menu; this adds items to the action bar if it is present.
+     */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.edit_profile_menu_tb, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.edit_profile_tb_validate -> {
+/*                mPresenter.saveEventToFirebase(
+                    EventInfos(
+                        mPresenter.getCurrentUser()!!.uid,
+                        Utils.todayDate,
+
+                        create_event_name_et.text.toString(),
+                        create_event_desc_et.text.toString(),
+                        mPicture,
+                        mLocation,
+                        chipList,
+                        private_event_spinner.selectedItemPosition,
+                        gender_event_spinner.selectedItemPosition,
+                        eat_event_spinner.selectedItemPosition,
+                        sleep_event_spinner.selectedItemPosition)
+                )*/
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     override fun updateUI(currentUser: User) {
-        user = currentUser
+        mPicture = currentUser.urlPicture.toString()
+        mLocation.latitude = currentUser.userLocation.latitude
+        mLocation.longitude = currentUser.userLocation.longitude
+
         Glide.with(this)
             .load(currentUser.urlPicture)
-            .apply(RequestOptions.circleCropTransform())
-            .into(profile_picture_iv)
-        profile_name_tv.text = currentUser.name
-        profile_city_tv.text = currentUser.userLocation.city
-        if (currentUser.userInfos.showAge)
-            profile_age_tv.text = resources.getStringArray(R.array.age)[currentUser.userInfos.age]
-        if (currentUser.userInfos.showGender)
-            profile_gender_tv.text =
-                resources.getStringArray(R.array.gender)[currentUser.userInfos.gender]
-        profile_rating_bar.rating = 2.0f
-        mPresenter.getChipList()
-    }
-
-    override fun updateList(currentUser: User) {
-        chipList = currentUser.chipList as MutableList<UserChip>
-        for (item in chipList) {
-            if (item.check)
-                addChip(item.name, item.group)
-        }
+            .circleCrop()
+            .into(create_event_profile_pic)
+        create_event_location.setText(currentUser.userLocation.city)
     }
 
     fun chipTest() {
@@ -200,80 +258,53 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         saveToFirestore(chip)
     }
 
-    override fun saveToFirestore(chip: Chip) {
+    fun saveToFirestore(chip: Chip) {
         if (chip.tag == "Console") {
             chip.setOnCloseIconClickListener {
-                TransitionManager.beginDelayedTransition(profile_console_chipgroup)
-                profile_console_chipgroup.removeView(chip)
+                TransitionManager.beginDelayedTransition(create_console_chipgroup)
+                create_console_chipgroup.removeView(chip)
                 for (item in chipList) {
-                    if (item.name == chip.text){
+                    if (item.name == chip.text) {
                         chipList[chipList.indexOf(item)].check = false
                         break
                     }
                 }
-                mPresenter.updateChip(chipList)
+                //  mPresenter.updateChip(chipList)
             }
-            profile_console_chipgroup.addView(chip)
+            create_console_chipgroup.addView(chip)
             for (item in chipList) {
-                if (item.name == chip.text){
+                if (item.name == chip.text) {
                     chipList[chipList.indexOf(item)].check = true
                     break
                 }
             }
-            mPresenter.updateChip(chipList)
+            //  mPresenter.updateChip(chipList)
             clearAutocomplete()
-            hideKeyboard(console_ac)
+            hideKeyboard(create_console_ac)
         }
 
         if (chip.tag == "Style") {
             chip.setOnCloseIconClickListener {
-                TransitionManager.beginDelayedTransition(style_chipgroup)
-                style_chipgroup.removeView(chip)
+                TransitionManager.beginDelayedTransition(create_style_chipgroup)
+                create_style_chipgroup.removeView(chip)
                 for (item in chipList) {
-                    if (item.name == chip.text){
+                    if (item.name == chip.text) {
                         chipList[chipList.indexOf(item)].check = false
                         break
                     }
                 }
-                mPresenter.updateChip(chipList)
+                //  mPresenter.updateChip(chipList)
             }
-            style_chipgroup.addView(chip)
+            create_style_chipgroup.addView(chip)
             for (item in chipList) {
-                if (item.name == chip.text){
+                if (item.name == chip.text) {
                     chipList[chipList.indexOf(item)].check = true
                     break
                 }
             }
-            mPresenter.updateChip(chipList)
+            // mPresenter.updateChip(chipList)
             clearAutocomplete()
-            hideKeyboard(style_ac)
+            hideKeyboard(create_style_ac)
         }
     }
-
-    /**
-     * Inflate the menu; this adds items to the action bar if it is present.
-     */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.profile_menu_tb, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) =
-        when (item.itemId) {
-            R.id.profile_tb_notifications -> {
-                mPresenter.openAppNotifications(this, packageName)
-                true
-            }
-            R.id.profile_tb_about -> {
-                intent = Intent(this, AboutActivity::class.java)
-                startActivity(intent)
-                true
-            }
-            R.id.profile_tb_logout -> {
-                signOutUserFromFirebase()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
 }
