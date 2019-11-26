@@ -18,6 +18,7 @@ import java.io.IOException
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class MainPresenter : BasePresenter(), MainContract.MainPresenterInterface {
+
     var firebaseRepository = FirestoreRepository()
     var user: MutableLiveData<List<User>> = MutableLiveData()
 

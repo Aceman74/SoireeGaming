@@ -1,10 +1,17 @@
 package com.aceman.soireegaming.utils
 
+import android.content.Context
+import android.graphics.Color
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
+import com.aceman.soireegaming.R
+import com.aceman.soireegaming.data.extensions.backSlashRemover
+import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  * Created by Lionel JOFFRAY - on 18/11/2019.
@@ -22,7 +29,9 @@ object Utils {
         val txtView =
             snackView.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         snackView.setPadding(0, 0, 0, 0)
+        snackView.setBackgroundResource(R.color.primaryColor)
         txtView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        txtView.setTextColor(Color.WHITE)
         return snack.show()
     }
 
@@ -38,13 +47,6 @@ object Utils {
         return cal.timeInMillis
     }
 
-    /**
-     * Remove backslash to convert date saved to millis.
-     */
-    fun String.backSlashRemover(string: String): String {
-        val s: StringBuilder = StringBuilder(string.replace("/", ""))
-        return s.toString()
-    }
 
     /**
      * Convert date with / custom format to millis.
@@ -66,6 +68,38 @@ object Utils {
         }
 
     /**
+     * Start a fade animation, for Recyclerview items.
+     */
+    fun setFadeAnimation(view: View, context: Context) {
+        val anim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        view.startAnimation(anim)
+    }
+
+    fun chipColor(chip: Chip) : Int {
+        return when (chip.text) {
+            "PS4", "PS3" -> R.color.playstation
+            "Xbox 360", "Xbox One" -> R.color.xbox
+            "PS2", "Xbox" -> android.R.color.black
+            "Dreamcast" -> R.color.dreamcast
+            "Gamecube" -> R.color.gamecube
+            "Wii", "Wii U", "3DS", "Switch" -> R.color.wii
+            "Android" -> R.color.android
+            "PC" -> R.color.pc
+            "Autre" -> R.color.autre
+            else -> R.color.primaryLightColor
+        }
+    }
+    fun getRandomColor(): Int {
+        val rnd = Random()
+        return Color.argb(
+            255,
+            rnd.nextInt(256),
+            rnd.nextInt(256),
+            rnd.nextInt(256)
+        )
+
+    }
+    /**
      * This object is used in numberpicker, makes save easier in Estate (only Int no full string).
      */
     object ListOfString {
@@ -82,8 +116,8 @@ object Utils {
             return arrayOf(
                 "Aventure", "Course", "FPS", "Stratégie", "MMORPG",
                 "MMO", "RPG", "Plate-forme", "Simulation", "Sport",
-                "Combat", "Course", "Réflexion", "BattleRoyal",
-                "Party Game", "Co-op", "2D", "VR", "Horreur", "Autre"
+                "Combat", "Réflexion", "BattleRoyal", "Party Game",
+                "Co-op", "2D", "VR", "Horreur", "Autre"
             ).sortedArray()
         }
     }

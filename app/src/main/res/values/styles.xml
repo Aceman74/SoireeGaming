@@ -5,13 +5,14 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColor">@android:color/black</item>
         <item name="colorError">@color/errorTextColor</item>
         <item name="android:textColorSecondary">@color/greyTextColor</item>
         <item name="colorControlHighlight">@color/primaryLightColor</item>
         <item name="colorControlNormal">@color/primaryTextColor</item>
         <item name="android:textColorHint">@color/primaryTextColor</item>
     </style>
+
 
     <style name="TitleFontMainPrimaryTxt" parent="AppThemeSG">
         <item name="android:textStyle">bold</item>
@@ -40,6 +41,7 @@
     <style name="clickableForegroundBtn" parent="AppThemeSG">
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:background">?colorPrimary</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
     <style name="clickableForegroundTransparent" parent="AppThemeSG">

@@ -20,7 +20,6 @@ import com.aceman.soireegaming.utils.base.BaseView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.activity_create_event.*
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
@@ -38,7 +37,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         setSupportActionBar(profile_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mPresenter.getUserDataFromFirestore()
-        chipTest()
+        chipSetting()
         profile_edit_btn.setOnClickListener {
             val intent = Intent(this, EditProfileActivity::class.java)
             startActivity(intent)
@@ -70,25 +69,25 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         }
     }
 
-    fun chipTest() {
+    fun chipSetting() {
 
         val console = Utils.ListOfString.listOfConsole()
         val consoleAdapter = ArrayAdapter<String>(applicationContext,
             android.R.layout.simple_dropdown_item_1line, console
         )
-        create_console_ac.setAdapter(consoleAdapter)
-        create_console_ac.threshold = 1
-        create_console_ac.onItemClickListener =
+        console_ac.setAdapter(consoleAdapter)
+        console_ac.threshold = 1
+        console_ac.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 var i = 0
-                if (create_console_chipgroup.childCount == 0) {
+                if (profile_console_chipgroup.childCount == 0) {
                     Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT)
                         .show()
                     addChip(selectedItem, "Console")
                 } else {
-                    while (i < create_console_chipgroup.childCount) {
-                        var chip: Chip = create_console_chipgroup.getChildAt(i) as Chip
+                    while (i < profile_console_chipgroup.childCount) {
+                        var chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Console $selectedItem déjà ajoutée !",
@@ -97,7 +96,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                             clearAutocomplete()
                             break
                         }
-                        if (i == create_console_chipgroup.childCount - 1) {
+                        if (i == profile_console_chipgroup.childCount - 1) {
                             Toast.makeText(
                                 applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT
                             ).show()
@@ -109,9 +108,9 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     }
                 }
             }
-        create_console_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
+        console_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
             if (b) {
-                create_console_ac.showDropDown()
+                console_ac.showDropDown()
             }
         }
 
@@ -121,19 +120,19 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
             android.R.layout.simple_dropdown_item_1line,
             style
         )
-        create_style_ac.setAdapter(styleAdapter)
-        create_style_ac.threshold = 1
-        create_style_ac.onItemClickListener =
+        style_ac.setAdapter(styleAdapter)
+        style_ac.threshold = 1
+        style_ac.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 var j = 0
-                if (create_style_chipgroup.childCount == 0) {
+                if (style_chipgroup.childCount == 0) {
                     Toast.makeText(applicationContext, "Ajout $selectedItem", Toast.LENGTH_SHORT)
                         .show()
                     addChip(selectedItem, "Style")
                 } else {
-                    while (j < create_style_chipgroup.childCount) {
-                        var chip: Chip = create_style_chipgroup.getChildAt(j) as Chip
+                    while (j < style_chipgroup.childCount) {
+                        var chip: Chip = style_chipgroup.getChildAt(j) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Style $selectedItem déjà ajouté !",
@@ -142,7 +141,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                             clearAutocomplete()
                             break
                         }
-                        if (j == create_style_chipgroup.childCount - 1) {
+                        if (j == style_chipgroup.childCount - 1) {
                             Toast.makeText(applicationContext, "Ajout $selectedItem",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -153,27 +152,27 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     }
                 }
             }
-        create_style_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
+        style_ac.onFocusChangeListener = View.OnFocusChangeListener { view, b ->
             if (b) {
-                create_style_ac.showDropDown()
+                style_ac.showDropDown()
             }
         }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus != null) {
-            hideKeyboard(create_console_ac)
-            hideKeyboard(create_style_ac)
+            hideKeyboard(console_ac)
+            hideKeyboard(style_ac)
             clearAutocomplete()
         }
         return super.dispatchTouchEvent(ev)
     }
 
     private fun clearAutocomplete() {
-        create_console_ac.clearFocus()
-        create_console_ac.text.clear()
-        create_style_ac.clearFocus()
-        create_style_ac.text.clear()
+        console_ac.clearFocus()
+        console_ac.text.clear()
+        style_ac.clearFocus()
+        style_ac.text.clear()
     }
 
     fun addChip(chipName: String, group: String) {
@@ -181,26 +180,16 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         val chip = Chip(this)
         chip.text = chipName
         chip.tag = group
-        when (chip.text) {
-            "PS4", "PS3" -> chip.setChipBackgroundColorResource(R.color.playstation)
-            "Xbox 360", "Xbox One" -> chip.setChipBackgroundColorResource(R.color.xbox)
-            "PS2", "Xbox" -> chip.setChipBackgroundColorResource(android.R.color.black)
-            "Dreamcast" -> chip.setChipBackgroundColorResource(R.color.dreamcast)
-            "Gamecube" -> chip.setChipBackgroundColorResource(R.color.gamecube)
-            "Wii", "Wii U", "3DS", "Switch" -> chip.setChipBackgroundColorResource(R.color.wii)
-            "Android" ->  chip.setChipBackgroundColorResource(R.color.android)
-            "PC" -> chip.setChipBackgroundColorResource(R.color.pc)
-            "Autre" -> chip.setChipBackgroundColorResource(R.color.autre)
-        }
+        chip.setChipBackgroundColorResource(Utils.chipColor(chip))
         chip.setTextColor(resources.getColor(R.color.primaryTextColor))
         chip.isClickable = true
         chip.isCheckable = false
         chip.isCloseIconVisible = true
 
-        saveToFirestore(chip)
+        updateAndSaveChips(chip)
     }
 
-    override fun saveToFirestore(chip: Chip) {
+    override fun updateAndSaveChips(chip: Chip) {
         if (chip.tag == "Console") {
             chip.setOnCloseIconClickListener {
                 TransitionManager.beginDelayedTransition(profile_console_chipgroup)

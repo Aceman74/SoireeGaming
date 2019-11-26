@@ -3,9 +3,7 @@ package com.aceman.soireegaming.data.repositories
 import com.aceman.soireegaming.data.models.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 
 
 /**
@@ -22,8 +20,8 @@ class FirestoreRepository {
         return firestoreDB.collection("user").document(uid).get()
     }
 
-    fun saveUser(userItem: User, uId: String): Task<Void> {
-        val documentReference = firestoreDB.collection("user").document(uId)
+    fun saveUser(userItem: User, uid: String): Task<Void> {
+        val documentReference = firestoreDB.collection("user").document(uid)
         return documentReference.set(userItem)
     }
 
@@ -59,8 +57,19 @@ class FirestoreRepository {
         return documentReference.delete()
     }
 
-    fun saveEvent(eventInfos: EventInfos, uid: String): Task<Void> {
-        return firestoreDB.collection("event").document(uid).set(eventInfos)
+    fun setEventParticipation(eventList: MutableList<String>): Task<Void>{
+        return firestoreDB.collection("user").document(user!!.uid).update("eventList", eventList)
+    }
+
+    fun saveEvent(eventInfos: EventInfos, eventId: String): Task<Void> {
+        return firestoreDB.collection("event").document(eventId).set(eventInfos)
+    }
+
+    fun getEvents(eventId: String): Task<DocumentSnapshot> {
+        return firestoreDB.collection("event").document(eventId).get()
+    }
+    fun getAllEvents(): Task<QuerySnapshot> {
+        return firestoreDB.collection("event").get()
     }
 }
 

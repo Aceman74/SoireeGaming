@@ -35,9 +35,9 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
 
     override fun saveUserToFirebase(userItem: User) {
 
-        firebaseRepository.getUser(userItem.uId).addOnSuccessListener { documentSnapshot ->
+        firebaseRepository.getUser(userItem.uid).addOnSuccessListener { documentSnapshot ->
             if (!documentSnapshot.exists()) {
-                firebaseRepository.saveUser(userItem,userItem.uId).addOnSuccessListener {
+                firebaseRepository.saveUser(userItem,userItem.uid).addOnSuccessListener {
                     Timber.i("New User saved!")
                 }.addOnFailureListener {
                     Timber.e("Failed to save User!")

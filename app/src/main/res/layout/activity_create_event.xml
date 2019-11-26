@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/create_event_tb"
-        style="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorPrimary"
@@ -110,8 +110,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity=""
                         android:hint="Nom de l'event"
+                        android:maxLines="1"
+                        android:maxLength="50"
+                        android:inputType="text"
                         android:padding="10dp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp" />
@@ -124,6 +126,7 @@
                         android:layout_gravity="center"
                         android:gravity=""
                         android:hint="Description du programme"
+                        android:maxLength="600"
                         android:padding="10dp"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp" />
@@ -180,6 +183,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@color/lightGrey"
+                            android:minWidth="60dp"
                             android:padding="5dp"
                             android:text="Début :"
                             android:textColor="@android:color/black"
@@ -191,7 +195,8 @@
                             android:layout_height="wrap_content"
                             android:minWidth="120dp"
                             android:padding="5dp"
-                            android:text="choisir la date"
+                            android:hint="choisir la date"
+                            android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_from_tv"/>
                         <TextView
@@ -199,6 +204,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="A partir de :"
+                            android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -212,7 +218,8 @@
                             android:layout_height="wrap_content"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:text="choisir l'heure"
+                            android:hint="choisir l'heure"
+                            android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_hour"/>
                     </RelativeLayout>
@@ -227,6 +234,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Fin :"
+                            android:minWidth="60dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -236,9 +244,10 @@
                             android:id="@+id/date_event_picker_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="138dp"
+                            android:minWidth="120dp"
                             android:padding="5dp"
-                            android:text="choisir la date"
+                            android:hint="choisir la date"
+                            android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_to_tv"/>
                         <TextView
@@ -246,6 +255,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Jusqu'à :"
+                            android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -259,7 +269,8 @@
                             android:layout_height="wrap_content"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:text="choisir l'heure"
+                            android:hint="choisir l'heure"
+                            android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_hour_2"/>
                     </RelativeLayout>

@@ -182,7 +182,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                             photoUrl,
                             UserLocation(),
                             UserInfos(),
-                            chipList
+                            chipList,
+                            eventList = mutableListOf()
                         )
                     )
                     mPresenter.saveDate(user)

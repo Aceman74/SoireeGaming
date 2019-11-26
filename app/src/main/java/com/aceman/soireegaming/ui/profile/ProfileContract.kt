@@ -25,7 +25,7 @@ interface ProfileContract {
     interface ProfileViewInterface : BaseView {
         fun updateUI(currentUser: User)
         fun signOutUserFromFirebase()
-        fun saveToFirestore(chip: Chip)
+        fun updateAndSaveChips(chip: Chip)
         fun updateList(currentUser: User)
     }
 }

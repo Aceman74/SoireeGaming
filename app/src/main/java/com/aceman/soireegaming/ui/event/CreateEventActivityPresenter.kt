@@ -38,9 +38,25 @@ class CreateEventActivityPresenter : BasePresenter(),
         }
     }
 
-    override fun saveEventToFirebase(eventInfos: EventInfos) {
+    override fun saveEventToFirebase(eventInfos: EventInfos, eventId: String) {
+        firebaseRepository.getUser(getCurrentUser()!!.uid).addOnSuccessListener {
+            firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
+            }.addOnFailureListener {
+            }
+        }
 
+    }
 
+    fun addEventToUserList(eventId: MutableList<String>){
+        if (getCurrentUser() != null) {
+            firebaseRepository.getUser(getCurrentUser()!!.uid)
+                .addOnSuccessListener { documentSnapshot ->
+                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
+                    if (currentUser != null) {    //  logout if no username set (account delete by admin )
+                        firebaseRepository.setEventParticipation(eventId)
+                    }
+                }
+        }
     }
 
     override fun saveDate(user: FirebaseUser) {

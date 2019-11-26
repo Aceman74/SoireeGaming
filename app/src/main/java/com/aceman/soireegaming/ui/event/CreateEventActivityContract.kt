@@ -15,7 +15,7 @@ interface CreateEventActivityPresenterInterface {
     fun getCurrentUser(): FirebaseUser?
     fun saveDate(user: FirebaseUser)
     fun getUserDataFromFirestore()
-    fun saveEventToFirebase(eventInfos: EventInfos)
+    fun saveEventToFirebase(eventInfos: EventInfos, eventId: String)
 
 }
 
