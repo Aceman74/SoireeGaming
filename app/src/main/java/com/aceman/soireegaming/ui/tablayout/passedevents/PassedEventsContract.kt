@@ -1,6 +1,8 @@
 package com.aceman.soireegaming.ui.bottomnavigation.messages
 
+import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.utils.base.BaseView
+import com.google.firebase.auth.FirebaseUser
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
@@ -8,11 +10,15 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface PassedEventsContract {
 
-interface PassedEventsPresenterInterface {
+    interface PassedEventsPresenterInterface {
 
-}
+        fun addEventInfos(eventId: String)
+        fun getAllEvents()
+        fun getCurrentUser(): FirebaseUser?
+    }
 
     interface PassedEventsViewInterface : BaseView {
-
+        fun updateUI(eventsList: MutableList<String>)
+        fun updateEvents(event: EventInfos)
     }
 }

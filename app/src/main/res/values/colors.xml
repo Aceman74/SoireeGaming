@@ -6,7 +6,7 @@
     <color name="primaryTextColor">#ffffff</color>
     <color name="greyTextColor">#727070</color>
     <color name="errorTextColor">#FF0000</color>
-    <color name="lightGrey">#F7F7F7</color>
+    <color name="lightGrey">#F0F0F0</color>
     <color name="yellow">#F7EB0E</color>
     <color name="playstation">#003087</color>
     <color name="xbox">#107C10</color>

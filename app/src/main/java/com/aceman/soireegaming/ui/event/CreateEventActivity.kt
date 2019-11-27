@@ -18,10 +18,7 @@ import androidx.transition.TransitionManager
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.extensions.customTimeStamp
 import com.aceman.soireegaming.data.extensions.hourSetting
-import com.aceman.soireegaming.data.models.EventInfos
-import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.models.UserChip
-import com.aceman.soireegaming.data.models.UserLocation
+import com.aceman.soireegaming.data.models.*
 import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
 import com.aceman.soireegaming.utils.ChipsManager
 import com.aceman.soireegaming.utils.Utils
@@ -39,12 +36,13 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
     CreateEventActivityContract.CreateEventActivityViewInterface {
     private val mPresenter: CreateEventActivityPresenter = CreateEventActivityPresenter()
     lateinit var mPicture: String
-    var mLocation = UserLocation(-1.0,-1.0,"City")
-    var itemPos: Int = -1
-    var chipList: MutableList<UserChip> = mutableListOf<UserChip>()
-    var dateList: MutableList<String> = mutableListOf("","","","")
-    var eventList: MutableList<String> = mutableListOf()
-    var eventId : String = ""
+   private var mLocation = UserLocation(-1.0,-1.0,"City")
+   private var itemPos: Int = -1
+   private var chipList: MutableList<UserChip> = mutableListOf<UserChip>()
+   private var dateList: MutableList<String> = mutableListOf("","","","")
+   private var eventList: MutableList<String> = mutableListOf()
+   private var eventPlayers: MutableList<String> = mutableListOf()
+   private var eventId : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -146,6 +144,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                 mPresenter.saveEventToFirebase(
                     EventInfos(
                         mPresenter.getCurrentUser()!!.uid,
+                        mPresenter.getCurrentUser()!!.displayName!!,
                         eventId,
                         Utils.todayDate,
                         create_event_name_et.text.toString(),
@@ -154,10 +153,13 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                         mLocation,
                         chipList,
                         dateList,
-                        private_event_spinner.selectedItemPosition,
-                        gender_event_spinner.selectedItemPosition,
-                        eat_event_spinner.selectedItemPosition,
-                        sleep_event_spinner.selectedItemPosition)
+                        eventPlayers,
+                        EventMisc(
+                            private_event_spinner.selectedItemPosition,
+                            gender_event_spinner.selectedItemPosition,
+                            eat_event_spinner.selectedItemPosition,
+                            sleep_event_spinner.selectedItemPosition)
+                        )
                 ,eventId
                 )
                     mPresenter.addEventToUserList(eventList)

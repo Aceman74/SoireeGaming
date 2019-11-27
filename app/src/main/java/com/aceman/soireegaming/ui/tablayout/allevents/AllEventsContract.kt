@@ -3,7 +3,6 @@ package com.aceman.soireegaming.ui.tablayout.allevents
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.utils.base.BaseView
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
@@ -19,7 +18,7 @@ interface AllEventsPresenterInterface {
 }
 
     interface AllEventsViewInterface : BaseView {
-        fun updateUI(eventsList: MutableList<QuerySnapshot>)
+        fun updateUI(eventsList: MutableList<String>)
         fun updateEvents(event: EventInfos)
     }
 }

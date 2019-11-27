@@ -1,121 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_ly"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightGrey">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapse_ly"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightGrey">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:expandedTitleMarginEnd="40dp"
+            app:expandedTitleMarginStart="40dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/collapse_ly"
+            <LinearLayout
+                android:id="@+id/const_first"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleMarginStart="40dp"
-                app:expandedTitleMarginEnd="40dp"
-                android:fitsSystemWindows="true">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax">
 
-                <LinearLayout
-                    android:id="@+id/const_first"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/main_tb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_collapseMode="parallax">
+                    android:background="?colorPrimary"
+                    android:minHeight="?actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:menu="@menu/main_menu_tb"
+                    app:title="Soirée Gaming" />
 
-                    <androidx.appcompat.widget.Toolbar
-                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                        android:id="@+id/main_tb"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/my_event_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    app:cardElevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?colorPrimary"
-                        android:minHeight="?actionBarSize"
-                        app:menu="@menu/main_menu_tb"
-                        app:title="Soirée Gaming" />
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="3dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/my_event_cv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        app:cardElevation="2dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        <TextView
+                            android:id="@+id/my_events_title"
+                            style="@style/TitleFontMainBlackTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_blue"
+                            android:padding="10dp"
+                            android:text="Mes Events"
+                            android:textColor="@color/primaryTextColor" />
 
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/create_event_tv"
+                            style="@style/clickableForegroundTransparent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="-1dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="+ Créer un évenement"
+                            android:textColor="@color/primaryColor" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/main_my_events_rv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="300dp"
+                            android:layout_below="@id/my_events_title" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                            <TextView
-                                android:id="@+id/my_events_title"
-                                style="@style/TitleFontMainBlackTxt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="10dp"
-                                android:text="Mes Events" />
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/TitleFontMainBlackTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:background="@drawable/shape_blue"
+            android:padding="10dp"
+            android:text="Mon Calendrier"
+            android:textColor="@color/primaryTextColor" />
+        
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/main_tab_ly"
+            style="@style/AppThemeSG"
+            android:background="@color/lightGrey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/primaryColor"
+            app:tabSelectedTextColor="@android:color/black">
 
-                            <TextView
-                                android:id="@+id/create_event_tv"
-                                style="@style/clickableForegroundTransparent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_gravity="center"
-                                android:layout_marginEnd="-1dp"
-                                android:clickable="true"
-                                android:focusable="true"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="+ Créer un évenement"
-                                android:textColor="@color/primaryColor" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/main_my_events_rv"
-                                android:layout_width="match_parent"
-                                android:layout_height="300dp"
-                                android:layout_below="@id/my_events_title"/>
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-            <TextView
-                android:id="@+id/textView3"
-                style="@style/TitleFontMainBlackTxt"
+            <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Mon Calendrier"/>
+                android:text="Monday" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/main_tab_ly"
-                style="@style/AppThemeSG"
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/primaryColor"
-                app:tabSelectedTextColor="@android:color/black">
+                android:text="Tuesday" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Monday" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tuesday" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wednesday" />
-            </com.google.android.material.tabs.TabLayout>
-        </com.google.android.material.appbar.AppBarLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday" />
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -131,8 +137,7 @@
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/main_vp"
                         android:layout_width="match_parent"
-                        android:layout_height="1000dp"
-                        android:background="@color/greyTextColor" />
+                        android:layout_height="wrap_content" />
 
             </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>

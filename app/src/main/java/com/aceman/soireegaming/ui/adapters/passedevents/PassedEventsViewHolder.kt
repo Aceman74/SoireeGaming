@@ -6,7 +6,7 @@
  *
  */
 
-package com.aceman.soireegaming.ui.adapters.allevents
+package com.aceman.soireegaming.ui.adapters.passedevents
 
 import android.graphics.Color
 import android.view.View
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.event_item_horizontal.view.*
  *
  * The viewHolder for Estate in MainActivity and Search.
  */
-class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class PassedEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""
     var description = ""
     var picture = ""
@@ -31,15 +31,13 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
     var itemPos = 0
 
 
+
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
     fun updateWithItem(eventList: EventInfos, position: Int, listener: (Int) -> Unit) {
         var i = 0
-        val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
-        val eventDate = Utils.dateWithBSToMillis(eventList.dateList[0])
-        if (eventDate < todayDate - 5000)
-            itemView.passed_event_hor_fl.visibility = View.VISIBLE
+
         itemView.event_main_title_hor_tv.text = eventList.title
         itemView.event_main_date_hor_tv.text = eventList.dateList[0]
         itemView.event_main_desc_hor_tv.text = eventList.description
@@ -49,9 +47,9 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
             .load(eventList.picture)
             .circleCrop()
             .into(itemView.event_main_pic_hor)
-        for (item in eventList.chipList) {
-            if (eventList.chipList[i].check) {
-                addChip(eventList.chipList[i].name)
+        for(item in eventList.chipList){
+            if(eventList.chipList[i].check){
+            addChip(eventList.chipList[i].name)
             }
             i++
         }
@@ -77,6 +75,5 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
 
 
     override fun onClick(view: View) {
-
     }
 }

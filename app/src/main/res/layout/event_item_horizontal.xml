@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="3dp"
+    android:layout_margin="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const_hor_ly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightGrey">
+
+
+        <FrameLayout
+            android:layout_margin="1dp"
+            android:id="@+id/item_hor_frame_ly"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/primaryColor"
+            app:layout_constraintBottom_toTopOf="@+id/event_main_desc_hor_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/event_main_title_hor_tv">
+
+        </FrameLayout>
+
+        <ImageView
+            android:layout_margin="1dp"
+            android:id="@+id/event_main_pic_hor"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_blue"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"/>
+
+
+        <TextView
+            android:id="@+id/event_user_hor_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="User"
+            app:layout_constraintEnd_toEndOf="@+id/event_main_pic_hor"
+            app:layout_constraintStart_toStartOf="@+id/event_main_pic_hor"
+            app:layout_constraintTop_toBottomOf="@+id/event_main_pic_hor" />
+
+
+        <ImageView
+            android:id="@+id/event_loc_ic_hor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/ic_location"
+            app:layout_constraintEnd_toEndOf="@+id/event_user_hor_tv"
+            app:layout_constraintStart_toStartOf="@+id/event_user_hor_tv"
+            app:layout_constraintTop_toBottomOf="@+id/event_user_hor_tv" />
+
+        <TextView
+            android:id="@+id/event_main_location_hor_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Location"
+            app:layout_constraintEnd_toEndOf="@+id/event_loc_ic_hor"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/event_loc_ic_hor"
+            app:layout_constraintTop_toBottomOf="@+id/event_loc_ic_hor" />
+
+        <TextView
+            android:id="@+id/event_main_desc_hor_tv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="5dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="DESCRIPTION"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/event_misc_sv_hor"
+            app:layout_constraintStart_toEndOf="@+id/event_main_pic_hor"
+            app:layout_constraintTop_toBottomOf="@+id/event_main_title_hor_tv"
+            app:layout_constraintHorizontal_weight="0.6"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/event_misc_sv_hor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fillViewport="true"
+            android:layout_gravity="center"
+            app:layout_constraintHorizontal_weight="0.4"
+            app:layout_constraintStart_toEndOf="@+id/event_main_desc_hor_tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/event_main_title_hor_tv">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/misc_event_item_hor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="MISC"
+                app:singleLine="false" />
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/event_main_title_hor_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="TITLE"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/event_main_date_hor_tv"
+            app:layout_constraintStart_toEndOf="@+id/event_main_pic_hor"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/event_main_date_hor_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="DATE"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:visibility="invisible"
+            android:id="@+id/passed_event_hor_fl"
+            android:background="@android:color/darker_gray"
+            android:alpha="0.4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

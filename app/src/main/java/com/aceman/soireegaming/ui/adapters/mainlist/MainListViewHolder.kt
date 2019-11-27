@@ -10,16 +10,12 @@ package com.aceman.soireegaming.ui.adapters.mainlist
 
 import android.graphics.Color
 import android.view.View
-import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
-import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.activity_create_event.*
-import kotlinx.android.synthetic.main.event_item.view.*
+import kotlinx.android.synthetic.main.event_item_vertical.view.*
 
 
 /**
@@ -42,34 +38,23 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
     fun updateWithItem(eventList: EventInfos, position: Int, listener: (Int) -> Unit) {
         var i = 0
 
-        itemView.event_main_title.text = eventList.title
-        itemView.event_main_date.text = eventList.dateList[0]
-        itemView.event_main_desc.text = eventList.description
-        itemView.event_main_location.text = eventList.location.city
+        itemView.event_main_title_vert_tv.text = eventList.title
+        itemView.event_main_date_vert_tv.text = eventList.dateList[0]
+        itemView.event_main_desc_vert_tv.text = eventList.description
+        itemView.event_main_loc_vert_tv.text = eventList.location.city
+        itemView.event_user_tv_vert.text = eventList.name
         Glide.with(itemView)
             .load(eventList.picture)
             .circleCrop()
-            .into(itemView.event_main_pic)
+            .into(itemView.event_main_pic_vert)
         for(item in eventList.chipList){
             if(eventList.chipList[i].check){
-            setChips(eventList.chipList[i].name)
+            addChip(eventList.chipList[i].name)
             }
             i++
         }
-
-
-    }
-
-    fun setChips(item: String){
-        var i = 0
-        if (itemView.misc_event_item.childCount == 0) {
-
-            addChip(item)
-        } else {
-                if (i == itemView.misc_event_item.childCount - 1) {
-                    itemPos = i
-                    addChip(item)
-            }
+        itemView.setOnClickListener {
+            listener(eventList.eid.toInt())
         }
     }
 
@@ -77,9 +62,13 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
         // Initialize a new chip instance
         val chip = Chip(itemView.context)
         chip.text = chipName
-        chip.setChipBackgroundColorResource(Utils.chipColor(chip))
+        val color = Utils.chipColor(chip)
+        chip.setChipBackgroundColorResource(color)
         chip.setTextColor(Color.WHITE)
-        itemView.misc_event_item.addView(chip)
+        itemView.misc_event_item_vert.addView(chip)
+        if (itemView.misc_event_item_vert.childCount == 1) {
+            itemView.const_ly_vert.setBackgroundResource(color)
+        }
     }
 
 

@@ -17,8 +17,13 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppThemeSG">
-        <activity android:name=".ui.event.CreateEventActivity"
-            android:parentActivityName=".ui.bottomnavigation.home.MainActivity"/>
+        <activity android:name=".ui.event.EventDetailActivity">
+            <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAPS_API}"/></activity>
+        <activity
+            android:name=".ui.event.CreateEventActivity"
+            android:parentActivityName=".ui.bottomnavigation.home.MainActivity" />
         <activity
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.profile.ProfileActivity" />

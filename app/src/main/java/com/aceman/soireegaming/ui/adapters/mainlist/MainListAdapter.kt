@@ -28,7 +28,7 @@ class MainListAdapter(var eventList: List<EventInfos>, val listener: (Int) -> Un
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListViewHolder {
         val v: View = LayoutInflater.from(parent.context)
-                .inflate(R.layout.event_item, parent, false)
+                .inflate(R.layout.event_item_vertical, parent, false)
         return MainListViewHolder(v)
     }
 

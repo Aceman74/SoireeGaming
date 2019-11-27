@@ -1,26 +1,28 @@
 package com.aceman.soireegaming.ui.tablayout.allevents
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.allevents.AllEventsAdapter
+import com.aceman.soireegaming.ui.event.EventDetailActivity
 import com.aceman.soireegaming.utils.base.BaseView
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_all_events.*
 import timber.log.Timber
+import java.util.*
 
 class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewInterface {
     private val mPresenter: AllEventsPresenter = AllEventsPresenter()
     lateinit var mRecyclerView: RecyclerView
-    var  eventList: MutableList<EventInfos> = mutableListOf()
+   private var  eventList: MutableList<EventInfos> = mutableListOf()
+    var remoteSize = mutableListOf<String>()
 
     companion object {
         fun newInstance(): AllEventsFragment {
@@ -33,13 +35,13 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val mView = inflater.inflate(R.layout.fragment_all_events, container, false)
         mPresenter.attachView(this)
-        mPresenter.getAllEvents()
         return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        configureRecyclerView()
+        eventList.clear()
+        mPresenter.getAllEvents()
     }
 
     /**
@@ -48,25 +50,42 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
     fun configureRecyclerView() {
         mRecyclerView = all_events_rv
         mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
-        mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = AllEventsAdapter(eventList) {
-            Timber.tag("RV click").i("$it")
-            // launchDetailActivity(it)
+            Timber.tag("All Events RV click").i("$it")
+             launchDetailActivity(it)
         }
     }
 
+    private fun launchDetailActivity(eid: Int) {
+        val intent = Intent(requireContext(), EventDetailActivity::class.java)
+        intent.putExtra("eid",eid)
+        startActivity(intent)
+    }
 
-    override fun updateUI(eventsList: MutableList<QuerySnapshot>) {
-        var i = 0
-        var event = eventsList[i].toObjects<EventInfos>(EventInfos::class.java)
-        while(i < event.size){
-            mPresenter.addEventInfos(event[i].eid)
-            i++
+
+    override fun updateUI(eventsList: MutableList<String>) {
+        configureRecyclerView()
+        remoteSize = eventsList
+        for(event in eventsList){
+            mPresenter.addEventInfos(event)
         }
     }
 
     override fun updateEvents(event: EventInfos) {
         eventList.add(event)
+        if(eventList.size == remoteSize.size)
+            filterList()
+    }
+
+    private fun filterList() {
+
+        configureRecyclerView()
+        sortByDate()
+    }
+    fun sortByDate() {
+        eventList.sortWith(Comparator { o1, o2 -> o1.dateList[0].compareTo(o2.dateList[0]) })
+        eventList.reverse()
         mRecyclerView.adapter!!.notifyDataSetChanged()
     }
 }

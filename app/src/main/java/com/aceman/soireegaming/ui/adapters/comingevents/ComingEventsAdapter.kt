@@ -6,7 +6,7 @@
  *
  */
 
-package com.aceman.soireegaming.ui.adapters.allevents
+package com.aceman.soireegaming.ui.adapters.comingevents
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,21 +21,21 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class AllEventsAdapter(var eventList: List<EventInfos>, val listener: (Int) -> Unit) : RecyclerView.Adapter<AllEventsViewHolder>() {
+class ComingEventsAdapter(var eventList: List<EventInfos>, val listener: (Int) -> Unit) : RecyclerView.Adapter<ComingEventsViewHolder>() {
 
     /**
      * Create the ViewHolder.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllEventsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComingEventsViewHolder {
         val v: View = LayoutInflater.from(parent.context)
                 .inflate(R.layout.event_item_horizontal, parent, false)
-        return AllEventsViewHolder(v)
+        return ComingEventsViewHolder(v)
     }
 
     /**
      * Bind the estate to the view, add animation.
      */
-    override fun onBindViewHolder(holder: AllEventsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ComingEventsViewHolder, position: Int) {
         holder.updateWithItem(this.eventList[position], position, listener)
         Utils.setFadeAnimation(holder.itemView, holder.itemView.context)
     }

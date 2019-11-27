@@ -1,5 +1,7 @@
 package com.aceman.soireegaming.ui.tablayout.allevents
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
@@ -7,8 +9,6 @@ import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
@@ -28,18 +28,17 @@ class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenter
 
     override fun getAllEvents() {
         if (getCurrentUser() != null) {
-            val eventList = mutableListOf<QuerySnapshot>()
-            var i = 0
-            firebaseRepository.getAllEvents()
-                .addOnCompleteListener {
-                    if(it.isSuccessful){
+            val list = mutableListOf<String>()
+            firebaseRepository.getAllEvents().addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    list.add(document.id)
+                }
 
-                        for(doc: QueryDocumentSnapshot in it.result!!){
-                            eventList.add(i,it.result!!)
-                            i++
-                    }
-                    }
-                        (getView() as AllEventsContract.AllEventsViewInterface).updateUI(eventList)
+                (getView() as AllEventsContract.AllEventsViewInterface).updateUI(list)
+            }
+                .addOnFailureListener { exception ->
+                    Log.d(TAG, "Error getting documents: ", exception)
                 }
         }
     }
