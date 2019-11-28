@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.event
+package com.aceman.soireegaming.ui.event.create
 
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
@@ -9,19 +9,18 @@ import com.google.firebase.auth.FirebaseUser
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 
-interface EventDetailActivityContract {
+interface CreateEventActivityContract {
 
-interface EventDetailActivityPresenterInterface {
+interface CreateEventActivityPresenterInterface {
     fun getCurrentUser(): FirebaseUser?
+    fun saveDate(user: FirebaseUser)
     fun getUserDataFromFirestore()
     fun saveEventToFirebase(eventInfos: EventInfos, eventId: String)
 
-    fun getEventInfos(eventId: String)
 }
 
-    interface EventDetailActivityViewInterface : BaseView {
+    interface CreateEventActivityViewInterface : BaseView {
        fun updateUI(currentUser : User)
-        fun updateEvents(eventDetails: EventInfos)
 
     }
 }

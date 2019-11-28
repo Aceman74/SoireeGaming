@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.profile
+package com.aceman.soireegaming.ui.profile.edit
 
 import android.app.Activity
 import android.content.Intent
@@ -20,8 +20,10 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import timber.log.Timber
 
-class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) : BaseActivity(), BaseView, EditProfileContract.EditProfileViewInterface {
-    private val mPresenter: EditProfilePresenter = EditProfilePresenter()
+class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) : BaseActivity(), BaseView,
+    EditProfileContract.EditProfileViewInterface {
+    private val mPresenter: EditProfilePresenter =
+        EditProfilePresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

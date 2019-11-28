@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tool:cardElevation="2dp"
+    tool:cardCornerRadius="20dp"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/message_list_picture"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="5dp"
+            tools:srcCompat="@tools:sample/avatars"/>
+
+    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/message_list_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:padding="2dp"
+            android:text="NAME / GROUP"
+            android:textStyle="bold"
+            tool:layout_constraintEnd_toStartOf="@+id/message_list_date"
+            tool:layout_constraintHorizontal_bias="0.0"
+            tool:layout_constraintStart_toStartOf="parent"
+            tool:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/message_list_last_message"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:maxLength="60"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:padding="2dp"
+            android:text="LAST MESSAGE"
+            android:textColor="@color/greyTextColor"
+            tool:layout_constraintBottom_toBottomOf="parent"
+            tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintStart_toStartOf="parent"
+            tool:layout_constraintTop_toBottomOf="@+id/message_list_title" />
+
+        <TextView
+            android:id="@+id/message_list_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:padding="3dp"
+            android:text="date"
+            tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

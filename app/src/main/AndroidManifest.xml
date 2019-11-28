@@ -17,20 +17,22 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppThemeSG">
-        <activity android:name=".ui.event.EventDetailActivity">
+        <activity android:name=".ui.chat.ChatLogActivity"></activity>
+        <activity android:name=".ui.event.detail.EventDetailActivity">
             <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="${GOOGLE_MAPS_API}"/></activity>
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/google_api_key" />
+        </activity>
         <activity
-            android:name=".ui.event.CreateEventActivity"
-            android:parentActivityName=".ui.bottomnavigation.home.MainActivity" />
+            android:name=".ui.event.create.CreateEventActivity"
+            android:parentActivityName=".ui.home.main.MainActivity" />
         <activity
-            android:name=".ui.profile.EditProfileActivity"
+            android:name=".ui.profile.edit.EditProfileActivity"
             android:parentActivityName=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.about.AboutActivity" />
         <activity
             android:name=".ui.profile.ProfileActivity"
-            android:parentActivityName=".ui.bottomnavigation.home.MainActivity" />
+            android:parentActivityName=".ui.home.main.MainActivity" />
         <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.bottomnavigation.home.MainActivity" />
+        <activity android:name=".ui.home.main.MainActivity" />
     </application>
 
 </manifest>

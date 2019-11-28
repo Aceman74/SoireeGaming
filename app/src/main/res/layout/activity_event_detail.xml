@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.event.EventDetailActivity">
+    tools:context=".ui.event.detail.EventDetailActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_event_tb"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"

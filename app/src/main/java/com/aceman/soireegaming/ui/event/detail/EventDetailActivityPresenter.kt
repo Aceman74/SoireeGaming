@@ -1,10 +1,8 @@
-package com.aceman.soireegaming.ui.event
+package com.aceman.soireegaming.ui.event.detail
 
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.repositories.FirestoreRepository
-import com.aceman.soireegaming.ui.profile.ProfileContract
-import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -12,8 +10,8 @@ import com.google.firebase.auth.FirebaseUser
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
-class CreateEventActivityPresenter : BasePresenter(),
-    CreateEventActivityContract.CreateEventActivityPresenterInterface {
+class EventDetailActivityPresenter : BasePresenter(),
+    EventDetailActivityContract.EventDetailActivityPresenterInterface {
     var firebaseRepository = FirestoreRepository()
     // var user: MutableLiveData<List<User>> = MutableLiveData()
 
@@ -32,7 +30,7 @@ class CreateEventActivityPresenter : BasePresenter(),
                 .addOnSuccessListener { documentSnapshot ->
                     val currentUser = documentSnapshot.toObject<User>(User::class.java)
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                        (getView() as CreateEventActivityContract.CreateEventActivityViewInterface).updateUI(currentUser)
+                        (getView() as  EventDetailActivityContract. EventDetailActivityViewInterface).updateUI(currentUser)
                     }
                 }
         }
@@ -47,6 +45,13 @@ class CreateEventActivityPresenter : BasePresenter(),
 
     }
 
+    override fun getEventInfos(eventId: String){
+        firebaseRepository.getEvents(eventId).addOnSuccessListener {
+            val event = it.toObject<EventInfos>(EventInfos::class.java)
+            (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateEvents(event!!)
+        }
+    }
+
     fun addEventToUserList(eventId: MutableList<String>){
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
@@ -55,15 +60,6 @@ class CreateEventActivityPresenter : BasePresenter(),
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
                         firebaseRepository.setEventParticipation(eventId)
                     }
-                }
-        }
-    }
-
-    override fun saveDate(user: FirebaseUser) {
-        val date = Utils.todayDate
-        firebaseRepository.getUser(user.uid).addOnSuccessListener {
-            firebaseRepository.saveDate(date).addOnSuccessListener {
-                }.addOnFailureListener {
                 }
         }
     }

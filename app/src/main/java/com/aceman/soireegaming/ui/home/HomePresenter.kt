@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.bottomnavigation.home
+package com.aceman.soireegaming.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.models.EventInfos
@@ -39,7 +39,9 @@ class HomePresenter : BasePresenter(), HomeContract.HomePresenterInterface {
     override fun addEventInfos(eventId: String){
         firebaseRepository.getEvents(eventId).addOnSuccessListener {
             val event = it.toObject<EventInfos>(EventInfos::class.java)
-            (getView() as HomeContract.HomeViewInterface).updateEvents(event!!)
+            if (event != null) {
+                (getView() as HomeContract.HomeViewInterface).updateEvents(event)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.event
+package com.aceman.soireegaming.ui.event.create
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
@@ -19,7 +19,7 @@ import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.extensions.customTimeStamp
 import com.aceman.soireegaming.data.extensions.hourSetting
 import com.aceman.soireegaming.data.models.*
-import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
+import com.aceman.soireegaming.ui.home.main.MainActivity
 import com.aceman.soireegaming.utils.ChipsManager
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
@@ -34,7 +34,8 @@ import java.util.concurrent.TimeUnit
 class CreateEventActivity(override val activityLayout: Int = R.layout.activity_create_event) :
     BaseActivity(),
     CreateEventActivityContract.CreateEventActivityViewInterface {
-    private val mPresenter: CreateEventActivityPresenter = CreateEventActivityPresenter()
+    private val mPresenter: CreateEventActivityPresenter =
+        CreateEventActivityPresenter()
     lateinit var mPicture: String
    private var mLocation = UserLocation(-1.0,-1.0,"City")
    private var itemPos: Int = -1

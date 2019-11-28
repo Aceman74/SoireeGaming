@@ -14,9 +14,8 @@ import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.data.models.UserLocation
-import com.aceman.soireegaming.ui.bottomnavigation.home.MainActivity
+import com.aceman.soireegaming.ui.home.main.MainActivity
 import com.aceman.soireegaming.utils.ChipsManager
-import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -183,7 +182,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                             UserLocation(),
                             UserInfos(),
                             chipList,
-                            eventList = mutableListOf()
+                            mutableListOf()
                         )
                     )
                     mPresenter.saveDate(user)

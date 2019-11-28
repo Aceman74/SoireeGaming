@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.profile
+package com.aceman.soireegaming.ui.profile.edit
 
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos

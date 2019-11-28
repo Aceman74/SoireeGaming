@@ -1,18 +1,16 @@
-package com.aceman.soireegaming.ui.bottomnavigation.home
+package com.aceman.soireegaming.ui.home.main
 
-import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.extensions.showFragment
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.bottomnavigation.explore.ExploreFragment
 import com.aceman.soireegaming.ui.bottomnavigation.messages.MessagesFragment
 import com.aceman.soireegaming.ui.bottomnavigation.notifications.NotificationsFragment
-import com.aceman.soireegaming.ui.event.CreateEventActivity
+import com.aceman.soireegaming.ui.home.HomeFragment
 import com.aceman.soireegaming.ui.login.MainContract
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
@@ -30,7 +28,8 @@ import java.util.*
 
 class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(),
     BaseView, MainContract.MainViewInterface {
-    private val mPresenter: MainPresenter = MainPresenter()
+    private val mPresenter: MainPresenter =
+        MainPresenter()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +65,9 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.title.toString()) {
-                "Accueil" -> showFragment(R.id.main_container, HomeFragment.newInstance())
+                "Accueil" -> showFragment(R.id.main_container,
+                    HomeFragment.newInstance()
+                )
                 "Explorer" -> showFragment(R.id.main_container, ExploreFragment.newInstance())
                 "Notifications" -> showFragment(
                     R.id.main_container,

@@ -22,7 +22,8 @@
             android:layout_margin="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:onClick="showPopup" />
 
         <TextView
             android:id="@+id/event_user_tv_vert"

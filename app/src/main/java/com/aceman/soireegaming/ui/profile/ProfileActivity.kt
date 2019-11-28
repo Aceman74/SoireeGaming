@@ -14,6 +14,7 @@ import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.ui.about.AboutActivity
+import com.aceman.soireegaming.ui.profile.edit.EditProfileActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
@@ -30,18 +31,32 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     lateinit var chipList: MutableList<UserChip>
     var itemPos: Int = -1
     lateinit var user: User
+    private var mIntent: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
+       mIntent = intent.getStringExtra("uid")
+        userOrIntent()
         setSupportActionBar(profile_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        mPresenter.getUserDataFromFirestore()
-        chipSetting()
-        profile_edit_btn.setOnClickListener {
-            val intent = Intent(this, EditProfileActivity::class.java)
-            startActivity(intent)
-        }
+    }
+
+    private fun userOrIntent() {
+        if(mIntent == null){
+            mPresenter.getUserDataFromFirestore()
+            chipSetting()
+            profile_edit_btn.setOnClickListener {
+                val intent = Intent(this, EditProfileActivity::class.java)
+                startActivity(intent)
+            }
+        }else{
+            mPresenter.getIntentUserDataFromFirestore(mIntent!!)
+            console_ac.visibility = View.GONE
+            style_ac.visibility = View.GONE
+            profile_edit_btn.text = "Envoyer un message"
+            }
+
     }
 
     override fun updateUI(currentUser: User) {
@@ -54,11 +69,15 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         profile_city_tv.text = currentUser.userLocation.city
         if (currentUser.userInfos.showAge)
             profile_age_tv.text = resources.getStringArray(R.array.age)[currentUser.userInfos.age]
+        else
+            profile_age_tv.visibility = View.GONE
         if (currentUser.userInfos.showGender)
             profile_gender_tv.text =
                 resources.getStringArray(R.array.gender)[currentUser.userInfos.gender]
+        else
+            profile_gender_tv.visibility = View.GONE
         profile_rating_bar.rating = 2.0f
-        mPresenter.getChipList()
+        mPresenter.getChipList(user.uid)
     }
 
     override fun updateList(currentUser: User) {
@@ -182,10 +201,15 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         chip.tag = group
         chip.setChipBackgroundColorResource(Utils.chipColor(chip))
         chip.setTextColor(resources.getColor(R.color.primaryTextColor))
+        if(mIntent == null){
         chip.isClickable = true
         chip.isCheckable = false
         chip.isCloseIconVisible = true
-
+        }else{
+            chip.isClickable = false
+            chip.isCheckable = false
+            chip.isCloseIconVisible = false
+        }
         updateAndSaveChips(chip)
     }
 
@@ -200,6 +224,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                         break
                     }
                 }
+                if(mIntent == null)
                 mPresenter.updateChip(chipList)
             }
             profile_console_chipgroup.addView(chip)
@@ -209,9 +234,11 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     break
                 }
             }
+            if(mIntent == null){
             mPresenter.updateChip(chipList)
             clearAutocomplete()
             hideKeyboard(console_ac)
+            }
         }
 
         if (chip.tag == "Style") {
@@ -224,6 +251,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                         break
                     }
                 }
+                if(mIntent == null)
                 mPresenter.updateChip(chipList)
             }
             style_chipgroup.addView(chip)
@@ -233,9 +261,11 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     break
                 }
             }
-            mPresenter.updateChip(chipList)
-            clearAutocomplete()
-            hideKeyboard(style_ac)
+            if(mIntent == null) {
+                mPresenter.updateChip(chipList)
+                clearAutocomplete()
+                hideKeyboard(style_ac)
+            }
         }
     }
 

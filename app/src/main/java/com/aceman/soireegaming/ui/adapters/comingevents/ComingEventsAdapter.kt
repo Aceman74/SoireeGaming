@@ -21,7 +21,7 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class ComingEventsAdapter(var eventList: List<EventInfos>, val listener: (Int) -> Unit) : RecyclerView.Adapter<ComingEventsViewHolder>() {
+class ComingEventsAdapter(var eventList: List<EventInfos>, val listener: (String) -> Unit) : RecyclerView.Adapter<ComingEventsViewHolder>() {
 
     /**
      * Create the ViewHolder.

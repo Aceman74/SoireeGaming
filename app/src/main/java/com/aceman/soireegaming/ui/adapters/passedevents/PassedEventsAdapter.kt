@@ -21,7 +21,7 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class PassedEventsAdapter(var eventList: List<EventInfos>, val listener: (Int) -> Unit) : RecyclerView.Adapter<PassedEventsViewHolder>() {
+class PassedEventsAdapter(var eventList: List<EventInfos>, val listener: (String) -> Unit) : RecyclerView.Adapter<PassedEventsViewHolder>() {
 
     /**
      * Create the ViewHolder.

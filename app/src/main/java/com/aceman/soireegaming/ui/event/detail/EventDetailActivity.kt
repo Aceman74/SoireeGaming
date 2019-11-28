@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.event
+package com.aceman.soireegaming.ui.event.detail
 
 import android.graphics.Color
 import android.os.Bundle
@@ -12,9 +12,10 @@ import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_event_detail.*
 
-class EventDetailActivity(override val activityLayout : Int = R.layout.activity_event_detail) : BaseActivity(), EventDetailActivityContract.EventDetailActivityViewInterface {
-    private val mPresenter: EventDetailActivityPresenter = EventDetailActivityPresenter()
-    private var mIntentInt: Int = -1
+class EventDetailActivity(override val activityLayout : Int = R.layout.activity_event_detail) : BaseActivity(),
+    EventDetailActivityContract.EventDetailActivityViewInterface {
+    private val mPresenter: EventDetailActivityPresenter =
+        EventDetailActivityPresenter()
     private var mEid: String = ""
     private lateinit var mUser : User
     private lateinit var mEvent : EventInfos
@@ -27,11 +28,7 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
     }
 
     private fun getIntentId() {
-        mIntentInt = intent.getIntExtra("eid",-1)
-        mEid = if(mIntentInt.toString().length < 8 )
-            "0$mIntentInt"
-        else
-            mIntentInt.toString()
+        mEid = intent.getStringExtra("eid")!!
         mPresenter.getUserDataFromFirestore()
     }
 

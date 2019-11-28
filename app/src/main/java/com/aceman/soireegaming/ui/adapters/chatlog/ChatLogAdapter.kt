@@ -6,14 +6,14 @@
  *
  */
 
-package com.aceman.soireegaming.ui.adapters.allevents
+package com.aceman.soireegaming.ui.adapters.chatlog
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
-import com.aceman.soireegaming.data.models.EventInfos
+import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.Utils
 
 /**
@@ -21,22 +21,22 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class AllEventsAdapter(var eventList: List<EventInfos>, val listener: (String) -> Unit) : RecyclerView.Adapter<AllEventsViewHolder>() {
+class ChatLogAdapter(var userList: MutableList<User>, val listener: (String) -> Unit) : RecyclerView.Adapter<ChatLogViewHolder>() {
 
     /**
      * Create the ViewHolder.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllEventsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatLogViewHolder {
         val v: View = LayoutInflater.from(parent.context)
-                .inflate(R.layout.event_item_horizontal, parent, false)
-        return AllEventsViewHolder(v)
+                .inflate(R.layout.contact_list_item, parent, false)
+        return ChatLogViewHolder(v)
     }
 
     /**
      * Bind the estate to the view, add animation.
      */
-    override fun onBindViewHolder(holder: AllEventsViewHolder, position: Int) {
-        holder.updateWithItem(this.eventList[position], position, listener)
+    override fun onBindViewHolder(holder: ChatLogViewHolder, position: Int) {
+        holder.updateWithItem(this.userList[position], position, listener)
         Utils.setFadeAnimation(holder.itemView, holder.itemView.context)
     }
 
@@ -44,6 +44,6 @@ class AllEventsAdapter(var eventList: List<EventInfos>, val listener: (String) -
      * ItemCount.
      */
     override fun getItemCount(): Int {
-        return this.eventList.size
+        return this.userList.size
     }
 }

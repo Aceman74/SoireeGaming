@@ -43,8 +43,8 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
             }
     }
 
-    override fun getChipList(){
-            firebaseRepository.getUser(getCurrentUser()!!.uid)
+    override fun getChipList(uid: String){
+            firebaseRepository.getUser(uid)
                 .addOnSuccessListener { documentSnapshot ->
                     val currentUser = documentSnapshot.toObject<User>(User::class.java)!!
                         (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
@@ -60,6 +60,17 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
                         (getView() as ProfileContract.ProfileViewInterface).signOutUserFromFirebase()
                     } else {
                         (getView() as ProfileContract.ProfileViewInterface).updateUI(currentUser)
+                    }
+                }
+        }
+    }
+    override fun getIntentUserDataFromFirestore(uid: String) {
+        if (getCurrentUser() != null) {
+            firebaseRepository.getUser(uid)
+                .addOnSuccessListener { documentSnapshot ->
+                    val intentUser = documentSnapshot.toObject<User>(User::class.java)
+                    if (intentUser != null) {    //  logout if no username set (account delete by admin )
+                        (getView() as ProfileContract.ProfileViewInterface).updateUI(intentUser)
                     }
                 }
         }

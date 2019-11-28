@@ -14,7 +14,8 @@ import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.comingevents.ComingEventsAdapter
 import com.aceman.soireegaming.ui.bottomnavigation.messages.ComingEventsPresenter
-import com.aceman.soireegaming.ui.event.EventDetailActivity
+import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
+import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_coming_events.*
@@ -58,11 +59,20 @@ class ComingEventsFragment : Fragment(), BaseView, ComingEventsContract.ComingEv
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = ComingEventsAdapter(eventList) {
             Timber.tag("Coming Events RV click").i("$it")
-             launchDetailActivity(it)
+            if(it.length < 9)
+                launchEventDetailActivity(it)
+            else
+                launchProfileDetailActivity(it)
         }
     }
 
-    private fun launchDetailActivity(eid: Int) {
+    private fun launchProfileDetailActivity(uid: String) {
+        val intent = Intent(requireContext(), ProfileActivity::class.java)
+        intent.putExtra("uid",uid)
+        startActivity(intent)
+    }
+
+    private fun launchEventDetailActivity(eid: String) {
         val intent = Intent(requireContext(), EventDetailActivity::class.java)
         intent.putExtra("eid",eid)
         startActivity(intent)

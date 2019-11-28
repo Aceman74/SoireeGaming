@@ -3,7 +3,9 @@ package com.aceman.soireegaming.data.repositories
 import com.aceman.soireegaming.data.models.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 
 
 /**
@@ -46,8 +48,8 @@ class FirestoreRepository {
         return firestoreDB.collection("user").document(user!!.uid).update("userInfos", userInfos)
     }
 
-    fun getUserList(): CollectionReference {
-        return firestoreDB.collection("user").document(user!!.uid).parent
+    fun getUserList(): Task<QuerySnapshot> {
+        return firestoreDB.collection("user").get()
     }
 
     fun deleteUser(userItem: User): Task<Void> {

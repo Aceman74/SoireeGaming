@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.allevents.AllEventsAdapter
-import com.aceman.soireegaming.ui.event.EventDetailActivity
+import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
+import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_all_events.*
 import timber.log.Timber
@@ -53,11 +54,20 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = AllEventsAdapter(eventList) {
             Timber.tag("All Events RV click").i("$it")
-             launchDetailActivity(it)
+            if(it.length < 9)
+                launchEventDetailActivity(it)
+            else
+                launchProfileDetailActivity(it)
         }
     }
 
-    private fun launchDetailActivity(eid: Int) {
+    private fun launchProfileDetailActivity(uid: String) {
+        val intent = Intent(requireContext(), ProfileActivity::class.java)
+        intent.putExtra("uid",uid)
+        startActivity(intent)
+    }
+
+    private fun launchEventDetailActivity(eid: String) {
         val intent = Intent(requireContext(), EventDetailActivity::class.java)
         intent.putExtra("eid",eid)
         startActivity(intent)

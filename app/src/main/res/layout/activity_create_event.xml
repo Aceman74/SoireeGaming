@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.event.CreateEventActivity">
+    tools:context=".ui.event.create.CreateEventActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/create_event_tb"

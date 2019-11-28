@@ -1,8 +1,7 @@
-package com.aceman.soireegaming.ui.bottomnavigation.home
+package com.aceman.soireegaming.ui.home.main
 
 import android.location.Address
 import android.location.Geocoder
-import android.os.AsyncTask
 import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserLocation

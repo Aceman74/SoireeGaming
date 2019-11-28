@@ -34,7 +34,7 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
-    fun updateWithItem(eventList: EventInfos, position: Int, listener: (Int) -> Unit) {
+    fun updateWithItem(eventList: EventInfos, position: Int, listener: (String) -> Unit) {
         var i = 0
         val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
         val eventDate = Utils.dateWithBSToMillis(eventList.dateList[0])
@@ -56,7 +56,10 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
             i++
         }
         itemView.setOnClickListener {
-            listener(eventList.eid.toInt())
+            listener(eventList.eid)
+        }
+        itemView.event_main_pic_hor.setOnClickListener {
+            listener(eventList.uid)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.bottomnavigation.home
+package com.aceman.soireegaming.ui.home
 
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
