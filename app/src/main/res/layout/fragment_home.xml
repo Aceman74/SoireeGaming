@@ -58,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_blue"
                             android:padding="10dp"
-                            android:text="Mes Events"
+                            android:text="@string/my_events"
                             android:textColor="@color/primaryTextColor" />
 
                         <TextView
@@ -73,7 +73,7 @@
                             android:focusable="true"
                             android:gravity="center"
                             android:padding="10dp"
-                            android:text="+ Créer un évenement"
+                            android:text="@string/create_my_event"
                             android:textColor="@color/primaryColor" />
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -94,7 +94,7 @@
             android:layout_margin="1dp"
             android:background="@drawable/shape_blue"
             android:padding="10dp"
-            android:text="Mon Calendrier"
+            android:text="@string/my_calendar"
             android:textColor="@color/primaryTextColor" />
         
         <com.google.android.material.tabs.TabLayout
@@ -109,17 +109,17 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monday" />
+                android:text="@string/tab_example" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tuesday" />
+                android:text="@string/tab_example" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wednesday" />
+                android:text="@string/tab_example" />
         </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.bottomnavigation.messages
+package com.aceman.soireegaming.ui.tablayout.followedevents
 
 import com.aceman.soireegaming.utils.base.BaseView
 
@@ -8,11 +8,7 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface FollowedEventsContract {
 
-interface FollowedEventsPresenterInterface {
+interface FollowedEventsPresenterInterface
 
-}
-
-    interface FollowedEventsViewInterface : BaseView {
-
-    }
+    interface FollowedEventsViewInterface : BaseView
 }

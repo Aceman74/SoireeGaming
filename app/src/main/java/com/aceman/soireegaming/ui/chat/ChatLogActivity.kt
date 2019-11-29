@@ -6,7 +6,6 @@ import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.MessageType
 import com.aceman.soireegaming.data.models.TextMessage
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.utils.FirestoreUtil
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import com.bumptech.glide.Glide
@@ -41,10 +40,9 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
             .into(chat_tb_img)
         chat_log_tb.title = otherUser.name
 
-        FirestoreUtil.getOrCreateChatChannel(mOtherUser) { channelId ->
+        mPresenter.getChannel(mOtherUser) { channelId ->
             messagesListenerRegistration =
-                FirestoreUtil.addChatMessagesListener(channelId, this, this::updateRecyclerView)
-
+                mPresenter.addChatMessagesListener(channelId, this, this::updateRecyclerView)
             chat_send_btn.setOnClickListener {
                 val messageToSend =
                     TextMessage(
@@ -52,7 +50,7 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
                         FirebaseAuth.getInstance().currentUser!!.uid, MessageType.TEXT
                     )
                 chat_log_et.setText("")
-                FirestoreUtil.sendMessage(messageToSend, channelId)
+                mPresenter.sendMessage(messageToSend, channelId)
             }
         }
     }

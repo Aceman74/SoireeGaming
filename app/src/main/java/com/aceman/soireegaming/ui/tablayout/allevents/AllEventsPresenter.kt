@@ -1,20 +1,19 @@
 package com.aceman.soireegaming.ui.tablayout.allevents
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
@@ -31,21 +30,21 @@ class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenter
             val list = mutableListOf<String>()
             firebaseRepository.getAllEvents().addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
+                    Timber.tag("AllEvents").d("${document.id} => ${document.data}")
                     list.add(document.id)
                 }
 
                 (getView() as AllEventsContract.AllEventsViewInterface).updateUI(list)
             }
                 .addOnFailureListener { exception ->
-                    Log.d(TAG, "Error getting documents: ", exception)
+                    Timber.tag("AllEvents").d(exception, "Error getting documents: ")
                 }
         }
     }
 
     override fun addEventInfos(eventId: String){
         firebaseRepository.getEvents(eventId).addOnSuccessListener {
-            val event = it.toObject<EventInfos>(EventInfos::class.java)
+            val event = it.toObject(EventInfos::class.java)
             (getView() as AllEventsContract.AllEventsViewInterface).updateEvents(event!!)
         }
     }

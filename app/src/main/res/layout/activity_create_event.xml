@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:text="Création d'un nouvelle évenement !"
+                        android:text="@string/create_new_event"
                         android:textAlignment="center" />
 
                     <TextView
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:text="Crée une soirée (ou journée, week-end) gaming, avec vos amis (privée), ou rencontrez de nouveaux joueurs !"
+                        android:text="@string/create_event_desc_text"
                         android:textAlignment="center" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:padding="10dp"
-                        android:text="Nommez votre event, et décrivez le programme prévu :" />
+                        android:text="@string/name_your_event" />
 
                     <EditText
                         android:id="@+id/create_event_name_et"
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:hint="Nom de l'event"
+                        android:hint="@string/event_name"
                         android:maxLines="1"
                         android:maxLength="50"
                         android:inputType="text"
@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity=""
-                        android:hint="Description du programme"
+                        android:hint="@string/desc_program"
                         android:maxLength="600"
                         android:padding="10dp"
                         android:paddingStart="20dp"
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:padding="10dp"
-                        android:text="Lieu" />
+                        android:text="@string/locality" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:hint="Ville"
+                            android:hint="@string/city"
                             android:paddingStart="0dp"
                             android:paddingEnd="20dp" />
 
@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:padding="10dp"
-                    android:text="Date et Horaires" />
+                    android:text="@string/date_and_hour" />
 
                     <RelativeLayout
                         android:id="@+id/create_date_1_ly"
@@ -185,7 +185,7 @@
                             android:background="@color/lightGrey"
                             android:minWidth="60dp"
                             android:padding="5dp"
-                            android:text="Début :"
+                            android:text="@string/begin"
                             android:textColor="@android:color/black"
                             android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:minWidth="120dp"
                             android:padding="5dp"
-                            android:hint="choisir la date"
+                            android:hint="@string/choose_date_hint"
                             android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_from_tv"/>
@@ -203,7 +203,7 @@
                             android:id="@+id/date_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="A partir de :"
+                            android:text="@string/from_hour"
                             android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -216,12 +216,12 @@
                             android:id="@+id/date_hour_picker"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/date_hour"
+                            android:hint="@string/choose_hour"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:hint="choisir l'heure"
-                            android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
-                            android:layout_toEndOf="@+id/date_hour"/>
+                            android:textColorHint="@color/greyTextColor" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:id="@+id/create_date_2_ly"
@@ -233,7 +233,7 @@
                             android:id="@+id/date_to_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fin :"
+                            android:text="@string/end"
                             android:minWidth="60dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -246,7 +246,7 @@
                             android:layout_height="wrap_content"
                             android:minWidth="120dp"
                             android:padding="5dp"
-                            android:hint="choisir la date"
+                            android:hint="@string/choose_date_hint"
                             android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_to_tv"/>
@@ -254,7 +254,7 @@
                             android:id="@+id/date_hour_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jusqu'à :"
+                            android:text="@string/until_hour"
                             android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -269,7 +269,7 @@
                             android:layout_height="wrap_content"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:hint="choisir l'heure"
+                            android:hint="@string/choose_hour"
                             android:textColorHint="@color/greyTextColor"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_hour_2"/>
@@ -296,7 +296,7 @@
                             android:layout_gravity="start"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Type"
+                            android:text="@string/type"
                             android:padding="10dp"
                             app:layout_constraintBottom_toTopOf="@+id/create_console_lly_1"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -328,7 +328,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Console(s)/ PC :"
+                                        android:text="@string/console_pc_cg"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold"
                                         android:padding="5dp"/>
@@ -340,7 +340,7 @@
                                     android:textColor="@android:color/black"
                                     android:textColorHint="@android:color/darker_gray"
                                     android:background="@color/lightGrey"
-                                    android:hint="Recherche"
+                                    android:hint="@string/search"
                                     android:layout_margin="2dp"
                                     android:padding="2dp"
                                     android:layout_width="match_parent"
@@ -389,7 +389,7 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Style de jeu :"
+                                        android:text="@string/style_cg"
                                         android:textColor="@android:color/black"
                                         android:textStyle="bold"
                                         android:padding="5dp"/>
@@ -402,7 +402,7 @@
                                     android:textColor="@android:color/black"
                                     android:textColorHint="@android:color/darker_gray"
                                     android:background="@color/lightGrey"
-                                    android:hint="Recherche"
+                                    android:hint="@string/search"
                                     android:layout_margin="2dp"
                                     android:padding="2dp"
                                     android:layout_width="match_parent"
@@ -454,14 +454,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:padding="10dp"
-                        android:text="Paramètres " />
+                        android:text="@string/param" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:padding="10dp"
-                        android:text="Les options suivantes permettent de créer des soirées personnalisées. Gardez tout de même en tête que plus on est de fou plus on rit ! " />
+                        android:text="@string/option_advertisement" />
 
                     <RelativeLayout
                         android:id="@+id/create_1_param_ly"
@@ -473,7 +473,7 @@
                         android:id="@+id/private_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Soirée privée (sur invitation)"
+                        android:text="@string/private_party_text"
                         android:background="@color/lightGrey"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -504,7 +504,7 @@
                             android:id="@+id/gender_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Soirée ouverte a(ux) :"
+                            android:text="@string/open_to_gender"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -532,7 +532,7 @@
                             android:id="@+id/eat_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nourriture et boissons :"
+                            android:text="@string/eat_and_drink"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -559,7 +559,7 @@
                             android:id="@+id/sleep_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dormir sur place :"
+                            android:text="@string/sleep_on"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"

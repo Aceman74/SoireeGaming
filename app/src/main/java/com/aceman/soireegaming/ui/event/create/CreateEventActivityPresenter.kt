@@ -1,8 +1,8 @@
 package com.aceman.soireegaming.ui.event.create
 
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseUser
  */
 class CreateEventActivityPresenter : BasePresenter(),
     CreateEventActivityContract.CreateEventActivityPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     // var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
@@ -29,7 +29,7 @@ class CreateEventActivityPresenter : BasePresenter(),
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
                 .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
+                    val currentUser = documentSnapshot.toObject(User::class.java)
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
                         (getView() as CreateEventActivityContract.CreateEventActivityViewInterface).updateUI(currentUser)
                     }
@@ -50,7 +50,7 @@ class CreateEventActivityPresenter : BasePresenter(),
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
                 .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
+                    val currentUser = documentSnapshot.toObject(User::class.java)
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
                         firebaseRepository.setEventParticipation(eventId)
                     }

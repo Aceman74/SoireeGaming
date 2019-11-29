@@ -23,7 +23,7 @@ import java.util.*
 
 object Utils {
 
-    fun snackBarPreset(view: View, message: String): Unit {
+    fun snackBarPreset(view: View, message: String) {
         val snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
         val snackView = snack.view
         val txtView =
@@ -39,7 +39,7 @@ object Utils {
      * Convert Date to millis for comparing in SearchActivity.
      */
     fun dateToMillis(year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, monthOfYear)
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -52,7 +52,7 @@ object Utils {
      * Convert date with / custom format to millis.
      */
     fun dateWithBSToMillis(dateString: String): Long {
-        val string = String().backSlashRemover(dateString)
+        val string = backSlashRemover(dateString)
 
         return dateToMillis(string.substring(4, 8).toInt(), string.substring(2, 4).toInt(), string.substring(0, 2).toInt())
     }

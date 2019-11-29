@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Valider"
+        android:title="@string/validate"
         android:id="@+id/edit_profile_tb_validate"
         android:icon="@drawable/ic_validate"
         android:enabled="true"

@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Gérer Notifications"
+        android:title="@string/men_notif_text"
         android:id="@+id/profile_tb_notifications"
         android:enabled="true"
         app:showAsAction="never"
         />
     <item
-        android:title="A propos de Soirée Gaming"
+        android:title="@string/menu_about_text"
         android:id="@+id/profile_tb_about"
         android:enabled="true"
         app:showAsAction="never"
         />
     <item
-        android:title="Déconnexion"
+        android:title="@string/menu_logout_text"
         android:id="@+id/profile_tb_logout"
         android:enabled="true"
         app:showAsAction="never"

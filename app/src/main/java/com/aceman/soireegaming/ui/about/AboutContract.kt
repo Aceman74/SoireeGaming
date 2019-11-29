@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.login
+package com.aceman.soireegaming.ui.about
 
 import com.aceman.soireegaming.utils.base.BaseView
 
@@ -8,14 +8,7 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface AboutContract {
 
-interface AboutPresenterInterface {
+interface AboutPresenterInterface
 
-}
-
-    interface AboutViewInterface : BaseView {
-
-
-
-
-    }
+    interface AboutViewInterface : BaseView
 }

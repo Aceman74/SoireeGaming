@@ -12,7 +12,7 @@ interface MessagesContract {
 
 interface MessagesPresenterInterface {
 
-    fun getUserList()
+    fun getEngagedChat()
     fun getCurrentUser(): FirebaseUser?
     fun addUserInfos(userId: String)
 }

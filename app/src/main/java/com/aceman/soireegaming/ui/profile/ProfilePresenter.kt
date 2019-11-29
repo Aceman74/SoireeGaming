@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
 
     @TargetApi(Build.VERSION_CODES.O)
     override fun openAppNotifications(context: ProfileActivity, packageName: String) {
@@ -38,24 +38,24 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
 
     override fun updateChip(chipList: MutableList<UserChip>) {
         firebaseRepository.getUser(getCurrentUser()!!.uid)
-            .addOnSuccessListener { documentSnapshot ->
+            .addOnSuccessListener {
                 firebaseRepository.updateChip(chipList)
             }
     }
 
     override fun getChipList(uid: String){
             firebaseRepository.getUser(uid)
-                .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)!!
-                        (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
-                    }
+                .addOnSuccessListener {
+                    val currentUser = it.toObject(User::class.java)!!
+                    (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
+                }
     }
 
     override fun getUserDataFromFirestore() {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
                 .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
+                    val currentUser = documentSnapshot.toObject(User::class.java)
                     if (currentUser == null) {    //  logout if no username set (account delete by admin )
                         (getView() as ProfileContract.ProfileViewInterface).signOutUserFromFirebase()
                     } else {
@@ -68,7 +68,7 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(uid)
                 .addOnSuccessListener { documentSnapshot ->
-                    val intentUser = documentSnapshot.toObject<User>(User::class.java)
+                    val intentUser = documentSnapshot.toObject(User::class.java)
                     if (intentUser != null) {    //  logout if no username set (account delete by admin )
                         (getView() as ProfileContract.ProfileViewInterface).updateUI(intentUser)
                     }

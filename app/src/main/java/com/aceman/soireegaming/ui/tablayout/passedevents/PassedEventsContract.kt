@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.bottomnavigation.messages
+package com.aceman.soireegaming.ui.tablayout.passedevents
 
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.utils.base.BaseView

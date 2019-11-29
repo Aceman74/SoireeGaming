@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.comingevents.ComingEventsAdapter
-import com.aceman.soireegaming.ui.bottomnavigation.messages.ComingEventsPresenter
 import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
 import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.utils.Utils
@@ -58,7 +57,7 @@ class ComingEventsFragment : Fragment(), BaseView, ComingEventsContract.ComingEv
         mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = ComingEventsAdapter(eventList) {
-            Timber.tag("Coming Events RV click").i("$it")
+            Timber.tag("Coming Events RV click").i(it)
             if(it.length < 9)
                 launchEventDetailActivity(it)
             else
@@ -94,11 +93,11 @@ class ComingEventsFragment : Fragment(), BaseView, ComingEventsContract.ComingEv
     }
 
     private fun filterList() {
-        var fakeList = eventList
+        val fakeList = eventList
         var i = 0
         val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
         while (i<fakeList.size){
-           var item = eventList[i]
+           val item = eventList[i]
             val eventDate = Utils.dateWithBSToMillis(item.dateList[0])
             if(eventDate < todayDate)
                 eventList.removeAt(i)

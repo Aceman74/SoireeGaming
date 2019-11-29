@@ -71,7 +71,7 @@ class HomeFragment : Fragment(), BaseView, HomeContract.HomeViewInterface {
         mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter = MainListAdapter(eventList) {
-            Timber.tag("Home Fragment RV click").i("$it")
+            Timber.tag("Home Fragment RV click").i(it)
             if(it.length < 9)
              launchEventDetailActivity(it)
             else

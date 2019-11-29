@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 import com.aceman.soireegaming.R
-import com.aceman.soireegaming.ui.bottomnavigation.messages.NotificationsContract
-import com.aceman.soireegaming.ui.bottomnavigation.messages.NotificationsPresenter
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_notifications.*
 

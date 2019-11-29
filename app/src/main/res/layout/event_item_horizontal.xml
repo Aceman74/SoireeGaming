@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:gravity="center"
-            android:text="User"
+            android:text="@string/user"
             app:layout_constraintEnd_toEndOf="@+id/event_main_pic_hor"
             app:layout_constraintStart_toStartOf="@+id/event_main_pic_hor"
             app:layout_constraintTop_toBottomOf="@+id/event_main_pic_hor" />
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Location"
+            android:text="@string/location"
             app:layout_constraintEnd_toEndOf="@+id/event_loc_ic_hor"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/event_loc_ic_hor"
@@ -81,7 +81,7 @@
             android:padding="5dp"
             android:ellipsize="end"
             android:maxLines="4"
-            android:text="DESCRIPTION"
+            android:text="@string/example_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/event_misc_sv_hor"
             app:layout_constraintStart_toEndOf="@+id/event_main_pic_hor"
@@ -106,7 +106,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="MISC"
                 app:singleLine="false" />
         </androidx.core.widget.NestedScrollView>
 
@@ -115,7 +114,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="TITLE"
+            android:text="@string/example_text"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/event_main_date_hor_tv"
@@ -127,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="DATE"
+            android:text="@string/test_date"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

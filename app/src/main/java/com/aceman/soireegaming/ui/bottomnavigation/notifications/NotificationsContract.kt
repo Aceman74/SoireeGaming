@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.bottomnavigation.messages
+package com.aceman.soireegaming.ui.bottomnavigation.notifications
 
 import com.aceman.soireegaming.utils.base.BaseView
 
@@ -8,11 +8,7 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface NotificationsContract {
 
-interface NotificationsPresenterInterface {
+interface NotificationsPresenterInterface
 
-}
-
-    interface NotificationsViewInterface : BaseView {
-
-    }
+    interface NotificationsViewInterface : BaseView
 }

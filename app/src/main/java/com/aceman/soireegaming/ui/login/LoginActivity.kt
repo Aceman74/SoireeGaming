@@ -29,7 +29,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
 
     private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
-    val chipList:MutableList<UserChip> = mutableListOf<UserChip>()
+    val chipList:MutableList<UserChip> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

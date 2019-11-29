@@ -72,24 +72,28 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
-             val fileUri = data!!.data!!
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                //Image Uri will not be null for RESULT_OK
+                val fileUri = data!!.data!!
 
-            //You can get File object from intent
-            val file = ImagePicker.getFile(data)
+                //You can get File object from intent
+                val file = ImagePicker.getFile(data)
 
-            Glide.with(this)
-                .load(file)
-                .circleCrop()
-                .into(edit_profile_picture_iv)
-            saveToStorage(fileUri)
-            //You can also get File Path from intent
-            val filePath:String = ImagePicker.getFilePath(data)!!
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Timber.tag("PICKER ERROR :").e(ImagePicker.getError(data))
-        } else {
-            Toast.makeText(this, "Annulation", Toast.LENGTH_SHORT).show()
+                Glide.with(this)
+                    .load(file)
+                    .circleCrop()
+                    .into(edit_profile_picture_iv)
+                saveToStorage(fileUri)
+                //You can also get File Path from intent
+                val filePath:String = ImagePicker.getFilePath(data)!!
+            }
+            ImagePicker.RESULT_ERROR -> {
+                Timber.tag("PICKER ERROR :").e(ImagePicker.getError(data))
+            }
+            else -> {
+                Toast.makeText(this, "Annulation", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -97,7 +101,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        var spaceRef = storageRef.child("$uid/profile_picture.jpg")
+        val spaceRef = storageRef.child("$uid/profile_picture.jpg")
         spaceRef.putFile(fileUri)
 
     }

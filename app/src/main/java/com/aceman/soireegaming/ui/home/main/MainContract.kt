@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.login
+package com.aceman.soireegaming.ui.home.main
 
 import android.location.Geocoder
 import com.aceman.soireegaming.data.models.UserLocation
@@ -20,7 +20,5 @@ interface MainPresenterInterface {
 
 }
 
-    interface MainViewInterface : BaseView {
-
-    }
+    interface MainViewInterface : BaseView
 }

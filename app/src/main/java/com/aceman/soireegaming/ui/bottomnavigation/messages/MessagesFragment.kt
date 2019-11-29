@@ -45,7 +45,7 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mPresenter.getUserList()
+        mPresenter.getEngagedChat()
     }
 
     override fun updateUI(list: MutableList<String>) {
@@ -75,7 +75,7 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = ContactListAdapter(userList) {
-            Timber.tag("Home Fragment RV click").i("$it")
+            Timber.tag("Home Fragment RV click").i(it)
             val intent = Intent(requireContext(),ChatLogActivity::class.java)
             intent.putExtra("uid",it)
             startActivity(intent)

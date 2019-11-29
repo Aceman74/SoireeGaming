@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.aceman.soireegaming.R
-import com.aceman.soireegaming.ui.login.ExploreContract
-import com.aceman.soireegaming.ui.login.ExplorePresenter
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_explore.*
 

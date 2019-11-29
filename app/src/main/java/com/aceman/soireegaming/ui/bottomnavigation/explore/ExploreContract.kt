@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.login
+package com.aceman.soireegaming.ui.bottomnavigation.explore
 
 import com.aceman.soireegaming.utils.base.BaseView
 
@@ -8,11 +8,7 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface ExploreContract {
 
-interface ExplorePresenterInterface {
+interface ExplorePresenterInterface
 
-}
-
-    interface ExploreViewInterface : BaseView {
-
-    }
+    interface ExploreViewInterface : BaseView
 }

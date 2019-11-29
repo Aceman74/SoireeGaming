@@ -3,7 +3,6 @@ package com.aceman.soireegaming.ui.about
 import android.os.Bundle
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.ui.home.HomePresenter
-import com.aceman.soireegaming.ui.login.AboutContract
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
 

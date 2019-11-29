@@ -13,25 +13,25 @@
         android:id="@+id/bot_accueil"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="Accueil"
+        android:title="@string/home"
         app:showAsAction="always" />
     <item
         android:id="@+id/bot_explorer"
         android:enabled="true"
         android:icon="@drawable/ic_search"
-        android:title="Explorer"
+        android:title="@string/explorer"
         app:showAsAction="always" />
     <item
     android:id="@+id/bot_notifications"
     android:enabled="true"
         android:icon="@drawable/ic_notification"
-    android:title="Notifications"
+    android:title="@string/notifications"
     app:showAsAction="always" />
     <item
         android:id="@+id/bot_messages"
         android:enabled="true"
         android:icon="@drawable/ic_message"
-        android:title="Messages"
+        android:title="@string/messages"
         app:showAsAction="always" />
 
 </menu>

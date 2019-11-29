@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="User"
+            android:text="@string/user"
             android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="@+id/event_main_pic_vert"
             app:layout_constraintStart_toStartOf="@+id/event_main_pic_vert"
@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:text="Location" />
+                android:text="@string/location" />
         </LinearLayout>
 
 
@@ -70,7 +70,7 @@
             android:layout_margin="10dp"
             android:textColor="@android:color/white"
             android:layout_toStartOf="@+id/event_main_date_vert_tv"
-            android:text="TITLE"
+            android:text="@string/example_text"
             android:maxWidth="200dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_margin="10dp"
-            android:text="DATE"
+            android:text="@string/test_date"
             android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
                 android:layout_weight="0.65"
                 android:ellipsize="end"
                 android:maxLines="8"
-                android:text="DESCRIPTION" />
+                android:text="@string/example_text"/>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="0dp"
@@ -130,8 +130,7 @@
                     android:id="@+id/misc_event_item_vert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="MISC" />
+                    android:layout_gravity="center" />
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
@@ -156,7 +155,7 @@
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JOINING" />
+                android:text="@string/example_text" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

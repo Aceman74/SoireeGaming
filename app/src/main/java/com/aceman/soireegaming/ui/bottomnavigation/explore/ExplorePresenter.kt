@@ -1,10 +1,8 @@
-package com.aceman.soireegaming.ui.login
+package com.aceman.soireegaming.ui.bottomnavigation.explore
 
 import com.aceman.soireegaming.utils.base.BasePresenter
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
-class ExplorePresenter : BasePresenter(), ExploreContract.ExplorePresenterInterface {
-
-}
+class ExplorePresenter : BasePresenter(), ExploreContract.ExplorePresenterInterface

@@ -59,12 +59,10 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
         detail_sleep_event_tv.text= resources.getStringArray(R.array.sleep)[mEvent.eventMisc.sleep]*/
         detail_console_chipgroup
         detail_style_chipgroup
-        var i = 0
-        for(item in mEvent.chipList){
+        for((i, item) in mEvent.chipList.withIndex()){
             if(mEvent.chipList[i].check){
                 addChip(mEvent.chipList[i].name, mEvent.chipList[i].group)
             }
-            i++
         }
     }
 

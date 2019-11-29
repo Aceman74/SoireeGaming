@@ -1,8 +1,8 @@
 package com.aceman.soireegaming.ui.profile.edit
 
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -12,7 +12,7 @@ import timber.log.Timber
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
 
     /**
      * Getting current user check.
@@ -27,7 +27,7 @@ class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePre
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
                 .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
+                    val currentUser = documentSnapshot.toObject(User::class.java)
                     (getView() as EditProfileContract.EditProfileViewInterface).loadUserInfos(currentUser!!)
                 }
         }

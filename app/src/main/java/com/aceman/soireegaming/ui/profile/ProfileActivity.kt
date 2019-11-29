@@ -106,7 +106,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     addChip(selectedItem, "Console")
                 } else {
                     while (i < profile_console_chipgroup.childCount) {
-                        var chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
+                        val chip: Chip = profile_console_chipgroup.getChildAt(i) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Console $selectedItem déjà ajoutée !",
@@ -151,7 +151,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                     addChip(selectedItem, "Style")
                 } else {
                     while (j < style_chipgroup.childCount) {
-                        var chip: Chip = style_chipgroup.getChildAt(j) as Chip
+                        val chip: Chip = style_chipgroup.getChildAt(j) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Style $selectedItem déjà ajouté !",

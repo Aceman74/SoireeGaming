@@ -58,12 +58,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Organisé par: "/>
+                            android:text="@string/set_by"/>
                     <TextView
                         android:id="@+id/detail_event_username_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="user" />
+                        android:text="@string/example_text_user" />
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/detail_event_profile_pic"
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:text="Création d'un nouvelle évenement !"
+                        android:text="@string/create_event_title"
                         android:textAlignment="center" />
 
                     <TextView
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="10dp"
-                        android:text="Crée une soirée (ou journée, week-end) gaming, avec vos amis (privée), ou rencontrez de nouveaux joueurs !"
+                        android:text="@string/create_event_desc_title"
                         android:textAlignment="center" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -128,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:padding="10dp"
-                            android:text="Lieu" />
+                            android:text="@string/locality" />
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="10dp"
-                            android:text="Ville" />
+                            android:text="@string/city" />
                         </LinearLayout>
                         <com.google.android.gms.maps.MapView
                             android:layout_width="0dp"
@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:padding="10dp"
-                        android:text="Date et Horaires" />
+                        android:text="@string/date_and_hour" />
 
                     <RelativeLayout
                         android:id="@+id/create_date_1_ly"
@@ -173,7 +173,7 @@
                             android:background="@color/lightGrey"
                             android:minWidth="60dp"
                             android:padding="5dp"
-                            android:text="Début :"
+                            android:text="@string/begin"
                             android:textColor="@android:color/black"
                             android:textStyle="bold" />
 
@@ -183,14 +183,14 @@
                             android:layout_height="wrap_content"
                             android:minWidth="120dp"
                             android:padding="5dp"
-                            android:text="choisir la date"
+                            android:text="@string/choose_date_hint"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_from_tv"/>
                         <TextView
                             android:id="@+id/date_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="A partir de :"
+                            android:text="@string/from_hour"
                             android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -203,11 +203,11 @@
                             android:id="@+id/detail_event_begin_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/date_hour"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:text="choisir la date"
-                            android:textColor="@android:color/black"
-                            android:layout_toEndOf="@+id/date_hour"/>
+                            android:text="@string/choose_date_hint"
+                            android:textColor="@android:color/black" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:id="@+id/create_date_2_ly"
@@ -219,7 +219,7 @@
                             android:id="@+id/date_to_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fin :"
+                            android:text="@string/end"
                             android:minWidth="60dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -239,7 +239,7 @@
                             android:id="@+id/date_hour_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Jusqu'à :"
+                            android:text="@string/until_hour"
                             android:minWidth="90dp"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
@@ -254,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:minWidth="100dp"
                             android:padding="5dp"
-                            android:text="choisir la date"
+                            android:text="@string/choose_date_hint"
                             android:textColor="@android:color/black"
                             android:layout_toEndOf="@+id/date_hour_2"/>
                     </RelativeLayout>
@@ -280,7 +280,7 @@
                         android:layout_gravity="start"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Type de soirée"
+                        android:text="@string/event_type"
                         android:padding="10dp"
                         app:layout_constraintBottom_toTopOf="@+id/detail_console_lly_1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -312,7 +312,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Console(s)/ PC :"
+                                    android:text="@string/console_pc_cg"
                                     android:textColor="@android:color/black"
                                     android:textStyle="bold"
                                     android:padding="5dp"/>
@@ -359,7 +359,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Style de jeu :"
+                                    android:text="@string/style_cg"
                                     android:textColor="@android:color/black"
                                     android:textStyle="bold"
                                     android:padding="5dp"/>
@@ -414,7 +414,7 @@
                             android:id="@+id/private_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Soirée privée (sur invitation)"
+                            android:text="@string/private_party_text"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -430,7 +430,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:minWidth="150dp"
-                            android:text="DETAIL"
+                            android:text="@string/detail_example"
                             android:padding="5dp"
                             android:entries="@array/private_event"
                             android:theme="@style/ThemeOverlay.AppCompat.Light"
@@ -446,7 +446,7 @@
                             android:id="@+id/gender_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Soirée ouverte a(ux) :"
+                            android:text="@string/open_to_gender"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -457,7 +457,7 @@
                             android:id="@+id/detail_gender_event_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="DETAIL"
+                            android:text="@string/detail_example"
                             android:minWidth="150dp"
                             android:padding="5dp"
                             android:entries="@array/gender_alt"
@@ -475,7 +475,7 @@
                             android:id="@+id/eat_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nourriture et boissons :"
+                            android:text="@string/eat_and_drink"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -486,7 +486,7 @@
                             android:id="@+id/detail_eat_event_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="DETAIL"
+                            android:text="@string/detail_example"
                             android:minWidth="150dp"
                             android:padding="5dp"
                             android:entries="@array/eat"
@@ -503,7 +503,7 @@
                             android:id="@+id/sleep_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dormir sur place :"
+                            android:text="@string/sleep_on"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
@@ -514,7 +514,7 @@
                             android:id="@+id/detail_sleep_event_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="DETAIL"
+                            android:text="@string/detail_example"
                             android:minWidth="150dp"
                             android:padding="5dp"
                             android:entries="@array/sleep"
@@ -537,7 +537,7 @@
                     android:id="@+id/participate_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Demander à rejoindre"/>
+                    android:text="@string/ask_to_join"/>
             </LinearLayout>
 
         </LinearLayout>

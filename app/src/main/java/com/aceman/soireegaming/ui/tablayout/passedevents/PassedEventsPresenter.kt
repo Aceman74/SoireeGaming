@@ -1,20 +1,19 @@
-package com.aceman.soireegaming.ui.bottomnavigation.messages
+package com.aceman.soireegaming.ui.tablayout.passedevents
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class PassedEventsPresenter : BasePresenter(), PassedEventsContract.PassedEventsPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
@@ -31,21 +30,21 @@ class PassedEventsPresenter : BasePresenter(), PassedEventsContract.PassedEvents
             val eventsList = mutableListOf<String>()
             firebaseRepository.getAllEvents().addOnSuccessListener { result ->
                 for (document in result) {
-                    Log.d(ContentValues.TAG, "${document.id} => ${document.data}")
+                    Timber.tag("PassedEvents").d("${document.id} => ${document.data}")
                     eventsList.add(document.id)
                 }
 
                 (getView() as PassedEventsContract.PassedEventsViewInterface).updateUI(eventsList)
             }
                 .addOnFailureListener { exception ->
-                    Log.d(ContentValues.TAG, "Error getting documents: ", exception)
+                    Timber.tag("PassedEvents").d("Error getting documents: $exception")
                 }
         }
     }
 
     override fun addEventInfos(eventId: String){
         firebaseRepository.getEvents(eventId).addOnSuccessListener {
-            val event = it.toObject<EventInfos>(EventInfos::class.java)
+            val event = it.toObject(EventInfos::class.java)
             (getView() as PassedEventsContract.PassedEventsViewInterface).updateEvents(event!!)
         }
     }

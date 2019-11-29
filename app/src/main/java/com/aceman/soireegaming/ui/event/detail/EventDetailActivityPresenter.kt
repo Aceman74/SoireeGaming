@@ -1,8 +1,8 @@
 package com.aceman.soireegaming.ui.event.detail
 
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseUser
  */
 class EventDetailActivityPresenter : BasePresenter(),
     EventDetailActivityContract.EventDetailActivityPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     // var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**

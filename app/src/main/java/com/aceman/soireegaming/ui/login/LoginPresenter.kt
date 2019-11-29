@@ -1,7 +1,7 @@
 package com.aceman.soireegaming.ui.login
 
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
@@ -12,7 +12,7 @@ import timber.log.Timber
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     // var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**

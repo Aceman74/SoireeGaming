@@ -53,7 +53,7 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
         mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = AllEventsAdapter(eventList) {
-            Timber.tag("All Events RV click").i("$it")
+            Timber.tag("All Events RV click").i(it)
             if(it.length < 9)
                 launchEventDetailActivity(it)
             else

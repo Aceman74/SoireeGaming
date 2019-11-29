@@ -1,17 +1,21 @@
 package com.aceman.soireegaming.ui.chat
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
+import com.aceman.soireegaming.data.models.Message
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.data.repositories.FirestoreRepository
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ListenerRegistration
+import com.xwray.groupie.kotlinandroidextensions.Item
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
  */
 class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterface {
-    var firebaseRepository = FirestoreRepository()
+    var firebaseRepository = FirestoreOperations
     var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
@@ -33,5 +37,20 @@ class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterf
                     }
                 }
         }
+    }
+
+    override fun getChannel(mOtherUser: String, onComplete: (channelId: String) -> Unit) {
+        firebaseRepository.getChatChannel(mOtherUser){
+          onComplete(it)
+       }
+    }
+
+    override  fun addChatMessagesListener(channelId: String, context: Context,
+                                onListen: (List<Item>) -> Unit): ListenerRegistration {
+        return firebaseRepository.chatListener(channelId,context,onListen)
+    }
+
+   override fun sendMessage(message: Message, channelId: String) {
+        return firebaseRepository.sendMessage(message,channelId)
     }
 }

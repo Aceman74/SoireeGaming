@@ -39,7 +39,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
     lateinit var mPicture: String
    private var mLocation = UserLocation(-1.0,-1.0,"City")
    private var itemPos: Int = -1
-   private var chipList: MutableList<UserChip> = mutableListOf<UserChip>()
+   private var chipList: MutableList<UserChip> = mutableListOf()
    private var dateList: MutableList<String> = mutableListOf("","","","")
    private var eventList: MutableList<String> = mutableListOf()
    private var eventPlayers: MutableList<String> = mutableListOf()
@@ -101,7 +101,8 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
             val minutes: Int = cldr.get(Calendar.MINUTE)
             val picker3 = TimePickerDialog(
                 this,
-                OnTimeSetListener { _, sHour, sMinute -> date_hour_picker.text = String().hourSetting(sHour,sMinute)
+                OnTimeSetListener { _, sHour, sMinute -> date_hour_picker.text =
+                    hourSetting(sHour, sMinute)
                     dateList[2] = date_hour_picker.text.toString()
                 },
                 hour,
@@ -117,7 +118,8 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
             val minutes: Int = cldr.get(Calendar.MINUTE)
             val picker4 = TimePickerDialog(
                 this,
-                OnTimeSetListener { _, sHour, sMinute -> date_hour_picker_2.text = String().hourSetting(sHour,sMinute)
+                OnTimeSetListener { _, sHour, sMinute -> date_hour_picker_2.text =
+                    hourSetting(sHour, sMinute)
                     dateList[3] = date_hour_picker_2.text.toString()
                 },
                 hour,
@@ -140,7 +142,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
         when (item.itemId) {
             R.id.edit_profile_tb_validate -> {
                 if(nullCheck()){
-                eventId = String().customTimeStamp()
+                eventId = customTimeStamp()
                     eventList.add(eventId)
                 mPresenter.saveEventToFirebase(
                     EventInfos(
@@ -229,7 +231,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                     addChip(selectedItem, "Console")
                 } else {
                     while (i < create_console_chipgroup.childCount) {
-                        var chip: Chip = create_console_chipgroup.getChildAt(i) as Chip
+                        val chip: Chip = create_console_chipgroup.getChildAt(i) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Console $selectedItem déjà ajoutée !",
@@ -274,7 +276,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                     addChip(selectedItem, "Style")
                 } else {
                     while (j < create_style_chipgroup.childCount) {
-                        var chip: Chip = create_style_chipgroup.getChildAt(j) as Chip
+                        val chip: Chip = create_style_chipgroup.getChildAt(j) as Chip
                         if (chip.text == selectedItem) {
                             Toast.makeText(
                                 applicationContext, "Style $selectedItem déjà ajouté !",

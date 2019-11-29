@@ -11,7 +11,6 @@ import com.aceman.soireegaming.ui.bottomnavigation.explore.ExploreFragment
 import com.aceman.soireegaming.ui.bottomnavigation.messages.MessagesFragment
 import com.aceman.soireegaming.ui.bottomnavigation.notifications.NotificationsFragment
 import com.aceman.soireegaming.ui.home.HomeFragment
-import com.aceman.soireegaming.ui.login.MainContract
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -49,7 +48,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         var latitude: Double = -1.0
         var longitude: Double = -1.0
         var city = "-1"
-        val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
+        val geocoder = Geocoder(this, Locale.getDefault())
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location ->
                 latitude = location.latitude

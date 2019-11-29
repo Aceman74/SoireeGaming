@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.passedevents.PassedEventsAdapter
-import com.aceman.soireegaming.ui.bottomnavigation.messages.PassedEventsContract
-import com.aceman.soireegaming.ui.bottomnavigation.messages.PassedEventsPresenter
 import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
 import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.utils.Utils
@@ -58,7 +56,7 @@ class PassedEventsFragment : Fragment(), BaseView, PassedEventsContract.PassedEv
         mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = PassedEventsAdapter(eventList) {
-            Timber.tag("Passe Events RV click").i("$it")
+            Timber.tag("Passe Events RV click").i(it)
             if(it.length < 9)
                 launchEventDetailActivity(it)
             else
@@ -97,7 +95,7 @@ class PassedEventsFragment : Fragment(), BaseView, PassedEventsContract.PassedEv
         var i = 0
         val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
         while (i<eventList.size){
-            var item = eventList[i]
+            val item = eventList[i]
             val eventDate = Utils.dateWithBSToMillis(item.dateList[0])
             if(eventDate > todayDate-5000){
                 eventList.removeAt(i)

@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Remove backslash to convert date saved to millis.
  */
-fun String.backSlashRemover(string: String): String {
+fun backSlashRemover(string: String): String {
     val s: StringBuilder = StringBuilder(string.replace("/", ""))
     return s.toString()
 }
@@ -18,11 +18,11 @@ fun String.backSlashRemover(string: String): String {
 /**
  * Remove backslash to convert date saved to millis.
  */
-fun String.hourSetting(hour: Int, minutes: Int): String {
-    var setHour : StringBuilder = if(hour.toString().length < 2){
+fun hourSetting(hour: Int, minutes: Int): String {
+    val setHour : StringBuilder = if(hour.toString().length < 2){
         StringBuilder("0$hour")
     }else StringBuilder(hour.toString())
-    var setMinutes : StringBuilder = if(minutes.toString().length < 2){
+    val setMinutes : StringBuilder = if(minutes.toString().length < 2){
         StringBuilder("0$minutes")
     }else StringBuilder(minutes.toString())
 
@@ -32,7 +32,7 @@ fun String.hourSetting(hour: Int, minutes: Int): String {
 /**
  * Use to save event.
  */
-fun String.customTimeStamp(): String {
+fun customTimeStamp(): String {
     val dateFormat = SimpleDateFormat("HHmmssdd")
     return dateFormat.format(Date()).toString()
 }
