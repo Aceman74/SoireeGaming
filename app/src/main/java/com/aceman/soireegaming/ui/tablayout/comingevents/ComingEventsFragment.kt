@@ -77,18 +77,17 @@ class ComingEventsFragment : Fragment(), BaseView, ComingEventsContract.ComingEv
         startActivity(intent)
     }
 
+    override fun updateAllEvents(eventsId: MutableList<String>) {
+        for(item in eventsId)
+            mPresenter.getUserEvent(item)
+    }
 
-    override fun updateUI(eventsList: MutableList<String>) {
-        configureRecyclerView()
-        remoteSize = eventsList
-        for(event in eventsList){
-            mPresenter.addEventInfos(event)
-        }
+    override fun updateUI(eid: String) {
+        mPresenter.getEventInfos(eid)
     }
 
     override fun updateEvents(event: EventInfos) {
         eventList.add(event)
-        if(eventList.size == remoteSize.size)
             filterList()
     }
 

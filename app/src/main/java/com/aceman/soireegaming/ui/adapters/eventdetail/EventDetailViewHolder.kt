@@ -6,7 +6,7 @@
  *
  */
 
-package com.aceman.soireegaming.ui.adapters.chatlog
+package com.aceman.soireegaming.ui.adapters.eventdetail
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.contact_list_item.view.*
  *
  * The viewHolder for Estate in MainActivity and Search.
  */
-class ChatLogViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""
     var description = ""
     var picture = ""
@@ -28,13 +28,22 @@ class ChatLogViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClic
     var itemPos = 0
 
 
-
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
-    fun updateWithItem(user: User, position: Int, listener: (String) -> Unit) {
+    fun updateWithItem(user: User, position: Int, listener: (String, String) -> Unit, isowner: Boolean) {
         var i = 0
 
+if(isowner){
+    itemView.contact_add.visibility = View.VISIBLE
+    itemView.contact_remove.visibility = View.VISIBLE
+    itemView.contact_add.setOnClickListener {
+        listener("add",user.uid)
+    }
+    itemView.contact_remove.setOnClickListener {
+        listener("remove",user.uid)
+    }
+}
         itemView.message_list_title.text = user.name
         itemView.message_list_date.text = "29/11/1990"
         Glide.with(itemView)
@@ -42,8 +51,9 @@ class ChatLogViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClic
             .circleCrop()
             .into(itemView.message_list_picture)
         itemView.setOnClickListener {
-            listener(user.uid)
+            listener(user.uid, position.toString())
         }
+
     }
 
     override fun onClick(view: View) {

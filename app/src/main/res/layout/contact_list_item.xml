@@ -50,21 +50,43 @@
             tool:layout_constraintStart_toStartOf="parent"
             tool:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/message_list_last_message"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <ImageButton
+            android:id="@+id/contact_add"
+            android:visibility="invisible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="2dp"
+            android:background="@drawable/shape_green_round"
+            android:ellipsize="end"
             android:maxLength="60"
             android:maxLines="2"
-            android:ellipsize="end"
             android:padding="2dp"
-            android:text="@string/example_text"
-            android:textColor="@color/greyTextColor"
+            android:src="@drawable/ic_validate"
             tool:layout_constraintBottom_toBottomOf="parent"
             tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintHorizontal_bias="0.767"
             tool:layout_constraintStart_toStartOf="parent"
-            tool:layout_constraintTop_toBottomOf="@+id/message_list_title" />
+            tool:layout_constraintTop_toBottomOf="@+id/message_list_title"
+            tool:layout_constraintVertical_bias="0.48" />
+
+        <ImageButton
+            android:id="@+id/contact_remove"
+            android:visibility="invisible"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="2dp"
+            android:background="@drawable/shape_red_round"
+            android:ellipsize="end"
+            android:maxLength="60"
+            android:maxLines="2"
+            android:padding="2dp"
+            android:src="@drawable/ic_remove"
+            tool:layout_constraintBottom_toBottomOf="parent"
+            tool:layout_constraintEnd_toEndOf="parent"
+            tool:layout_constraintHorizontal_bias="0.945"
+            tool:layout_constraintStart_toStartOf="parent"
+            tool:layout_constraintTop_toBottomOf="@+id/message_list_title"
+            tool:layout_constraintVertical_bias="0.48" />
 
         <TextView
             android:id="@+id/message_list_date"

@@ -2,29 +2,90 @@ package com.aceman.soireegaming.ui.event.detail
 
 import android.graphics.Color
 import android.os.Bundle
-import com.aceman.soireegaming.BuildConfig
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.ui.adapters.eventdetail.EventDetailAdapter
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_event_detail.*
+import timber.log.Timber
+import kotlin.math.absoluteValue
 
 class EventDetailActivity(override val activityLayout : Int = R.layout.activity_event_detail) : BaseActivity(),
-    EventDetailActivityContract.EventDetailActivityViewInterface {
+    EventDetailActivityContract.EventDetailActivityViewInterface, OnMapReadyCallback {
     private val mPresenter: EventDetailActivityPresenter =
         EventDetailActivityPresenter()
     private var mEid: String = ""
-    private lateinit var mUser : User
-    private lateinit var mEvent : EventInfos
+    private lateinit var mUser: User
+    private lateinit var mEvent: EventInfos
+    lateinit var mRecyclerView: RecyclerView
+    lateinit var mWaitingRecyclerView: RecyclerView
+    private var userList = mutableListOf<User>()
+    private var waitingUserList = mutableListOf<User>()
+    private lateinit var mMap: GoogleMap
+    lateinit var placesClient : PlacesClient
+    lateinit var mMarker: Marker
+    var isOwner = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
+        configureMaps()
         getIntentId()
+        participate_btn.setOnClickListener {
+            onClickParticipate()
+        }
+    }
 
+    private fun getUserType() {
+        mPresenter.typeOfUser(mEid)
+    }
+
+    override fun setUserType(type: String) {
+        when (type) {
+            "Waiting" -> {
+                participate_btn.text = "En attente de l'organisateur"
+                participate_btn.setBackgroundColor(Color.GRAY)
+                participate_btn.isClickable = false
+            }
+            "Present" -> {
+                if (mUser.uid == mEvent.uid) {
+                    isEventOwner()
+                } else
+                    isParticipant()
+            }
+        }
+    }
+
+    private fun isEventOwner() {
+        participate_btn.text = "Gerer l'évenement"
+        isOwner = true
+        configureWaitingRecyclerView()
+    }
+
+    private fun isParticipant() {
+        participate_btn.text = "Ne plus participer"
+       participate_btn.setOnClickListener { mPresenter.removeEventDemand(mEid) }
+    }
+
+    private fun onClickParticipate() {
+        participate_btn.text = "En attente de l'organisateur"
+        mPresenter.createEventDemand(mEid)
     }
 
     private fun getIntentId() {
@@ -35,11 +96,22 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
     override fun updateUI(currentUser: User) {
         mUser = currentUser
         mPresenter.getEventInfos(mEid)
+        mPresenter.getEventDemandInfos(mEid)
     }
 
-    override fun updateEvents(eventDetails: EventInfos) {
+    override fun updateEventsDemands(userDemand: MutableList<String>) {
+        mPresenter.getUserDemandList(userDemand)
+    }
+
+    override fun updateEvents(eventDetails: EventInfos, userPresent: MutableList<String>) {
+        mPresenter.getUserPresentList(userPresent)
         mEvent = eventDetails
-        BuildConfig.GOOGLE_MAPS_API
+        mMarker.position = LatLng(mEvent.location.latitude,mEvent.location.longitude)
+        mMarker.title = mEvent.location.city
+        mMap.addMarker(MarkerOptions().position(mMarker.position)
+            .title(mMarker.title))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(mMarker.position))
+        mMap.cameraPosition.zoom.absoluteValue
         detail_event_title_tv.text = mEvent.title
         detail_event_username_tv.text = mEvent.name
         detail_event_description_tv.text = mEvent.description
@@ -59,23 +131,97 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
         detail_sleep_event_tv.text= resources.getStringArray(R.array.sleep)[mEvent.eventMisc.sleep]*/
         detail_console_chipgroup
         detail_style_chipgroup
-        for((i, item) in mEvent.chipList.withIndex()){
-            if(mEvent.chipList[i].check){
+        for ((i, item) in mEvent.chipList.withIndex()) {
+            if (mEvent.chipList[i].check) {
                 addChip(mEvent.chipList[i].name, mEvent.chipList[i].group)
             }
         }
+
+        FirestoreOperations.getEngagedUsers(eventDetails.eid).addOnSuccessListener {
+            for (item in it.id) {
+                Timber.tag("testDetail").i("$it.data ${it.id}")
+            }
+        }
+    }
+    /**
+     * Set the map.
+     */
+    fun configureMaps() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map_detail) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+    }
+    /**
+     * Called when the map is ready to add all markers and objects to the map.
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.uiSettings.isMapToolbarEnabled = false
+        val Paris = LatLng( 48.864716, 2.349014)
+        mMarker = mMap.addMarker(
+            MarkerOptions().position(Paris)
+                .title("Paris"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Paris))
+        mMap.cameraPosition.zoom.absoluteValue
+    }
+    override fun setUserList(userList: MutableList<User>) {
+        this.userList = userList
+        configureRecyclerView()
     }
 
-    fun addChip(chipName: String, group: String) {
-        // Initialize a new chip instance
-        val chip = Chip(this)
-        chip.text = chipName
-        val color = Utils.chipColor(chip)
-        chip.setChipBackgroundColorResource(color)
-        chip.setTextColor(Color.WHITE)
-        if(group == "Console")
-        detail_console_chipgroup.addView(chip)
-        else
-            detail_style_chipgroup.addView(chip)
+    override fun setDemandList(userDemandList: MutableList<User>) {
+        waitingUserList = userDemandList
+        configureWaitingRecyclerView()
+        getUserType()
     }
+    /**
+     * Initialize the recyclerview for picture preview.
+     */
+    fun configureRecyclerView() {
+        mRecyclerView = event_detail_rv
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                applicationContext,
+                DividerItemDecoration.HORIZONTAL
+            )
+        )
+        mRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView.adapter = EventDetailAdapter(userList, isOwner) { s: String, s1: String ->
+            Timber.tag("Event Detail RV click").i("$s $s1")
+
+
+        }
+    }
+        /**
+         * Initialize the recyclerview for picture preview.
+         */
+        fun configureWaitingRecyclerView() {
+            mWaitingRecyclerView = event_detail_waiting_rv
+            mWaitingRecyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    applicationContext,
+                    DividerItemDecoration.HORIZONTAL
+                )
+            )
+            mWaitingRecyclerView.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            mWaitingRecyclerView.adapter = EventDetailAdapter(waitingUserList, isOwner) { s: String, s1: String ->
+                Timber.tag("Event Waiting RV click").i("$s $s1")
+
+            }
+        }
+
+        fun addChip(chipName: String, group: String) {
+            // Initialize a new chip instance
+            val chip = Chip(this)
+            chip.text = chipName
+            val color = Utils.chipColor(chip)
+            chip.setChipBackgroundColorResource(color)
+            chip.setTextColor(Color.WHITE)
+            if (group == "Console")
+                detail_console_chipgroup.addView(chip)
+            else
+                detail_style_chipgroup.addView(chip)
+        }
+
 }

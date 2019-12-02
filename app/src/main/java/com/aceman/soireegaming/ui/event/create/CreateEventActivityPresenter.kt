@@ -2,6 +2,7 @@ package com.aceman.soireegaming.ui.event.create
 
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
+import com.aceman.soireegaming.data.models.ObjectId
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 class CreateEventActivityPresenter : BasePresenter(),
     CreateEventActivityContract.CreateEventActivityPresenterInterface {
     var firebaseRepository = FirestoreOperations
-    // var user: MutableLiveData<List<User>> = MutableLiveData()
+    val mUser = FirebaseAuth.getInstance().currentUser!!
 
     /**
      * Getting current user check.
@@ -38,17 +39,14 @@ class CreateEventActivityPresenter : BasePresenter(),
     }
 
     override fun saveEventToFirebase(eventInfos: EventInfos, eventId: String) {
-        firebaseRepository.getUser(getCurrentUser()!!.uid).addOnSuccessListener {
-            firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
-            }.addOnFailureListener {
-            }
+        firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
+            createEventPresence(eventId)
         }
-
     }
 
-    fun addEventToUserList(eventId: MutableList<String>){
+    fun addEventToUserList(userId: String, eventId: MutableList<String>) {
         if (getCurrentUser() != null) {
-            firebaseRepository.getUser(getCurrentUser()!!.uid)
+            firebaseRepository.getUser(userId)
                 .addOnSuccessListener { documentSnapshot ->
                     val currentUser = documentSnapshot.toObject(User::class.java)
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
@@ -58,12 +56,19 @@ class CreateEventActivityPresenter : BasePresenter(),
         }
     }
 
+    override fun createEventPresence(eventId: String) {
+        firebaseRepository.userCollection.document(mUser.uid).collection("Events")
+            .add(ObjectId("event",eventId))
+        firebaseRepository.eventCollection.document(eventId).collection("Users")
+            .add(ObjectId("user",mUser.uid))
+    }
+
     override fun saveDate(user: FirebaseUser) {
         val date = Utils.todayDate
         firebaseRepository.getUser(user.uid).addOnSuccessListener {
             firebaseRepository.saveDate(date).addOnSuccessListener {
-                }.addOnFailureListener {
-                }
+            }.addOnFailureListener {
+            }
         }
     }
 }

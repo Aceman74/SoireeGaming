@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.PagerAdapter
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.EventInfos
-import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.ui.adapters.mainlist.MainListAdapter
 import com.aceman.soireegaming.ui.event.create.CreateEventActivity
 import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
@@ -110,13 +109,10 @@ class HomeFragment : Fragment(), BaseView, HomeContract.HomeViewInterface {
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun updateUI(currentUser: User) {
-        var i = 0
-        while(i < currentUser.eventList.size && currentUser.eventList[0] != ""){
-            mPresenter.addEventInfos(currentUser.eventList[i])
-            i++
-        }
+    override fun updateUI(eventId: String) {
+        mPresenter.addEventInfos(eventId)
     }
+
 
     override fun updateEvents(event: EventInfos) {
         eventList.add(event)

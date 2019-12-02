@@ -36,10 +36,6 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
      */
     fun updateWithItem(eventList: EventInfos, position: Int, listener: (String) -> Unit) {
         var i = 0
-        val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
-        val eventDate = Utils.dateWithBSToMillis(eventList.dateList[0])
-        if (eventDate < todayDate - 5000)
-            itemView.passed_event_hor_fl.visibility = View.VISIBLE
         itemView.event_main_title_hor_tv.text = eventList.title
         itemView.event_main_date_hor_tv.text = eventList.dateList[0]
         itemView.event_main_desc_hor_tv.text = eventList.description
@@ -71,10 +67,6 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
             chip.setChipBackgroundColorResource(color)
             chip.setTextColor(Color.WHITE)
             itemView.misc_event_item_hor.addView(chip)
-            if (itemView.misc_event_item_hor.childCount == 1) {
-                itemView.event_main_pic_hor.setBackgroundResource(color)
-                itemView.item_hor_frame_ly.setBackgroundResource(color)
-            }
         }
     }
 

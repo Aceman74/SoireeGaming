@@ -31,7 +31,6 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
     var itemPos = 0
 
 
-
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
@@ -47,9 +46,9 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
             .load(eventList.picture)
             .circleCrop()
             .into(itemView.event_main_pic_vert)
-        for(item in eventList.chipList){
-            if(eventList.chipList[i].check){
-            addChip(eventList.chipList[i].name)
+        for (item in eventList.chipList) {
+            if (eventList.chipList[i].check) {
+                addChip(eventList.chipList[i].name)
             }
             i++
         }
@@ -63,14 +62,14 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
 
     fun addChip(chipName: String) {
         // Initialize a new chip instance
-        val chip = Chip(itemView.context)
-        chip.text = chipName
-        val color = Utils.chipColor(chip)
-        chip.setChipBackgroundColorResource(color)
-        chip.setTextColor(Color.WHITE)
-        itemView.misc_event_item_vert.addView(chip)
-        if (itemView.misc_event_item_vert.childCount == 1) {
-            itemView.const_ly_vert.setBackgroundResource(color)
+
+        if (itemView.misc_event_item_vert.childCount < 2) {
+            val chip = Chip(itemView.context)
+            chip.text = chipName
+            val color = Utils.chipColor(chip)
+            chip.setChipBackgroundColorResource(color)
+            chip.setTextColor(Color.WHITE)
+            itemView.misc_event_item_vert.addView(chip)
         }
     }
 

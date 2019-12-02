@@ -17,15 +17,16 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppThemeSG">
-        <activity android:name=".ui.chat.ChatLogActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key" />
+        <activity android:name="com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity" />
         <activity android:name=".ui.event.detail.EventDetailActivity">
-            <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="@string/google_api_key" />
         </activity>
         <activity
             android:name=".ui.event.create.CreateEventActivity"
-            android:parentActivityName=".ui.home.main.MainActivity" />
+            android:parentActivityName=".ui.home.main.MainActivity">
+        </activity>
         <activity
             android:name=".ui.profile.edit.EditProfileActivity"
             android:parentActivityName=".ui.profile.ProfileActivity" />

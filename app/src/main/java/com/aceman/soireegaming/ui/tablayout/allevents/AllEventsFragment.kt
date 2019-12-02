@@ -14,6 +14,7 @@ import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.ui.adapters.allevents.AllEventsAdapter
 import com.aceman.soireegaming.ui.event.detail.EventDetailActivity
 import com.aceman.soireegaming.ui.profile.ProfileActivity
+import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_all_events.*
 import timber.log.Timber
@@ -89,7 +90,16 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
     }
 
     private fun filterList() {
-
+        var i = 0
+        val todayDate = Utils.dateWithBSToMillis(Utils.todayDate)
+        while (i<eventList.size){
+            val item = eventList[i]
+            val eventDate = Utils.dateWithBSToMillis(item.dateList[0])
+            if(eventDate < todayDate){
+                eventList.removeAt(i)
+                i=0
+            }else i++
+        }
         configureRecyclerView()
         sortByDate()
     }

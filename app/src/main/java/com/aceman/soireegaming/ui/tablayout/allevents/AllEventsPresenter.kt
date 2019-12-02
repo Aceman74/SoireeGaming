@@ -30,7 +30,6 @@ class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenter
             val list = mutableListOf<String>()
             firebaseRepository.getAllEvents().addOnSuccessListener { result ->
                 for (document in result) {
-                    Timber.tag("AllEvents").d("${document.id} => ${document.data}")
                     list.add(document.id)
                 }
 
@@ -43,7 +42,7 @@ class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenter
     }
 
     override fun addEventInfos(eventId: String){
-        firebaseRepository.getEvents(eventId).addOnSuccessListener {
+        firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             val event = it.toObject(EventInfos::class.java)
             (getView() as AllEventsContract.AllEventsViewInterface).updateEvents(event!!)
         }

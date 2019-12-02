@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos
@@ -19,11 +20,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_edit_profile.*
 import timber.log.Timber
+import java.io.File
 
 class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) : BaseActivity(), BaseView,
     EditProfileContract.EditProfileViewInterface {
     private val mPresenter: EditProfilePresenter =
         EditProfilePresenter()
+    private var file = File("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,13 +81,12 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                 val fileUri = data!!.data!!
 
                 //You can get File object from intent
-                val file = ImagePicker.getFile(data)
+                 file = ImagePicker.getFile(data)!!
 
                 Glide.with(this)
                     .load(file)
                     .circleCrop()
                     .into(edit_profile_picture_iv)
-                saveToStorage(fileUri)
                 //You can also get File Path from intent
                 val filePath:String = ImagePicker.getFilePath(data)!!
             }
@@ -103,7 +105,9 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val spaceRef = storageRef.child("$uid/profile_picture.jpg")
         spaceRef.putFile(fileUri)
-
+        spaceRef.downloadUrl.addOnCompleteListener {
+            mPresenter.updatePictureOnFirestore((it.result.toString()))
+        }
     }
 
     override fun loadUserInfos(currentUser: User) {
@@ -113,7 +117,8 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
             .into(edit_profile_picture_iv)
         edit_profile_name_et.setText(currentUser.name)
         edit_profile_email_et.setText(currentUser.email)
-        if(currentUser.userInfos.showAge){
+        edit_member_since_tv.text = currentUser.Date
+            if(currentUser.userInfos.showAge){
             edit_profile_age_switch.isChecked = true
             if(currentUser.userInfos.age != -1){
                 edit_profile_age_spinner.setSelection(currentUser.userInfos.age)
@@ -146,6 +151,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                     edit_profile_gender_switch.isChecked))
                 mPresenter.updateNameOnFirestore(edit_profile_name_et.text.toString())
                 mPresenter.updateEmailOnFirestore(edit_profile_email_et.text.toString())
+                saveToStorage(file.toUri())
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isEmpty
 import androidx.transition.TransitionManager
+import com.aceman.soireegaming.BuildConfig
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.extensions.customTimeStamp
 import com.aceman.soireegaming.data.extensions.hourSetting
@@ -24,16 +25,32 @@ import com.aceman.soireegaming.utils.ChipsManager
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_create_event.*
+import timber.log.Timber
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import kotlin.math.absoluteValue
 
 
 class CreateEventActivity(override val activityLayout: Int = R.layout.activity_create_event) :
     BaseActivity(),
-    CreateEventActivityContract.CreateEventActivityViewInterface {
+    CreateEventActivityContract.CreateEventActivityViewInterface, OnMapReadyCallback {
     private val mPresenter: CreateEventActivityPresenter =
         CreateEventActivityPresenter()
     lateinit var mPicture: String
@@ -44,6 +61,13 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
    private var eventList: MutableList<String> = mutableListOf()
    private var eventPlayers: MutableList<String> = mutableListOf()
    private var eventId : String = ""
+   private var AUTOCOMPLETE_REQUEST_CODE = 100
+   var  placeLatLng : LatLng = LatLng(-1.0,-1.0)
+    var fields: List<Place.Field> =
+        listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+    private lateinit var mMap: GoogleMap
+    lateinit var placesClient : PlacesClient
+   lateinit var mMarker: Marker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +75,49 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
         setSupportActionBar(create_event_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         mPresenter.getUserDataFromFirestore()
+        Places.initialize(applicationContext, BuildConfig.GOOGLE_MAPS_API)
+        placesClient = Places.createClient(this)
         datePicker()
+        configureMaps()
         ChipsManager.initListOfChip(chipList)
         chipSetter()
+        create_event_location.setOnClickListener {
+            val intent = Autocomplete.IntentBuilder(
+        AutocompleteActivityMode.OVERLAY, fields)
+                .setCountry("FR")
+                .setTypeFilter(TypeFilter.ADDRESS)
+        .build(this)
+startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+        }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                RESULT_OK -> {
+                    var place = Autocomplete.getPlaceFromIntent(data!!)
+                    Timber.i("%s%s", "%s, ", "Place: ${place.name} , Address: ${place.address}")
+                    create_event_location.text = place.name
+                    placeLatLng = place.latLng!!
+                    mLocation.latitude = placeLatLng.latitude
+                    mLocation.longitude = placeLatLng.longitude
+                    mLocation.city = place.name!!
+                    mMarker.title = place.name
+                    mMarker.position = placeLatLng
+                    moveMarker(mMarker)
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    var status = Autocomplete.getStatusFromIntent(data!!)
+                    Timber.i(status.statusMessage)
+                }
+                RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+        }
     }
 
     private fun datePicker() {
@@ -143,7 +206,6 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
             R.id.edit_profile_tb_validate -> {
                 if(nullCheck()){
                 eventId = customTimeStamp()
-                    eventList.add(eventId)
                 mPresenter.saveEventToFirebase(
                     EventInfos(
                         mPresenter.getCurrentUser()!!.uid,
@@ -165,7 +227,9 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                         )
                 ,eventId
                 )
-                    mPresenter.addEventToUserList(eventList)
+                   // mPresenter.createEventPresence(eventId)
+
+                  //  mPresenter.addEventToUserList(FirebaseAuth.getInstance().currentUser!!.uid, eventList)
                     Utils.snackBarPreset(findViewById(android.R.id.content),"Event Programmé avec succès !")
                     Executors.newSingleThreadScheduledExecutor().schedule({
                         val intent = Intent(baseContext, MainActivity::class.java)
@@ -189,6 +253,9 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
             create_event_desc_et.text.toString() == "" ->{Utils.snackBarPreset(findViewById(android.R.id.content),"Il faut entrer une description !")
                 false
             }
+            mLocation.latitude == -1.0 ->{Utils.snackBarPreset(findViewById(android.R.id.content),"Il faut entrer une addresse !")
+                false
+            }
             dateList.contains("") -> {Utils.snackBarPreset(findViewById(android.R.id.content),"Il faut entrer toutes les dates !")
                 false
             }
@@ -205,12 +272,22 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
     override fun updateUI(currentUser: User) {
         mPicture = currentUser.urlPicture.toString()
         mLocation = currentUser.userLocation
+        mMarker.position = LatLng(mLocation.latitude,mLocation.longitude)
+        mMarker.title = currentUser.userLocation.city
+        moveMarker(mMarker)
         eventList = currentUser.eventList
         Glide.with(this)
             .load(currentUser.urlPicture)
             .circleCrop()
             .into(create_event_profile_pic)
         create_event_location.setText(currentUser.userLocation.city)
+    }
+
+    private fun moveMarker(mMarker: Marker) {
+        mMap.addMarker(MarkerOptions().position(mMarker.position)
+            .title(mMarker.title))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(mMarker.position))
+        mMap.cameraPosition.zoom.absoluteValue
     }
 
     fun chipSetter() {
@@ -381,5 +458,24 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
             clearAutocomplete()
             hideKeyboard(create_style_ac)
         }
+    }
+    /**
+     * Set the map.
+     */
+    fun configureMaps() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+    }
+    /**
+     * Called when the map is ready to add all markers and objects to the map.
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.uiSettings.isMapToolbarEnabled = false
+        val Paris = LatLng( 48.864716, 2.349014)
+        mMarker = mMap.addMarker(MarkerOptions().position(Paris)
+            .title("Paris"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(Paris))
+        mMap.cameraPosition.zoom.absoluteValue
     }
 }

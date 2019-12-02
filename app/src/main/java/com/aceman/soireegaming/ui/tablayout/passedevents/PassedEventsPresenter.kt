@@ -43,7 +43,7 @@ class PassedEventsPresenter : BasePresenter(), PassedEventsContract.PassedEvents
     }
 
     override fun addEventInfos(eventId: String){
-        firebaseRepository.getEvents(eventId).addOnSuccessListener {
+        firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             val event = it.toObject(EventInfos::class.java)
             (getView() as PassedEventsContract.PassedEventsViewInterface).updateEvents(event!!)
         }

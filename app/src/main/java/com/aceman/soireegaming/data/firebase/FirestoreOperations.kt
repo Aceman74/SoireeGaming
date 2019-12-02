@@ -67,6 +67,9 @@ object FirestoreOperations {
         return userCollection.document(user.uid).update("chipList", chipList)
     }
 
+    fun updatePicture(pictureUrl: String): Task<Void> {
+        return userCollection.document(user.uid).update("urlPicture", pictureUrl)
+    }
     fun saveUserInfos(userInfos: UserInfos): Task<Void> {
         return userCollection.document(user.uid).update("userInfos", userInfos)
     }
@@ -87,7 +90,7 @@ object FirestoreOperations {
         return eventCollection.document(eventId).set(eventInfos)
     }
 
-    fun getEvents(eventId: String): Task<DocumentSnapshot> {
+    fun getEventDetail(eventId: String): Task<DocumentSnapshot> {
         return eventCollection.document(eventId).get()
     }
 
@@ -110,8 +113,7 @@ object FirestoreOperations {
     }
 
     fun createChatChannel(
-        otherId: String, event: Boolean,
-        onComplete: (channelId: String) -> Unit
+        otherId: String
     ) {
         userCollection.document(user.uid)
             .collection("engagedChatChannels") // current user check if other ID is present
@@ -126,20 +128,17 @@ object FirestoreOperations {
                     .document(otherId)
                     .set(mapOf("channelId" to newChannel.id))
 
-                if (event) {
-                    eventCollection.document(otherId)
-                        .collection("engagedChatChannels")
-                        .document(currentUserId)
-                        .set(mapOf("channelId" to newChannel.id))
-                } else {
                     userCollection.document(otherId)
                         .collection("engagedChatChannels")
                         .document(currentUserId)
                         .set(mapOf("channelId" to newChannel.id))
-                }
-
-                onComplete(newChannel.id)
             }
+    }
+
+    fun getEngagedUsers(eventId: String): Task<DocumentSnapshot> {
+      return  eventCollection.document(eventId)
+            .collection("engagedUsers")
+            .document().get()
     }
 
     fun chatListener(channelId: String, context: Context,

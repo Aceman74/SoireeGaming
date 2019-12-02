@@ -14,7 +14,6 @@ interface LoginPresenterInterface {
 
     fun getCurrentUser(): FirebaseUser?
     fun saveUserToFirebase(userItem: User)
-    fun saveDate(user: FirebaseUser)
 }
 
     interface LoginViewInterface : BaseView {

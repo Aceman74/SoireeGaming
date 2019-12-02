@@ -1,4 +1,4 @@
-package com.aceman.soireegaming.ui.chat
+package com.aceman.soireegaming.ui.bottomnavigation.messages.chat
 
 import android.content.Context
 import com.aceman.soireegaming.data.models.Message

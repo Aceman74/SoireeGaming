@@ -68,10 +68,6 @@ class ComingEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.O
             chip.setChipBackgroundColorResource(color)
             chip.setTextColor(Color.WHITE)
             itemView.misc_event_item_hor.addView(chip)
-            if (itemView.misc_event_item_hor.childCount == 1) {
-                itemView.event_main_pic_hor.setBackgroundResource(color)
-                itemView.item_hor_frame_ly.setBackgroundResource(color)
-            }
         }
     }
 

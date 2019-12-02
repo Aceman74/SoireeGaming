@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.ui.adapters.contactlist.ContactListAdapter
-import com.aceman.soireegaming.ui.chat.ChatLogActivity
+import com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import kotlinx.android.synthetic.main.fragment_messages.*
 import timber.log.Timber

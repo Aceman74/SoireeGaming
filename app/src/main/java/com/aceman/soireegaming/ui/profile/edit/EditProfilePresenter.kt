@@ -5,7 +5,6 @@ import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber
 
 /**
@@ -13,28 +12,18 @@ import timber.log.Timber
  */
 class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePresenterInterface {
     var firebaseRepository = FirestoreOperations
+    val mUser = FirebaseAuth.getInstance().currentUser!!
 
-    /**
-     * Getting current user check.
-     *
-     * @return actual user
-     */
-    override fun getCurrentUser(): FirebaseUser? {
-        return FirebaseAuth.getInstance().currentUser
-    }
 
     override fun getUserDataFromFirestore() {
-        if (getCurrentUser() != null) {
-            firebaseRepository.getUser(getCurrentUser()!!.uid)
+            firebaseRepository.getUser(mUser.uid)
                 .addOnSuccessListener { documentSnapshot ->
                     val currentUser = documentSnapshot.toObject(User::class.java)
                     (getView() as EditProfileContract.EditProfileViewInterface).loadUserInfos(currentUser!!)
-                }
         }
     }
 
     override fun saveUserInfosToFirebase(userInfos: UserInfos) {
-        val mUser = getCurrentUser()!!
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.saveUserInfos(userInfos).addOnSuccessListener {
                     Timber.i("Infos Updated saved!")
@@ -45,7 +34,6 @@ class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePre
     }
 
     override fun updateNameOnFirestore(name: String){
-        val mUser = getCurrentUser()!!
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updateName(name).addOnSuccessListener {
                 Timber.i("Name Updated saved!")
@@ -55,8 +43,12 @@ class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePre
         }
     }
 
+    override fun updatePictureOnFirestore(toUri: String){
+        firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
+            firebaseRepository.updatePicture(toUri)
+        }
+    }
     override fun updateEmailOnFirestore(email: String){
-        val mUser = getCurrentUser()!!
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updateEmail(email).addOnSuccessListener {
                 Timber.i("Email Updated saved!")

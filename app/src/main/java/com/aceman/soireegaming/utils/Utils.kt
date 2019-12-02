@@ -52,7 +52,9 @@ object Utils {
      * Convert date with / custom format to millis.
      */
     fun dateWithBSToMillis(dateString: String): Long {
-        val string = backSlashRemover(dateString)
+        var string = backSlashRemover(dateString)
+        if(string.length == 7)
+            string = "0$string"
 
         return dateToMillis(string.substring(4, 8).toInt(), string.substring(2, 4).toInt(), string.substring(0, 2).toInt())
     }

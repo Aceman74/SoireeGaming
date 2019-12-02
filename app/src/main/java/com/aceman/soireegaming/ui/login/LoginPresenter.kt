@@ -2,7 +2,6 @@ package com.aceman.soireegaming.ui.login
 
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
-import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -22,15 +21,6 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
-    }
-
-    override fun saveDate(user: FirebaseUser) {
-        val date = Utils.todayDate
-        firebaseRepository.getUser(user.uid).addOnSuccessListener {
-            firebaseRepository.saveDate(date).addOnSuccessListener {
-                }.addOnFailureListener {
-                }
-        }
     }
 
     override fun saveUserToFirebase(userItem: User) {

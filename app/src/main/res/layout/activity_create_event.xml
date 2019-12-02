@@ -140,9 +140,12 @@
                         android:text="@string/locality" />
 
                     <LinearLayout
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -153,17 +156,29 @@
                             android:src="@drawable/ic_location"
                             android:tint="@color/primaryColor" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/create_event_location"
                             style="@style/EditTextStyle"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:hint="@string/city"
+                            android:text="@string/city"
                             android:paddingStart="0dp"
                             android:paddingEnd="20dp" />
 
                     </LinearLayout>
+
+                    <fragment
+                        xmlns:map="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/address_map"
+                        android:layout_gravity="center"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        tools:context="com.example.mapwithmarker.MapsMarkerActivity"
+                        map:cameraZoom="12"
+                        map:mapType="terrain"
+                        map:liteMode="true" />
                     <TextView
                     style="@style/TitleFontMainBlackTxt"
                     android:layout_width="wrap_content"

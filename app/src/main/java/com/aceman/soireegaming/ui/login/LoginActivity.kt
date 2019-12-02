@@ -16,6 +16,7 @@ import com.aceman.soireegaming.data.models.UserInfos
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.ui.home.main.MainActivity
 import com.aceman.soireegaming.utils.ChipsManager
+import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -170,12 +171,15 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 // Successfully signed in
                 val user = mPresenter.getCurrentUser()
                 if (user != null ){
+
+                    val date = Utils.todayDate
                     var photoUrl = user.photoUrl.toString()
                     if(user.photoUrl == null)
                          photoUrl = "https://firebasestorage.googleapis.com/v0/b/soireegaming-ccde4.appspot.com/o/profile_default%2Flogo_SG.png?alt=media&token=9e9c6564-a5c6-4759-91a0-04922e8f8840"
                     mPresenter.saveUserToFirebase(
                         User(
                             user.uid,
+                            date,
                             user.displayName!!,
                             user.email!!,
                             photoUrl,
@@ -185,7 +189,6 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                             mutableListOf()
                         )
                     )
-                    mPresenter.saveDate(user)
                 }
                 isLoggedUser()
                 main_login_bt.text = "Continuer"
