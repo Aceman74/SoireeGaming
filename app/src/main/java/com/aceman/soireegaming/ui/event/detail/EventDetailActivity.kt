@@ -1,7 +1,9 @@
 package com.aceman.soireegaming.ui.event.detail
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,7 @@ import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.ui.adapters.eventdetail.EventDetailAdapter
+import com.aceman.soireegaming.ui.home.main.MainActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.bumptech.glide.Glide
@@ -20,10 +23,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_event_detail.*
 import timber.log.Timber
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.math.absoluteValue
 
 class EventDetailActivity(override val activityLayout : Int = R.layout.activity_event_detail) : BaseActivity(),
@@ -38,7 +42,6 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
     private var userList = mutableListOf<User>()
     private var waitingUserList = mutableListOf<User>()
     private lateinit var mMap: GoogleMap
-    lateinit var placesClient : PlacesClient
     lateinit var mMarker: Marker
     var isOwner = false
 
@@ -60,7 +63,7 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
         when (type) {
             "Waiting" -> {
                 participate_btn.text = "En attente de l'organisateur"
-                participate_btn.setBackgroundColor(Color.GRAY)
+                participate_btn.alpha = 0.5f
                 participate_btn.isClickable = false
             }
             "Present" -> {
@@ -73,19 +76,31 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
     }
 
     private fun isEventOwner() {
-        participate_btn.text = "Gerer l'évenement"
+        participate_btn.visibility = View.INVISIBLE
         isOwner = true
         configureWaitingRecyclerView()
     }
 
     private fun isParticipant() {
         participate_btn.text = "Ne plus participer"
-       participate_btn.setOnClickListener { mPresenter.removeEventDemand(mEid) }
+        participate_btn.alpha = 1.0f
+       participate_btn.setOnClickListener { mPresenter.removeEventParticipation(mEid, mUser.uid)
+           event_detail_rv.visibility = View.INVISIBLE
+               Utils.snackBarPreset(findViewById(android.R.id.content),
+                   "Participation retirée !")
+           Executors.newSingleThreadScheduledExecutor().schedule({
+               val intent = Intent(baseContext, MainActivity::class.java)
+               startActivity(intent)
+               overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+           }, 2, TimeUnit.SECONDS)}
+
     }
 
     private fun onClickParticipate() {
         participate_btn.text = "En attente de l'organisateur"
         mPresenter.createEventDemand(mEid)
+        participate_btn.isClickable = false
+        participate_btn.alpha = 0.5f
     }
 
     private fun getIntentId() {
@@ -106,6 +121,7 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
     override fun updateEvents(eventDetails: EventInfos, userPresent: MutableList<String>) {
         mPresenter.getUserPresentList(userPresent)
         mEvent = eventDetails
+        getUserType()
         mMarker.position = LatLng(mEvent.location.latitude,mEvent.location.longitude)
         mMarker.title = mEvent.location.city
         mMap.addMarker(MarkerOptions().position(mMarker.position)
@@ -120,17 +136,15 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
         detail_event_end_date.text = mEvent.dateList[1]
         detail_event_begin_hour.text = mEvent.dateList[2]
         detail_event_end_hour.text = mEvent.dateList[3]
+
         Glide.with(this)
             .load(mEvent.picture)
             .circleCrop()
             .into(detail_event_profile_pic)
-        /*
         detail_private_event_tv.text = resources.getStringArray(R.array.private_event)[mEvent.eventMisc.private]
         detail_gender_event_tv.text= resources.getStringArray(R.array.gender_alt)[mEvent.eventMisc.gender]
         detail_eat_event_tv.text= resources.getStringArray(R.array.eat)[mEvent.eventMisc.eat]
-        detail_sleep_event_tv.text= resources.getStringArray(R.array.sleep)[mEvent.eventMisc.sleep]*/
-        detail_console_chipgroup
-        detail_style_chipgroup
+        detail_sleep_event_tv.text= resources.getStringArray(R.array.sleep)[mEvent.eventMisc.sleep]
         for ((i, item) in mEvent.chipList.withIndex()) {
             if (mEvent.chipList[i].check) {
                 addChip(mEvent.chipList[i].name, mEvent.chipList[i].group)
@@ -186,11 +200,25 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
         )
         mRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mRecyclerView.adapter = EventDetailAdapter(userList, isOwner) { s: String, s1: String ->
+        mRecyclerView.adapter = EventDetailAdapter(userList, isOwner, false) { s: String, s1: String ->
             Timber.tag("Event Detail RV click").i("$s $s1")
-
+            when(s){
+                "remove" -> {mPresenter.removeEventParticipation(mEid,s1)
+                    Utils.snackBarPreset(findViewById(android.R.id.content),
+                        "Participant retiré  :( ")
+                refreshView()}
+            }
 
         }
+    }
+
+    fun refreshView(){
+        userList.clear()
+        waitingUserList.clear()
+        detail_console_chipgroup.removeAllViews()
+        detail_style_chipgroup.removeAllViews()
+        mPresenter.getEventInfos(mEid)
+        mPresenter.getEventDemandInfos(mEid)
     }
         /**
          * Initialize the recyclerview for picture preview.
@@ -205,9 +233,20 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
             )
             mWaitingRecyclerView.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            mWaitingRecyclerView.adapter = EventDetailAdapter(waitingUserList, isOwner) { s: String, s1: String ->
+            mWaitingRecyclerView.adapter = EventDetailAdapter(waitingUserList, isOwner,true) { s: String, s1: String ->
                 Timber.tag("Event Waiting RV click").i("$s $s1")
-
+                when(s){
+                    "add" -> {mPresenter.acceptEventDemand(mEid,s1)
+                        mPresenter.removeEventDemand(mEid,s1)
+                        Utils.snackBarPreset(findViewById(android.R.id.content),
+                            "Participant Ajouté !")
+                        refreshView()}
+                    "remove" -> {mPresenter.removeEventDemand(mEid,s1)
+                        Utils.snackBarPreset(findViewById(android.R.id.content),
+                            "Participant refusé  :( ")
+                        refreshView()}
+                }
+                mPresenter.getEventDemandInfos(mEid)
             }
         }
 

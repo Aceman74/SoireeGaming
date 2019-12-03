@@ -12,6 +12,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.data.models.User
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 
 
@@ -31,10 +32,17 @@ class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
-    fun updateWithItem(user: User, position: Int, listener: (String, String) -> Unit, isowner: Boolean) {
+    fun updateWithItem(
+        user: User,
+        position: Int,
+        listener: (String, String) -> Unit,
+        isowner: Boolean,
+        waitingList: Boolean
+    ) {
         var i = 0
 
-if(isowner){
+if(isowner && user.uid != FirebaseAuth.getInstance().uid){
+    if(waitingList)
     itemView.contact_add.visibility = View.VISIBLE
     itemView.contact_remove.visibility = View.VISIBLE
     itemView.contact_add.setOnClickListener {

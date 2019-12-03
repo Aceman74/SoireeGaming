@@ -15,11 +15,14 @@ import com.aceman.soireegaming.utils.base.BaseActivity
 import com.aceman.soireegaming.utils.base.BaseView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import timber.log.Timber
 import java.util.*
+
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.
@@ -41,8 +44,24 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         bottomNavigationView.selectedItemId = R.id.bot_accueil
         pb_layout_include.visibility = View.VISIBLE
         getLocation()
+        getTokenFCM()
     }
 
+    private fun getTokenFCM() {
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+                // Get new Instance ID token
+                val token = task.result?.token
+                mPresenter.updateToken(token)
+                // Log and toast
+                val msg = "FCM $token"
+                Timber.d("Token $msg")
+            })
+
+    }
 
     fun getLocation() {
         var latitude: Double = -1.0

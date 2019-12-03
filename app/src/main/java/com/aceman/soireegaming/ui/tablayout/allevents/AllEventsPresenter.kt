@@ -1,9 +1,7 @@
 package com.aceman.soireegaming.ui.tablayout.allevents
 
-import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.EventInfos
-import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -14,7 +12,6 @@ import timber.log.Timber
  */
 class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenterInterface {
     var firebaseRepository = FirestoreOperations
-    var user: MutableLiveData<List<User>> = MutableLiveData()
 
     /**
      * Getting current user check.

@@ -20,13 +20,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
-        <activity android:name="com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity" />
-        <activity android:name=".ui.event.detail.EventDetailActivity">
-        </activity>
+        <activity android:name=".ui.bottomnavigation.messages.chat.ChatLogActivity" />
+        <activity android:name=".ui.event.detail.EventDetailActivity"></activity>
         <activity
             android:name=".ui.event.create.CreateEventActivity"
-            android:parentActivityName=".ui.home.main.MainActivity">
-        </activity>
+            android:parentActivityName=".ui.home.main.MainActivity"></activity>
         <activity
             android:name=".ui.profile.edit.EditProfileActivity"
             android:parentActivityName=".ui.profile.ProfileActivity" />
@@ -42,6 +40,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.home.main.MainActivity" />
+
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".service.NotificationsService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -14,7 +14,6 @@ import timber.log.Timber
 class EventDetailActivityPresenter : BasePresenter(),
     EventDetailActivityContract.EventDetailActivityPresenterInterface {
     var firebaseRepository = FirestoreOperations
-    // var user: MutableLiveData<List<User>> = MutableLiveData()
     val mUser = FirebaseAuth.getInstance().currentUser!!
 
 
@@ -136,12 +135,12 @@ class EventDetailActivityPresenter : BasePresenter(),
             .add(ObjectId("userDemand", mUser.uid))
     }
 
-    override fun removeEventDemand(eventId: String) {
-        firebaseRepository.userCollection.document(mUser.uid).collection("EventsDemand")
+    override fun removeEventDemand(eventId: String, userId: String) {
+        firebaseRepository.userCollection.document(userId).collection("EventsDemand")
             .get().addOnSuccessListener {
                 for (item in it) {
                     if (item["id"] == eventId) {
-                        firebaseRepository.userCollection.document(mUser.uid)
+                        firebaseRepository.userCollection.document(userId)
                             .collection("EventsDemand")
                             .document(item.id).delete()
                     }
@@ -150,7 +149,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.eventCollection.document(eventId).collection("UsersDemand")
             .get().addOnSuccessListener {
                 for (item in it) {
-                    if (item["id"] == mUser.uid) {
+                    if (item["id"] == userId) {
                         firebaseRepository.eventCollection.document(eventId)
                             .collection("UsersDemand")
                             .document(item.id).delete()
@@ -159,13 +158,33 @@ class EventDetailActivityPresenter : BasePresenter(),
             }
     }
 
-        fun addEventToUserList(eventId: MutableList<String>) {
-            firebaseRepository.getUser(mUser.uid)
-                .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject<User>(User::class.java)
-                    if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                        firebaseRepository.setEventParticipation(eventId)
+    override fun removeEventParticipation(eventId: String, userId: String) {
+        firebaseRepository.userCollection.document(userId).collection("Events")
+            .get().addOnSuccessListener {
+                for (item in it) {
+                    if (item["id"] == eventId) {
+                        firebaseRepository.userCollection.document(userId)
+                            .collection("Events")
+                            .document(item.id).delete()
                     }
                 }
-        }
+            }
+        firebaseRepository.eventCollection.document(eventId).collection("Users")
+            .get().addOnSuccessListener {
+                for (item in it) {
+                    if (item["id"] == userId) {
+                        firebaseRepository.eventCollection.document(eventId)
+                            .collection("Users")
+                            .document(item.id).delete()
+                    }
+                }
+            }
     }
+
+    override fun acceptEventDemand(eventId: String, userId: String) {
+        firebaseRepository.userCollection.document(userId).collection("Events")
+            .add(ObjectId("event", eventId))
+        firebaseRepository.eventCollection.document(eventId).collection("Users")
+            .add(ObjectId("user", userId))
+    }
+}

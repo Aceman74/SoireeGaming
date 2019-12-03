@@ -2,9 +2,7 @@ package com.aceman.soireegaming.ui.home.main
 
 import android.location.Address
 import android.location.Geocoder
-import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
-import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +16,7 @@ import java.io.IOException
 class MainPresenter : BasePresenter(), MainContract.MainPresenterInterface {
 
     var firebaseRepository = FirestoreOperations
-    var user: MutableLiveData<List<User>> = MutableLiveData()
+    val mUser = FirebaseAuth.getInstance().currentUser!!
 
     override fun getCity(lat: Double, lon: Double, geocoder: Geocoder): String {
         var cityName = "City"
@@ -50,14 +48,17 @@ class MainPresenter : BasePresenter(), MainContract.MainPresenterInterface {
     }
 
     override fun saveUserLocationToFirebase(userLoc: UserLocation) {
-        val mUser = getCurrentUser()
-        firebaseRepository.getUser(mUser!!.uid).addOnSuccessListener {
+        firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.saveUserLocation(userLoc).addOnSuccessListener {
                     Timber.i("New Location saved!")
                 }.addOnFailureListener {
                     Timber.e("Failed to save User Location!")
                 }
         }
+    }
+
+    override fun updateToken(token: String?) {
+        firebaseRepository.userCollection.document(mUser.uid).update("Token",token)
     }
 
 }

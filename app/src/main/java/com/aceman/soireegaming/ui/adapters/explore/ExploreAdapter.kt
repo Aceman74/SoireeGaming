@@ -6,14 +6,14 @@
  *
  */
 
-package com.aceman.soireegaming.ui.adapters.eventdetail
+package com.aceman.soireegaming.ui.adapters.explore
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
-import com.aceman.soireegaming.data.models.User
+import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.utils.Utils
 
 /**
@@ -21,22 +21,22 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class EventDetailAdapter(var userList: MutableList<User>, var isOwner: Boolean, var waitingList : Boolean, val listener: (String, String) -> Unit) : RecyclerView.Adapter<EventDetailViewHolder>() {
+class ExploreAdapter(var eventList: List<EventInfos>, val listener: (String) -> Unit) : RecyclerView.Adapter<ExploreViewHolder>() {
 
     /**
      * Create the ViewHolder.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventDetailViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ExploreViewHolder {
         val v: View = LayoutInflater.from(parent.context)
-                .inflate(R.layout.contact_list_item, parent, false)
-        return EventDetailViewHolder(v)
+                .inflate(R.layout.event_item_horizontal, parent, false)
+        return ExploreViewHolder(v)
     }
 
     /**
      * Bind the estate to the view, add animation.
      */
-    override fun onBindViewHolder(holder: EventDetailViewHolder, position: Int) {
-        holder.updateWithItem(this.userList[position], position, listener, isOwner, waitingList)
+    override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) {
+        holder.updateWithItem(this.eventList[position], position, listener)
         Utils.setFadeAnimation(holder.itemView, holder.itemView.context)
     }
 
@@ -44,6 +44,6 @@ class EventDetailAdapter(var userList: MutableList<User>, var isOwner: Boolean, 
      * ItemCount.
      */
     override fun getItemCount(): Int {
-        return this.userList.size
+        return this.eventList.size
     }
 }

@@ -20,6 +20,7 @@ import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_login.*
@@ -41,8 +42,9 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     }
 
     override fun isLoggedUser() {
-        when (mPresenter.getCurrentUser()?.uid) {
+        when (FirebaseAuth.getInstance().currentUser) {
             null -> {
+                signOutUserFromFirebase()
                 main_login_bt.text = "Créer un compte / Se connecter"
                 main_login_known_user_tv.visibility = View.INVISIBLE
                 main_login_bt.setOnClickListener {
@@ -169,7 +171,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
 
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
-                val user = mPresenter.getCurrentUser()
+                val user = FirebaseAuth.getInstance().currentUser
                 if (user != null ){
 
                     val date = Utils.todayDate

@@ -1,6 +1,5 @@
 package com.aceman.soireegaming.ui.bottomnavigation.messages
 
-import androidx.lifecycle.MutableLiveData
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.base.BasePresenter
@@ -13,7 +12,7 @@ import timber.log.Timber
  */
 class MessagesPresenter : BasePresenter(), MessagesContract.MessagesPresenterInterface {
     var firebaseRepository = FirestoreOperations
-    var user: MutableLiveData<List<User>> = MutableLiveData()
+    var mUser = FirebaseAuth.getInstance().currentUser!!
 
     /**
      * Getting current user check.
@@ -27,7 +26,7 @@ class MessagesPresenter : BasePresenter(), MessagesContract.MessagesPresenterInt
     override fun getEngagedChat() {
         if (getCurrentUser() != null) {
             val list = mutableListOf<String>()
-            firebaseRepository.getUserList()
+            firebaseRepository.userCollection.document(mUser.uid).collection("engagedChatChannels").get()
                 .addOnSuccessListener {
                     for (document in it) {
                         Timber.tag("Messages").d( "${document.id} => ${document.data}")

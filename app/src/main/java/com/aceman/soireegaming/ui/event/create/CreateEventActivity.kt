@@ -63,6 +63,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
    private var eventId : String = ""
    private var AUTOCOMPLETE_REQUEST_CODE = 100
    var  placeLatLng : LatLng = LatLng(-1.0,-1.0)
+    var dateMin = ""
     var fields: List<Place.Field> =
         listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
     private lateinit var mMap: GoogleMap
@@ -131,6 +132,7 @@ startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
                 this,
                 OnDateSetListener { _, year, monthOfYear, dayOfMonth -> date_event_picker.text =
                     dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                    dateMin = "$dayOfMonth/$monthOfYear/$year"
                     dateList[0] = date_event_picker.text.toString()
                 },
                 year,
@@ -141,6 +143,7 @@ startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
             picker.show()
         }
         date_event_picker_2.setOnClickListener {
+            if(dateMin != ""){
             val cldr: Calendar = Calendar.getInstance()
             val day: Int = cldr.get(Calendar.DAY_OF_MONTH)
             val month: Int = cldr.get(Calendar.MONTH)
@@ -155,8 +158,11 @@ startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
                 month,
                 day
             )
-            picker2.datePicker.minDate = Utils.dateWithBSToMillis(dateList[0])
+            picker2.datePicker.minDate = Utils.dateWithBSToMillis(dateMin)
             picker2.show()
+
+            }else
+                Utils.snackBarPreset(findViewById(android.R.id.content),"Choissisez une date de début !")
         }
         date_hour_picker.setOnClickListener {
             val cldr: Calendar = Calendar.getInstance()

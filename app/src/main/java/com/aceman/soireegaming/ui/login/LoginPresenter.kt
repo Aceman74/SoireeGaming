@@ -3,8 +3,6 @@ package com.aceman.soireegaming.ui.login
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.base.BasePresenter
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber
 
 /**
@@ -12,16 +10,7 @@ import timber.log.Timber
  */
 class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
     var firebaseRepository = FirestoreOperations
-    // var user: MutableLiveData<List<User>> = MutableLiveData()
 
-    /**
-     * Getting current user check.
-     *
-     * @return actual user
-     */
-    override fun getCurrentUser(): FirebaseUser? {
-        return FirebaseAuth.getInstance().currentUser
-    }
 
     override fun saveUserToFirebase(userItem: User) {
 

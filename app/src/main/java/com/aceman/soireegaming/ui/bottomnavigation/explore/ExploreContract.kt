@@ -1,5 +1,7 @@
 package com.aceman.soireegaming.ui.bottomnavigation.explore
 
+import com.aceman.soireegaming.data.models.EventInfos
+import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.base.BaseView
 
 /**
@@ -8,7 +10,15 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 interface ExploreContract {
 
-interface ExplorePresenterInterface
+interface ExplorePresenterInterface {
+    fun getUserDataFromFirestore()
+    fun getAllEvents()
+    fun addEventInfos(eventId: String)
+}
 
-    interface ExploreViewInterface : BaseView
+    interface ExploreViewInterface : BaseView {
+        fun updateUI(currentUser: User)
+        fun updateEventList(list: MutableList<String>)
+        fun updateEvents(event: EventInfos)
+    }
 }

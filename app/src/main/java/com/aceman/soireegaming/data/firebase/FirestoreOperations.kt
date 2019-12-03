@@ -98,7 +98,7 @@ object FirestoreOperations {
         return eventCollection.get()
     }
 
-    fun getChatChannel(
+    fun getOrCreateChatChannel(
         otherUserId: String,
         onComplete: (channelId: String) -> Unit
     ) {
@@ -108,7 +108,11 @@ object FirestoreOperations {
                 if (it.exists()) {
                     onComplete(it["channelId"] as String)
                     return@addOnSuccessListener
-                } else onComplete("empty")
+                } else {
+                    createChatChannel(otherUserId)
+                    onComplete("channelId")
+                    return@addOnSuccessListener
+                }
             }
     }
 

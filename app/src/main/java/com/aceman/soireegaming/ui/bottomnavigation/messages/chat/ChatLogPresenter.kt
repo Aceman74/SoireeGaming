@@ -40,7 +40,7 @@ class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterf
     }
 
     override fun getChannel(mOtherUser: String, onComplete: (channelId: String) -> Unit) {
-        firebaseRepository.getChatChannel(mOtherUser){
+        firebaseRepository.getOrCreateChatChannel(mOtherUser){
           onComplete(it)
        }
     }

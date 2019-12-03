@@ -14,6 +14,7 @@ import com.aceman.soireegaming.R
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.ui.about.AboutActivity
+import com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity
 import com.aceman.soireegaming.ui.profile.edit.EditProfileActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
@@ -21,6 +22,7 @@ import com.aceman.soireegaming.utils.base.BaseView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_profile.*
 
 
@@ -43,7 +45,7 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     }
 
     private fun userOrIntent() {
-        if(mIntent == null){
+        if(mIntent == null || mIntent == FirebaseAuth.getInstance().currentUser!!.uid){
             mPresenter.getUserDataFromFirestore()
             chipSetting()
             profile_edit_btn.setOnClickListener {
@@ -55,6 +57,10 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
             console_ac.visibility = View.GONE
             style_ac.visibility = View.GONE
             profile_edit_btn.text = "Envoyer un message"
+            profile_edit_btn.setOnClickListener {
+                val intent = Intent(this, ChatLogActivity::class.java)
+                intent.putExtra("uid",mIntent)
+                startActivity(intent) }
             }
 
     }
@@ -190,8 +196,10 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     private fun clearAutocomplete() {
         console_ac.clearFocus()
         console_ac.text.clear()
+        console_ac.hint = "Rechercher"
         style_ac.clearFocus()
         style_ac.text.clear()
+        style_ac.hint = "Rechercher"
     }
 
     fun addChip(chipName: String, group: String) {

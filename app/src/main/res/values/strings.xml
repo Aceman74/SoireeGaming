@@ -121,7 +121,14 @@
         <item>Non</item>
         <item>Oui</item>
     </string-array>
-
+    <string-array name="distance">
+        <item>Toutes</item>
+        <item>5 Km</item>
+        <item>10 Km</item>
+        <item>15 Km</item>
+        <item>20 Km</item>
+        <item>+25 Km</item>
+    </string-array>
     <array name="age">
         <item>"18-25 ans"</item>
         <item>"26-30 ans"</item>
@@ -132,5 +139,23 @@
         <item>"51-55 ans"</item>
         <item>"26-60 ans"</item>
         <item>"+60 ans"</item>
+    </array>
+    <array name="console">
+        <item>"Toutes"</item>
+        <item>"PS4"</item>
+        <item>"Xbox One"</item>
+        <item>"PC"</item>
+        <item>"Switch"</item>
+        <item>"Wii U"</item>
+        <item>"PS3"</item>
+        <item>"Xbox 360"</item>
+        <item>"3DS"</item>
+        <item>"Xbox"</item>
+        <item>"PS2"</item>
+        <item>"Wii"</item>
+        <item>"Gamecube"</item>
+        <item>"Dreamcast"</item>
+        <item>"Android"</item>
+        <item>"Autre"</item>
     </array>
 </resources>

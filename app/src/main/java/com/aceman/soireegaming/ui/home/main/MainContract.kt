@@ -16,6 +16,7 @@ interface MainPresenterInterface {
     fun getCity(lat: Double, lon: Double, geocoder: Geocoder): String
     fun getCurrentUser(): FirebaseUser?
     fun saveUserLocationToFirebase(userLoc: UserLocation)
+    fun updateToken(token: String?)
 
 
 }

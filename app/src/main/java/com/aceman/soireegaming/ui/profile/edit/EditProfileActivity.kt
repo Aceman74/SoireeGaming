@@ -27,6 +27,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
     private val mPresenter: EditProfilePresenter =
         EditProfilePresenter()
     private var file = File("")
+    private var changedPic = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +80,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
             Activity.RESULT_OK -> {
                 //Image Uri will not be null for RESULT_OK
                 val fileUri = data!!.data!!
+                changedPic = true
 
                 //You can get File object from intent
                  file = ImagePicker.getFile(data)!!
@@ -151,6 +153,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                     edit_profile_gender_switch.isChecked))
                 mPresenter.updateNameOnFirestore(edit_profile_name_et.text.toString())
                 mPresenter.updateEmailOnFirestore(edit_profile_email_et.text.toString())
+                if(changedPic)
                 saveToStorage(file.toUri())
                 true
             }
