@@ -39,9 +39,11 @@
                 android:id="@+id/create_1_cv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="1dp"
                 android:orientation="vertical"
-                app:cardElevation="2dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/create_2_cv"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,8 +90,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/create_1_cv"
-                app:cardElevation="2dp"
-                android:layout_margin="1dp">
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,21 +134,18 @@
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp" />
 
-                    <TextView
-                        style="@style/TitleFontMainBlackTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:padding="10dp"
-                        android:text="@string/locality" />
-
                     <LinearLayout
-                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:padding="5dp">
-
+                        <TextView
+                            style="@style/TitleFontMainBlackTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:padding="10dp"
+                            android:text="@string/locality" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -174,12 +174,25 @@
                         android:layout_gravity="center"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="200dp"
                         tools:context="com.example.mapwithmarker.MapsMarkerActivity"
                         map:cameraZoom="12"
                         map:mapType="terrain"
                         map:liteMode="true" />
-                    <TextView
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/date_and_hour_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
                     style="@style/TitleFontMainBlackTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -187,115 +200,128 @@
                     android:padding="10dp"
                     android:text="@string/date_and_hour" />
 
-                    <RelativeLayout
-                        android:id="@+id/create_date_1_ly"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/create_date_1_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/date_from_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@color/lightGrey"
-                            android:minWidth="60dp"
-                            android:padding="5dp"
-                            android:text="@string/begin"
-                            android:textColor="@android:color/black"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/date_from_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/lightGrey"
+                        android:minWidth="150dp"
+                        android:padding="5dp"
+                        android:text="@string/begin"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/date_event_picker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="120dp"
-                            android:padding="5dp"
-                            android:hint="@string/choose_date_hint"
-                            android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"
-                            android:layout_toEndOf="@+id/date_from_tv"/>
-                        <TextView
-                            android:id="@+id/date_hour"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/from_hour"
-                            android:minWidth="90dp"
-                            android:background="@color/lightGrey"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:padding="5dp"
-                            android:layout_toEndOf="@+id/date_event_picker"/>
+                    <TextView
+                        android:id="@+id/date_event_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150dp"
+                        android:padding="5dp"
+                        android:hint="@string/choose_date_hint"
+                        android:textColorHint="@color/greyTextColor"
+                        android:textColor="@android:color/black"/>
 
-
-                        <TextView
-                            android:id="@+id/date_hour_picker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/date_hour"
-                            android:hint="@string/choose_hour"
-                            android:minWidth="100dp"
-                            android:padding="5dp"
-                            android:textColor="@android:color/black"
-                            android:textColorHint="@color/greyTextColor" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:id="@+id/create_date_2_ly"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/date_to_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/end"
-                            android:minWidth="60dp"
-                            android:background="@color/lightGrey"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:padding="5dp"/>
-
-                        <TextView
-                            android:id="@+id/date_event_picker_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="120dp"
-                            android:padding="5dp"
-                            android:hint="@string/choose_date_hint"
-                            android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"
-                            android:layout_toEndOf="@+id/date_to_tv"/>
-                        <TextView
-                            android:id="@+id/date_hour_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/until_hour"
-                            android:minWidth="90dp"
-                            android:background="@color/lightGrey"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"
-                            android:padding="5dp"
-                            android:layout_toEndOf="@+id/date_event_picker_2"/>
-
-
-                        <TextView
-                            android:id="@+id/date_hour_picker_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="100dp"
-                            android:padding="5dp"
-                            android:hint="@string/choose_hour"
-                            android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"
-                            android:layout_toEndOf="@+id/date_hour_2"/>
-                    </RelativeLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/create_date_12_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/from_hour"
+                        android:minWidth="150dp"
+                        android:background="@color/lightGrey"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"/>
+
+
+                    <TextView
+                        android:id="@+id/date_hour_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/choose_hour"
+                        android:minWidth="150dp"
+                        android:padding="5dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@color/greyTextColor" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/create_date_2_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_to_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/end"
+                        android:minWidth="150dp"
+                        android:background="@color/lightGrey"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"/>
+
+                    <TextView
+                        android:id="@+id/date_event_picker_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150dp"
+                        android:padding="5dp"
+                        android:hint="@string/choose_date_hint"
+                        android:textColorHint="@color/greyTextColor"
+                        android:textColor="@android:color/black"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/create_date_21_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/date_hour_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/until_hour"
+                        android:minWidth="150dp"
+                        android:background="@color/lightGrey"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"/>
+
+
+                    <TextView
+                        android:id="@+id/date_hour_picker_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150dp"
+                        android:padding="5dp"
+                        android:hint="@string/choose_hour"
+                        android:textColorHint="@color/greyTextColor"
+                        android:textColor="@android:color/black"/>
+                </LinearLayout>
+            </LinearLayout>
             </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/create_3_cv"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:orientation="vertical"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_marginBottom="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -374,6 +400,7 @@
                                         android:layout_height="match_parent"
                                         app:chipSpacingHorizontal="10dp"
                                         app:chipSpacingVertical="10dp"
+                                        android:layout_margin="5dp"
                                         android:layout_below="@+id/entry_chip_txt"/>
                                 </androidx.core.widget.NestedScrollView>
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -436,6 +463,7 @@
                                         android:layout_height="match_parent"
                                         app:chipSpacingHorizontal="10dp"
                                         app:chipSpacingVertical="10dp"
+                                        android:layout_margin="5dp"
                                         android:layout_below="@+id/entry_chip_txt">
 
 
@@ -455,8 +483,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/create_3_cv"
-                app:cardElevation="2dp"
-                android:layout_margin="1dp">
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -478,7 +507,7 @@
                         android:padding="10dp"
                         android:text="@string/option_advertisement" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/create_1_param_ly"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -486,30 +515,26 @@
 
                     <TextView
                         android:id="@+id/private_tv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/private_party_text"
                         android:background="@color/lightGrey"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:padding="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                        android:layout_weight="0.5"/>
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/private_event_spinner"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:minWidth="150dp"
-                        android:padding="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:textAlignment="center"
                         android:entries="@array/private_event"
                         android:theme="@style/ThemeOverlay.AppCompat.Light"
-                        android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
-                    <RelativeLayout
+                        android:layout_weight="0.5"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:id="@+id/create_2_param_ly"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -517,27 +542,28 @@
 
                         <TextView
                             android:id="@+id/gender_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/open_to_gender"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:layout_weight="0.5"/>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/gender_event_spinner"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:textAlignment="center"
                             android:entries="@array/gender_alt"
                             android:theme="@style/ThemeOverlay.AppCompat.Light"
-                            android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
+                            android:layout_weight="0.5"/>
+                    </LinearLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/create_3_param_ly"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -545,26 +571,27 @@
 
                         <TextView
                             android:id="@+id/eat_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/eat_and_drink"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:layout_weight="0.5"/>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/eat_event_spinner"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:textAlignment="center"
                             android:entries="@array/eat"
                             android:theme="@style/ThemeOverlay.AppCompat.Light"
-                            android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
-                    <RelativeLayout
+                            android:layout_weight="0.5"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:id="@+id/create_4_param_ly"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -572,25 +599,26 @@
 
                         <TextView
                             android:id="@+id/sleep_tv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="@string/sleep_on"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:layout_weight="0.5"/>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner
                             android:id="@+id/sleep_event_spinner"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:minWidth="150dp"
-                            android:padding="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:textAlignment="center"
                             android:entries="@array/sleep"
                             android:theme="@style/ThemeOverlay.AppCompat.Light"
-                            android:layout_alignParentEnd="true"/>
-                    </RelativeLayout>
+                            android:layout_weight="0.5"/>
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

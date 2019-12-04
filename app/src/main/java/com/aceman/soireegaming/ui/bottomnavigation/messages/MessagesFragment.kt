@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.data.models.DateStamp
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.ui.adapters.contactlist.ContactListAdapter
 import com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity
@@ -25,14 +26,16 @@ import timber.log.Timber
 class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInterface {
     private val mPresenter: MessagesPresenter = MessagesPresenter()
     lateinit var mRecyclerView: RecyclerView
-    private var listSize = 0
+    private var chanList = mutableListOf<String>()
     private var userList = mutableListOf<User>()
+    private var dateList = mutableListOf<DateStamp>()
 
     companion object {
         fun newInstance(): MessagesFragment {
             return MessagesFragment()
         }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,17 +51,30 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         mPresenter.getEngagedChat()
     }
 
-    override fun updateUI(list: MutableList<String>) {
-        listSize = list.size
-        for(user in list){
+    override fun updateUI(
+        list: MutableList<String>,
+        chanList: MutableList<String>
+    ) {
+        this.chanList = chanList
+        for (user in list) {
             mPresenter.addUserInfos(user)
         }
     }
 
     override fun updateUsers(user: User) {
         userList.add(user)
-        if(userList.size == listSize)
-            configureRecyclerView()
+        configureRecyclerView()
+        var i = 0
+        for (item in chanList) {
+            mPresenter.getLastMessageTime(item).addOnCompleteListener {
+                var date = it.result!!.toObject(DateStamp::class.java)
+                dateList.add(date!!)
+                i++
+                if (i == userList.size)
+                    mRecyclerView.adapter!!.notifyDataSetChanged()
+            }
+        }
+
     }
 
     /**
@@ -69,15 +85,15 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         mRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
-                DividerItemDecoration.HORIZONTAL
+                DividerItemDecoration.VERTICAL
             )
         )
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mRecyclerView.adapter = ContactListAdapter(userList) {
+        mRecyclerView.adapter = ContactListAdapter(userList, dateList) {
             Timber.tag("Home Fragment RV click").i(it)
-            val intent = Intent(requireContext(),ChatLogActivity::class.java)
-            intent.putExtra("uid",it)
+            val intent = Intent(requireContext(), ChatLogActivity::class.java)
+            intent.putExtra("uid", it)
             startActivity(intent)
 
         }

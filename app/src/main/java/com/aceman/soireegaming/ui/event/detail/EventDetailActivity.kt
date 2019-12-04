@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
@@ -192,12 +191,6 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
      */
     fun configureRecyclerView() {
         mRecyclerView = event_detail_rv
-        mRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                applicationContext,
-                DividerItemDecoration.HORIZONTAL
-            )
-        )
         mRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = EventDetailAdapter(userList, isOwner, false) { s: String, s1: String ->
@@ -225,12 +218,6 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
          */
         fun configureWaitingRecyclerView() {
             mWaitingRecyclerView = event_detail_waiting_rv
-            mWaitingRecyclerView.addItemDecoration(
-                DividerItemDecoration(
-                    applicationContext,
-                    DividerItemDecoration.HORIZONTAL
-                )
-            )
             mWaitingRecyclerView.layoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             mWaitingRecyclerView.adapter = EventDetailAdapter(waitingUserList, isOwner,true) { s: String, s1: String ->

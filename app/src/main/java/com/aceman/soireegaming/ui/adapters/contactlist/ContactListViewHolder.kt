@@ -10,6 +10,7 @@ package com.aceman.soireegaming.ui.adapters.contactlist
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.aceman.soireegaming.data.models.DateStamp
 import com.aceman.soireegaming.data.models.User
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.contact_list_item.view.*
@@ -32,11 +33,12 @@ class ContactListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
     /**
      * Update the view with the picture, and handle the click on it who opens DetailActivity.
      */
-    fun updateWithItem(user: User, position: Int, listener: (String) -> Unit) {
+    fun updateWithItem(user: User, date: MutableList<DateStamp>, position: Int, listener: (String) -> Unit) {
         var i = 0
 
         itemView.message_list_title.text = user.name
-        itemView.message_list_date.text = "29/11/1990"
+        if(date.size > 0)
+        itemView.message_list_date.text = "${date[position].date} ${date[position].hour}"
         Glide.with(itemView)
             .load(user.urlPicture)
             .circleCrop()

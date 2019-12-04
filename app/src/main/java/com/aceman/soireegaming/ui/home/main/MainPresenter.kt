@@ -3,6 +3,7 @@ package com.aceman.soireegaming.ui.home.main
 import android.location.Address
 import android.location.Geocoder
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
+import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
@@ -45,6 +46,17 @@ class MainPresenter : BasePresenter(), MainContract.MainPresenterInterface {
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
+    }
+
+    override fun getLocation(onComplete: (isNew: Boolean) -> Unit
+    ) {
+        firebaseRepository.userCollection.document(mUser.uid).get().addOnSuccessListener {
+           var user = it.toObject(User::class.java)
+            if (user!!.userLocation.city == "SG")
+            onComplete(true)
+            else
+                onComplete(false)
+        }
     }
 
     override fun saveUserLocationToFirebase(userLoc: UserLocation) {

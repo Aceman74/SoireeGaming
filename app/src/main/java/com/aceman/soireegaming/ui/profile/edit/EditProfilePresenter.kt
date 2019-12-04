@@ -3,6 +3,7 @@ package com.aceman.soireegaming.ui.profile.edit
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos
+import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.utils.base.BasePresenter
 import com.google.firebase.auth.FirebaseAuth
 import timber.log.Timber
@@ -48,6 +49,11 @@ class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePre
             firebaseRepository.updatePicture(toUri)
         }
     }
+
+    override fun updateLocationOnFirestore(location: UserLocation){
+        firebaseRepository.userCollection.document(mUser.uid).update("userLocation", location)
+    }
+
     override fun updateEmailOnFirestore(email: String){
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updateEmail(email).addOnSuccessListener {

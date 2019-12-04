@@ -3,6 +3,7 @@ package com.aceman.soireegaming.data.firebase
 import android.content.Context
 import com.aceman.soireegaming.data.models.*
 import com.aceman.soireegaming.ui.adapters.chatlog.item.TextMessageItem
+import com.aceman.soireegaming.utils.Utils
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -170,8 +171,9 @@ object FirestoreOperations {
         chatCollection.document(channelId)
             .collection("messages")
             .add(message)
+        val date = DateStamp(Utils.todayDate,Utils.isTime)
         chatCollection.document(channelId)
-            .collection("last").add(message)
+            .collection("last").document("last").set(date)
     }
 
 }

@@ -69,6 +69,11 @@ object Utils {
             return dateFormat.format(Date())
         }
 
+    val isTime: String
+        get() {
+            val time = SimpleDateFormat("HH:mm")
+            return time.format(Date())
+        }
     /**
      * Start a fade animation, for Recyclerview items.
      */

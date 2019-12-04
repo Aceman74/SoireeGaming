@@ -8,10 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
@@ -26,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -41,7 +40,7 @@ import kotlin.math.roundToInt
  * A simple [Fragment] subclass.
  */
 class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterface,
-    OnMapReadyCallback, SeekBar.OnSeekBarChangeListener {
+    OnMapReadyCallback {
     private val mPresenter: ExplorePresenter = ExplorePresenter()
     private lateinit var mMap: GoogleMap
     lateinit var mMarker: Marker
@@ -51,6 +50,7 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
     lateinit var mRecyclerView: RecyclerView
     var mDate = ""
     var mFilteredList = mutableListOf<EventInfos>()
+    lateinit var userLoc: LatLng
 
     companion object {
         fun newInstance(): ExploreFragment {
@@ -83,12 +83,13 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
     }
 
     private fun filterSearch() {
-       var food = explore_food_tv.selectedItemPosition
-       var sleep = explore_sleep_tv.selectedItemPosition
-       var gender = explore_gender_tv.selectedItemPosition
-       var console = explore_console_tv.selectedItemPosition
-       var distance = explore_distance_tv.selectedItemPosition
-        when(distance){
+        var food = explore_food_tv.selectedItemPosition
+        var sleep = explore_sleep_tv.selectedItemPosition
+        var gender = explore_gender_tv.selectedItemPosition
+        var console = explore_console_tv.selectedItemPosition
+        var distance = explore_distance_tv.selectedItemPosition
+        var stringConsole = resources.getStringArray(R.array.console)[console]
+        when (distance) {
             1 -> distance = 5
             2 -> distance = 10
             3 -> distance = 15
@@ -105,7 +106,7 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     explore_date_tv.text =
                         dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
-                     mDate = explore_date_tv.text.toString()
+                    mDate = explore_date_tv.text.toString()
                 },
                 year,
                 month,
@@ -114,12 +115,12 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
             picker.datePicker.minDate = System.currentTimeMillis() - 1000
             picker.show()
         }
-        if (food == 0 && sleep == 0 && gender == 0 && console == 0 && mDate == "" && distance == 0){
+        if (food == 0 && sleep == 0 && gender == 0 && console == 0 && mDate == "" && distance == 0) {
             mFilteredList.clear()
             mFilteredList.addAll(mEventsDetailsList)
             configureRecyclerView()
             sortByDate()
-        }else{
+        } else {
             mFilteredList.clear()
             mFilteredList.addAll(mEventsDetailsList)
             var userLocation = Location("user")
@@ -129,30 +130,33 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
             var eventLocation = Location("event")
 
             var i = 0
-            for(item in mEventsDetailsList){
+            for (item in mEventsDetailsList) {
                 eventLocation.latitude = item.location.latitude
                 eventLocation.longitude = item.location.longitude
-              var distanceEvent = userLocation.distanceTo(eventLocation).roundToInt()
+                var distanceEvent = userLocation.distanceTo(eventLocation).roundToInt() / 1000
                 when {
-                    mDate != "" && Utils.dateWithBSToMillis(item.dateList[0]) > Utils.dateWithBSToMillis(mDate) -> {
-                        mFilteredList.removeAt(i)
-                        i++
+                    mDate != "" && Utils.dateWithBSToMillis(item.dateList[0]) > Utils.dateWithBSToMillis(
+                        mDate
+                    ) -> {
+                        mFilteredList.removeAt(mFilteredList.indexOf(item))
                     }
-                    item.eventMisc.eat != food -> {
-                        mFilteredList.removeAt(i)
-                        i++
+                    item.eventMisc.eat != food && food != 0 -> {
+                        mFilteredList.removeAt(mFilteredList.indexOf(item))
                     }
-                    item.eventMisc.sleep != sleep -> {
-                        mFilteredList.removeAt(i)
-                        i++
+                    item.eventMisc.sleep != sleep && sleep != 0 -> {
+                        mFilteredList.removeAt(mFilteredList.indexOf(item))
                     }
-                    item.eventMisc.gender != gender -> {
-                        mFilteredList.removeAt(i)
-                        i++
+                    item.eventMisc.gender != gender && gender != 0 -> {
+                        mFilteredList.removeAt(mFilteredList.indexOf(item))
                     }
-                    distanceEvent > distance -> {
-                        mFilteredList.removeAt(i)
-                        i++
+                    distanceEvent > distance && distance != 0 -> {
+                        mFilteredList.removeAt(mFilteredList.indexOf(item))
+                    }
+                    stringConsole != "Toutes" -> {
+                        for (chip in item.chipList) {
+                            if (stringConsole == chip.name && !chip.check)
+                                mFilteredList.removeAt(mFilteredList.indexOf(item))
+                        }
                     }
                 }
             }
@@ -191,36 +195,59 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
      */
     fun configureRecyclerView() {
         mRecyclerView = explore_rv
-        mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
-        mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = ExploreAdapter(mFilteredList) {
             Timber.tag("All Events RV click").i(it)
-            if(it.length < 9)
+            if (it.length < 9)
                 launchEventDetailActivity(it)
             else
                 launchProfileDetailActivity(it)
+        }
+        configureMarkers(mFilteredList)
+    }
+
+    private fun configureMarkers(mFilteredList: MutableList<EventInfos>) {
+        mMap.clear()
+        mMarker = mMap.addMarker(
+            MarkerOptions().position(userLoc)
+                .title("Tu es ici !")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user))
+        )
+        mMarker.showInfoWindow()
+
+        for (item in mFilteredList) {
+            var itemLoc = LatLng(item.location.latitude, item.location.longitude)
+            mMap.addMarker(
+                MarkerOptions()
+                    .position(itemLoc)
+                    .title(item.title)
+            )
+
         }
     }
 
     private fun launchProfileDetailActivity(uid: String) {
         val intent = Intent(requireContext(), ProfileActivity::class.java)
-        intent.putExtra("uid",uid)
+        intent.putExtra("uid", uid)
         startActivity(intent)
     }
 
     private fun launchEventDetailActivity(eid: String) {
         val intent = Intent(requireContext(), EventDetailActivity::class.java)
-        intent.putExtra("eid",eid)
+        intent.putExtra("eid", eid)
         startActivity(intent)
     }
 
     override fun updateUI(currentUser: User) {
         mUser = currentUser
-        var userLoc = LatLng(mUser.userLocation.latitude, mUser.userLocation.longitude)
+        userLoc = LatLng(mUser.userLocation.latitude, mUser.userLocation.longitude)
         mMarker = mMap.addMarker(
             MarkerOptions().position(userLoc)
-                .title(mUser.userLocation.city)
+                .title("Tu es ici !")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_user))
         )
+        mMarker.showInfoWindow()
         mMap.moveCamera(CameraUpdateFactory.newLatLng(userLoc))
         mMap.cameraPosition.zoom.absoluteValue
         mPresenter.getAllEvents()
@@ -241,18 +268,6 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         mEventsDetailsList.sortWith(Comparator { o1, o2 -> o1.dateList[0].compareTo(o2.dateList[0]) })
         mEventsDetailsList.reverse()
         mRecyclerView.adapter!!.notifyDataSetChanged()
-    }
-
-    override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

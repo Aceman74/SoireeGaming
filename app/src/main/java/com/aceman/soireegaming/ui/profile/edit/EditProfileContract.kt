@@ -2,6 +2,7 @@ package com.aceman.soireegaming.ui.profile.edit
 
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserInfos
+import com.aceman.soireegaming.data.models.UserLocation
 import com.aceman.soireegaming.utils.base.BaseView
 
 /**
@@ -16,6 +17,7 @@ interface EditProfilePresenterInterface {
     fun updateEmailOnFirestore(email: String)
     fun updateNameOnFirestore(name: String)
     fun updatePictureOnFirestore(toUri: String)
+    fun updateLocationOnFirestore(location: UserLocation)
 }
 
     interface EditProfileViewInterface : BaseView {

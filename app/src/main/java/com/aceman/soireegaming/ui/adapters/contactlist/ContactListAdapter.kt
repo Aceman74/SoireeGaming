@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.data.models.DateStamp
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.utils.Utils
 
@@ -21,7 +22,7 @@ import com.aceman.soireegaming.utils.Utils
  *
  * Adapter who shows the Estate on FragmentList in MainActivity and Search.
  */
-class ContactListAdapter(var userList: MutableList<User>, val listener: (String) -> Unit) : RecyclerView.Adapter<ContactListViewHolder>() {
+class ContactListAdapter(var userList: MutableList<User>, var dateList: MutableList<DateStamp>, val listener: (String) -> Unit) : RecyclerView.Adapter<ContactListViewHolder>() {
 
     /**
      * Create the ViewHolder.
@@ -36,7 +37,7 @@ class ContactListAdapter(var userList: MutableList<User>, val listener: (String)
      * Bind the estate to the view, add animation.
      */
     override fun onBindViewHolder(holder: ContactListViewHolder, position: Int) {
-        holder.updateWithItem(this.userList[position], position, listener)
+        holder.updateWithItem(this.userList[position], dateList, position, listener)
         Utils.setFadeAnimation(holder.itemView, holder.itemView.context)
     }
 

@@ -35,9 +35,22 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_email_et"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_email_et"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_email_et"
+                app:layout_constraintVertical_bias="0.48000002"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <ImageView
                 android:id="@+id/edit_profile_picture_iv"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
+                android:background="@drawable/shape_blue_round"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -57,7 +70,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.043"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture_iv" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -103,7 +116,7 @@
                 android:id="@+id/edit_profile_email_et"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:ems="14"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:text="@string/test_hotmail"
@@ -134,7 +147,7 @@
                 android:id="@+id/edit_profile_name_et"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:ems="14"
                 android:inputType="text"
                 android:maxLines="1"
                 android:text="@string/test_name"
@@ -147,6 +160,71 @@
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="@+id/textView2"
                 app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="5dp"
+                android:text="@string/city_profile"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.045"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_picture_iv" />
+
+            <TextView
+                android:id="@+id/edit_profile_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="14"
+                android:text="address"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.515"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/textView6"
+                app:layout_constraintVertical_bias="0.555" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_address_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.36"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_address_tv"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_address_tv"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_name_et"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.428"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_name_et"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_name_et"
+                app:layout_constraintVertical_bias="0.48000002"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+            <TextView
+                android:id="@+id/click_here_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clique ici !"
+                android:visibility="gone"
+                android:textColor="@color/quantum_googgreen"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_profile_address_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintTop_toTopOf="@+id/edit_profile_picture_iv"
+                app:layout_constraintVertical_bias="0.992" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

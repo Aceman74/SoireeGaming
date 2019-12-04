@@ -53,7 +53,7 @@ if(isowner && user.uid != FirebaseAuth.getInstance().uid){
     }
 }
         itemView.message_list_title.text = user.name
-        itemView.message_list_date.text = "29/11/1990"
+        itemView.message_list_date.text = user.userLocation.city
         Glide.with(itemView)
             .load(user.urlPicture)
             .circleCrop()

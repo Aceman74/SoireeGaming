@@ -13,11 +13,11 @@
     <string name="locality">Lieu</string>
     <string name="city">Ville</string>
     <string name="date_and_hour">Date et Horaires</string>
-    <string name="begin">Début :</string>
+    <string name="begin">Date de début :</string>
     <string name="choose_date_hint">choisir la date</string>
     <string name="from_hour">A partir de :</string>
     <string name="choose_hour">choisir l\'heure</string>
-    <string name="end">Fin :</string>
+    <string name="end">Date de fin :</string>
     <string name="until_hour">Jusqu\'à :</string>
     <string name="type">Type</string>
     <string name="console_pc_cg">Console(s)/ PC :</string>
@@ -60,7 +60,7 @@
     <string name="age_edit_profile">Age (modifier profil)</string>
     <string name="gender_edit_profile">Genre (modifier profil)</string>
     <string name="r_putation">Réputation</string>
-    <string name="loading_text">Chargement utilisateur \n  en cours…</string>
+    <string name="loading_text">Chargement \n  en cours…</string>
     <string name="men_notif_text">Gérer Notifications</string>
     <string name="menu_about_text">A propos de Soirée Gaming</string>
     <string name="menu_logout_text">Déconnexion</string>
@@ -91,6 +91,7 @@
     <string name="choose_date">Choisis la date</string>
     <string name="console">Console :</string>
     <string name="choose_console">Choisis une console</string>
+    <string name="city_profile">Ville :</string>
 
     <string-array name="gender">
         <item>Masculin</item>

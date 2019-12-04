@@ -9,7 +9,7 @@
         android:id="@+id/appbar_ly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lightGrey">
+        android:background="@color/primaryTextColor">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapse_ly"
@@ -41,15 +41,17 @@
                     android:id="@+id/my_event_cv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    app:cardElevation="2dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardElevation="10dp"
+                    app:cardCornerRadius="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="3dp">
+                        android:layout_marginTop="3dp"
+                        android:background="@color/primaryTextColor">
 
                         <TextView
                             android:id="@+id/my_events_title"
@@ -85,7 +87,16 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
         <TextView
             android:id="@+id/textView3"
             style="@style/TitleFontMainBlackTxt"
@@ -121,6 +132,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tab_example" />
         </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -141,4 +154,5 @@
 
             </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

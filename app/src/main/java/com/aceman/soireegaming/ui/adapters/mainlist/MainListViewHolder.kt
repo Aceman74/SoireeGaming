@@ -41,7 +41,7 @@ class MainListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCli
         itemView.event_main_date_vert_tv.text = eventList.dateList[0]
         itemView.event_main_desc_vert_tv.text = eventList.description
         itemView.event_main_loc_vert_tv.text = eventList.location.city
-        itemView.event_user_tv_vert.text = eventList.name
+        itemView.event_item_vert_hour.text = eventList.dateList[2]
         Glide.with(itemView)
             .load(eventList.picture)
             .circleCrop()

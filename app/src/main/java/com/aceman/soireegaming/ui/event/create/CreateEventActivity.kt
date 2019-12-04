@@ -61,9 +61,9 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
    private var eventList: MutableList<String> = mutableListOf()
    private var eventPlayers: MutableList<String> = mutableListOf()
    private var eventId : String = ""
-   private var AUTOCOMPLETE_REQUEST_CODE = 100
    var  placeLatLng : LatLng = LatLng(-1.0,-1.0)
     var dateMin = ""
+    private var AUTOCOMPLETE_REQUEST_CODE = 100
     var fields: List<Place.Field> =
         listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
     private lateinit var mMap: GoogleMap
@@ -98,6 +98,7 @@ startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
                 RESULT_OK -> {
+                    mMap.clear()
                     var place = Autocomplete.getPlaceFromIntent(data!!)
                     Timber.i("%s%s", "%s, ", "Place: ${place.name} , Address: ${place.address}")
                     create_event_location.text = place.name

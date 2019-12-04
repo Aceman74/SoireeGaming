@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.PagerAdapter
@@ -67,7 +66,6 @@ class HomeFragment : Fragment(), BaseView, HomeContract.HomeViewInterface {
      */
      fun configureRecyclerView() {
         mRecyclerView = main_my_events_rv
-        mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         mRecyclerView.adapter = MainListAdapter(eventList) {
             Timber.tag("Home Fragment RV click").i(it)

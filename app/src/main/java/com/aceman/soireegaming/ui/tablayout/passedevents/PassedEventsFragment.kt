@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aceman.soireegaming.R
@@ -53,7 +52,6 @@ class PassedEventsFragment : Fragment(), BaseView, PassedEventsContract.PassedEv
      */
     fun configureRecyclerView() {
         mRecyclerView = passed_events_rv
-        mRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.HORIZONTAL))
         mRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mRecyclerView.adapter = PassedEventsAdapter(eventList) {
             Timber.tag("Passe Events RV click").i(it)
