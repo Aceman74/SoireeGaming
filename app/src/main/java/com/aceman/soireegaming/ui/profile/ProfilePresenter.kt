@@ -6,6 +6,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
 import com.aceman.soireegaming.data.firebase.FirestoreOperations
+import com.aceman.soireegaming.data.models.OpinionAndRating
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.utils.base.BasePresenter
@@ -74,5 +75,15 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
                     }
                 }
         }
+    }
+
+    fun getRating(uid: String){
+        firebaseRepository.userCollection.document(uid).collection("Ratings").get().addOnSuccessListener {
+            (getView() as ProfileContract.ProfileViewInterface).setRating(it)
+        }
+    }
+
+    override fun rateUser(rating: OpinionAndRating) {
+        firebaseRepository.userCollection.document(rating.ratedId).collection("Ratings").add(rating)
     }
 }

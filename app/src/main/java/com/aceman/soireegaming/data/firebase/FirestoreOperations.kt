@@ -25,6 +25,7 @@ object FirestoreOperations {
     val userCollection = firestoreInstance.collection("user")
     val eventCollection = firestoreInstance.collection("event")
     val chatCollection = firestoreInstance.collection("chatChannels")
+    val notificationCollection = firestoreInstance.collection("notification")
     val user = FirebaseAuth.getInstance().currentUser!!
 
     /*    fun initCurrentUserIfFirstTime(onComplete: () -> Unit) {
@@ -115,6 +116,39 @@ object FirestoreOperations {
                     return@addOnSuccessListener
                 }
             }
+    }
+
+    fun getOrCreateTokensList(
+       token: String, tokenMap: MutableMap<String, String>, user: String,
+        onComplete: (tokenExist: Boolean) -> Unit
+    ) {
+        userCollection.document("tokens").get().addOnSuccessListener { it ->
+            if (it.exists()) {
+                    getTokenList{mutableMap: MutableMap<String, String>? ->
+                            mutableMap!![user] = token
+                            addTokenList(mutableMap)
+                    }
+                    onComplete(true)
+                    return@addOnSuccessListener
+                } else {
+                addTokenList(tokenMap)
+                    onComplete(true)
+                    return@addOnSuccessListener
+                }
+            }
+    }
+
+    private fun getTokenList(onComplete: (list: MutableMap<String,String>?) -> Unit) {
+        userCollection.document("tokens").get().addOnSuccessListener {
+            var list = it.data as MutableMap<String,String>
+            onComplete( list )
+            return@addOnSuccessListener
+        }
+    }
+
+    private fun addTokenList(token: MutableMap<String, String>) {
+        userCollection.document("tokens")
+            .set(token)
     }
 
     fun createChatChannel(

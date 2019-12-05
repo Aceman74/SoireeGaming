@@ -29,11 +29,16 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
+        checkIntent()
+    }
+
+    private fun checkIntent() {
         mOtherUser = intent.getStringExtra("uid")!!
         mPresenter.getUserDataFromFirestore(mOtherUser)
     }
 
     override fun updateUI(otherUser: User) {
+        var mUser = FirebaseAuth.getInstance().currentUser!!
         Glide.with(this)
             .load(otherUser.urlPicture)
             .circleCrop()
@@ -46,8 +51,8 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
             chat_send_btn.setOnClickListener {
                 val messageToSend =
                     TextMessage(
-                        chat_log_et.text.toString(), Calendar.getInstance().time,
-                        FirebaseAuth.getInstance().currentUser!!.uid, MessageType.TEXT
+                        chat_log_et.text.toString(), Calendar.getInstance().time, mUser.displayName!!,
+                        mUser.uid, otherUser.uid, MessageType.TEXT
                     )
                 chat_log_et.setText("")
                 mPresenter.sendMessage(messageToSend, channelId)

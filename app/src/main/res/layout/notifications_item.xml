@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="50dp"
+    android:layout_margin="2dp">
+
+        <LinearLayout
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:background="@color/lightGrey">
+<LinearLayout
+    android:id="@+id/not_left_ly"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.25">
+    <ImageView
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/not_picture_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/chat_logo"/>
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/not_center_ly"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/not_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="TITLE"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+        <TextView
+            android:id="@+id/not_body_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:text="BODY"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/not_right_ly"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.25"
+        >
+        <TextView
+            android:id="@+id/not_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:text="DATE"
+            android:textColor="@color/greyTextColor"
+            android:gravity="center_horizontal"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+        <ImageButton
+            android:id="@+id/not_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_clear"
+            android:padding="5dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/errorTextColor"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>

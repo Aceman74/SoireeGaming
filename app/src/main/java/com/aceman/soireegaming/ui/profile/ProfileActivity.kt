@@ -1,19 +1,22 @@
 package com.aceman.soireegaming.ui.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
 import com.aceman.soireegaming.R
+import com.aceman.soireegaming.data.models.OpinionAndRating
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.data.models.UserChip
 import com.aceman.soireegaming.ui.about.AboutActivity
+import com.aceman.soireegaming.ui.adapters.profile.ProfileAdapter
 import com.aceman.soireegaming.ui.bottomnavigation.messages.chat.ChatLogActivity
 import com.aceman.soireegaming.ui.profile.edit.EditProfileActivity
 import com.aceman.soireegaming.utils.Utils
@@ -23,17 +26,24 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_profile.*
+import timber.log.Timber
 
 
 class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) :
-    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface {
+    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface, RatingBar.OnRatingBarChangeListener {
 
     private val mPresenter: ProfilePresenter = ProfilePresenter()
     lateinit var chipList: MutableList<UserChip>
     var itemPos: Int = -1
     lateinit var user: User
     private var mIntent: String? = ""
+    var canRate = true
+    var mVisitorId = FirebaseAuth.getInstance().currentUser!!.uid
+    var ratingList = mutableListOf<OpinionAndRating>()
+    var mRating = 2
+    lateinit var mRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,15 +55,18 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     }
 
     private fun userOrIntent() {
-        if(mIntent == null || mIntent == FirebaseAuth.getInstance().currentUser!!.uid){
+        if(mIntent == null || mIntent == mVisitorId){
             mPresenter.getUserDataFromFirestore()
+            mPresenter.getRating(mVisitorId)
             chipSetting()
+            profile_rating_bar.setIsIndicator(true)
             profile_edit_btn.setOnClickListener {
                 val intent = Intent(this, EditProfileActivity::class.java)
                 startActivity(intent)
             }
         }else{
             mPresenter.getIntentUserDataFromFirestore(mIntent!!)
+            mPresenter.getRating(mIntent!!)
             console_ac.visibility = View.GONE
             style_ac.visibility = View.GONE
             profile_edit_btn.text = "Envoyer un message"
@@ -61,8 +74,8 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                 val intent = Intent(this, ChatLogActivity::class.java)
                 intent.putExtra("uid",mIntent)
                 startActivity(intent) }
+            profile_rating_bar.onRatingBarChangeListener = this
             }
-
     }
 
     override fun updateUI(currentUser: User) {
@@ -302,5 +315,52 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    override fun setRating(mutableList: QuerySnapshot?) {
+        if(mutableList != null && mutableList.size()> 0){
+            mRating = 0
+        for(item in mutableList)
+            ratingList.add(item.toObject(OpinionAndRating::class.java))
+            for (rate in ratingList){
+                mRating += rate.rating
+                if(rate.ratingId == mVisitorId)
+                    canRate = false
+                profile_rating_bar.setIsIndicator(true)
+            }
+            mRating /= ratingList.size
+            profile_rating_bar.rating = mRating.toFloat()
+            configureRecyclerView()
+        }
+    }
+
+    override fun configureRecyclerView() {
+        mRecyclerView = profile_rating_rv
+        mRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mRecyclerView.adapter = ProfileAdapter(ratingList) { s: String, s1: String ->
+            Timber.tag("Event Waiting RV click").i("$s $s1")
+        }
+    }
+
+    override fun onRatingChanged(p0: RatingBar?, p1: Float, p2: Boolean) {
+        if(p2 && canRate){
+        var edittext = EditText(this)
+        edittext.maxLines = 1
+            edittext.maxWidth = 100
+        var dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Laissez un avis pour valider la note")
+        dialog.setMessage("Vous devez laisser un avis écrit pour valider votre note!")
+        dialog.setView(edittext)
+        dialog.setPositiveButton("Valider") { _, i ->
+            profile_rating_bar.setIsIndicator(true)
+            canRate = false
+            mPresenter.rateUser(OpinionAndRating(mIntent!!,mVisitorId,edittext.text.toString(),p1.toInt()))
+        }
+        dialog.setNegativeButton("Annuler") { _, i ->
+
+        }
+        dialog.show()
+        }
+    }
 
 }

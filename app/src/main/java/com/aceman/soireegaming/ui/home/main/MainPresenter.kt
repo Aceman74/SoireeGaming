@@ -73,4 +73,9 @@ class MainPresenter : BasePresenter(), MainContract.MainPresenterInterface {
         firebaseRepository.userCollection.document(mUser.uid).update("Token",token)
     }
 
+    override fun updateOrCreateTokenList(token: String,tokenMap: MutableMap<String, String>, user: String,
+                                         onComplete: (isNew: Boolean) -> Unit) {
+        firebaseRepository.getOrCreateTokensList(token,tokenMap,user,onComplete)
+    }
+
 }

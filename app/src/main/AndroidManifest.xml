@@ -20,7 +20,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
-        <activity android:name=".ui.bottomnavigation.messages.chat.ChatLogActivity" />
+        <activity android:name=".ui.bottomnavigation.messages.chat.ChatLogActivity">
+            <intent-filter>
+                <action android:name="ChatNotification"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.event.detail.EventDetailActivity"></activity>
         <activity
             android:name=".ui.event.create.CreateEventActivity"
@@ -40,15 +45,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.home.main.MainActivity" />
-
-        <service
-            android:name=".service.MyFirebaseMessagingService"
-            android:exported="false"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+<meta-data
+    android:name="com.google.firebase.messaging.default_notification_icon"
+    android:resource="@drawable/ic_not_logo"/>
         <service
             android:name=".service.NotificationsService">
             <intent-filter>

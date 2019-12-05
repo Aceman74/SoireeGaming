@@ -18,6 +18,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -67,14 +68,20 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     }
 
     private fun getTokenFCM() {
+        var token : String = ""
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
                 // Get new Instance ID token
-                val token = task.result?.token
+                 token = task.result?.token!!
                 mPresenter.updateToken(token)
+                var tokenMap = mutableMapOf<String,String>()
+                var user = FirebaseAuth.getInstance().currentUser!!.uid
+                tokenMap[user] = token
+                mPresenter.updateOrCreateTokenList(token,tokenMap, user) {
+                }
                 // Log and toast
                 val msg = "FCM $token"
                 Timber.d("Token $msg")

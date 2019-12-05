@@ -40,7 +40,7 @@ class CreateEventActivityPresenter : BasePresenter(),
 
     override fun saveEventToFirebase(eventInfos: EventInfos, eventId: String) {
         firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
-            createEventPresence(eventId)
+            createEventPresence(eventId, mUser.uid)
         }
     }
 
@@ -56,11 +56,11 @@ class CreateEventActivityPresenter : BasePresenter(),
         }
     }
 
-    override fun createEventPresence(eventId: String) {
+    override fun createEventPresence(eventId: String, uid: String) {
         firebaseRepository.userCollection.document(mUser.uid).collection("Events")
-            .add(ObjectId("event",eventId))
+            .add(ObjectId("event",eventId, mUser.uid))
         firebaseRepository.eventCollection.document(eventId).collection("Users")
-            .add(ObjectId("user",mUser.uid))
+            .add(ObjectId("user",mUser.uid, mUser.uid))
     }
 
     override fun saveDate(user: FirebaseUser) {

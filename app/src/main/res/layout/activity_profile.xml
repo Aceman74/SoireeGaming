@@ -6,314 +6,345 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileActivity">
 
-    <TextView
-        android:id="@+id/profile_rating_title_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/gamer_speak"
-        android:padding="5dp"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/profile_rating_rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardView2" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/profile_tb"
-        style="@style/ThemeOverlay.AppCompat.Light"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/primaryTextColor"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorPrimary"
         android:minHeight="?actionBarSize"
+        app:layout_constraintBottom_toTopOf="@id/profile_nested_sv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/profile_menu_tb"
-        app:title="Mon Profil" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Mon Profil"
+        app:titleTextColor="@color/primaryTextColor" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_tb"
-        app:layout_constraintVertical_weight="0.4"
-        app:cardElevation="2dp"
-        android:layout_marginBottom="2dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/profile_picture_iv"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:background="@drawable/shape_blue_round"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.846"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.34"
-                tools:srcCompat="@tools:sample/avatars"
-                android:src="@android:drawable/star_big_on"
-                android:clickable="true"
-                android:focusable="true"/>
-
-            <Button
-                android:id="@+id/profile_edit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/profile_picture_iv"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/profile_picture_iv"
-                app:layout_constraintTop_toBottomOf="@+id/profile_picture_iv"
-                app:layout_constraintVertical_bias="0.47" />
-
-            <TextView
-                android:id="@+id/profile_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/prenom_example_text"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/profile_age_tv"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.186"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/profile_picture_iv" />
-
-            <TextView
-                android:id="@+id/profile_city_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Ville"
-                app:layout_constraintBottom_toTopOf="@+id/profile_reputation_tv"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/profile_gender_tv" />
-
-            <TextView
-                android:id="@+id/profile_age_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/age_edit_profile"
-                app:layout_constraintBottom_toTopOf="@+id/profile_gender_tv"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/profile_name_tv" />
-
-            <TextView
-                android:id="@+id/profile_gender_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/gender_edit_profile"
-                app:layout_constraintBottom_toTopOf="@+id/profile_city_tv"
-                app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
-                app:layout_constraintTop_toBottomOf="@+id/profile_age_tv" />
-
-            <TextView
-                android:id="@+id/profile_reputation_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/r_putation"
-                android:textColor="@color/primaryColor"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/profile_edit_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.174"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_city_tv" />
-
-            <RatingBar
-                android:id="@+id/profile_rating_bar"
-                style="?android:attr/ratingBarStyleIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/lightGrey"
-                android:max="4"
-                android:numStars="4"
-                android:theme="@style/RatingBar"
-                app:layout_constraintEnd_toEndOf="@+id/profile_reputation_tv"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/profile_reputation_tv"
-                app:layout_constraintTop_toBottomOf="@+id/profile_reputation_tv" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/profile_nested_sv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_rating_title_tv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        app:layout_constraintVertical_weight="0.4"
-        android:layout_marginBottom="2dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/create_console_lly_1"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/create_console_lly_2"
-                app:layout_constraintHorizontal_weight="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:cardElevation="2dp"
-                android:layout_margin="1dp">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/profile_support_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/console_pc_cg"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold"
-                        android:padding="5dp"/>
-
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
-                    <AutoCompleteTextView
-                        android:id="@+id/console_ac"
-                        android:textColor="@android:color/black"
-                        android:textColorHint="@android:color/darker_gray"
-                        android:background="@color/lightGrey"
-                        android:text="@string/search"
-                        android:layout_margin="2dp"
-                        android:padding="2dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:completionThreshold="1"
-                        android:imeOptions="actionDone"
-                        />
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/profile_console_chipgroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:chipSpacingHorizontal="10dp"
-                        app:chipSpacingVertical="10dp"
-                        android:layout_below="@+id/entry_chip_txt"/>
-                    </androidx.core.widget.NestedScrollView>
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/create_console_lly_2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="1dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="0.5"
-                app:layout_constraintStart_toEndOf="@+id/create_console_lly_1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:cardElevation="2dp"
-                android:layout_margin="1dp">
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/profile_gamertags_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/style_cg"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:padding="5dp"/>
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <AutoCompleteTextView
-                        android:id="@+id/style_ac"
-                        android:textColor="@android:color/black"
-                        android:textColorHint="@android:color/darker_gray"
-                        android:background="@color/lightGrey"
-                        android:text="@string/search"
-                        android:layout_margin="2dp"
-                        android:padding="2dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapWords"
-                        android:completionThreshold="1"
-                        android:imeOptions="actionDone" />
-
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/style_chipgroup"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:chipSpacingHorizontal="10dp"
-                            app:chipSpacingVertical="10dp"
-                            android:layout_below="@+id/entry_chip_txt">
-
-
-                        </com.google.android.material.chip.ChipGroup>
-                    </androidx.core.widget.NestedScrollView>
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/profile_rating_rv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_rating_title_tv"
-        app:layout_constraintVertical_weight="0.2" />
+        app:layout_constraintTop_toBottomOf="@id/profile_tb">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profile_tb"
+                app:layout_constraintVertical_weight="0.4">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/profile_picture_iv"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/shape_blue_round"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@android:drawable/star_big_on"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.846"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.34"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <Button
+                        android:id="@+id/profile_edit_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_profile"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_picture_iv"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/profile_picture_iv"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_picture_iv"
+                        app:layout_constraintVertical_bias="0.47" />
+
+                    <TextView
+                        android:id="@+id/profile_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/prenom_example_text"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_age_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.186"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/profile_picture_iv" />
+
+                    <TextView
+                        android:id="@+id/profile_city_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Ville"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_gender_tv" />
+
+                    <TextView
+                        android:id="@+id/profile_age_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/age_edit_profile"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_gender_tv"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_name_tv" />
+
+                    <TextView
+                        android:id="@+id/profile_gender_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/gender_edit_profile"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_city_tv"
+                        app:layout_constraintEnd_toEndOf="@+id/profile_name_tv"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/profile_name_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_age_tv" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/create_console_lly_1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="1dp"
+                        android:orientation="vertical"
+                        app:cardElevation="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/create_console_lly_2"
+                        app:layout_constraintHorizontal_weight="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/profile_support_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:text="@string/console_pc_cg"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold" />
+
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <AutoCompleteTextView
+                                android:id="@+id/console_ac"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:background="@color/lightGrey"
+                                android:completionThreshold="1"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapWords"
+                                android:padding="2dp"
+                                android:text="@string/search"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/darker_gray" />
+
+                            <androidx.core.widget.NestedScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/profile_console_chipgroup"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@+id/entry_chip_txt"
+                                    app:chipSpacingHorizontal="10dp"
+                                    app:chipSpacingVertical="10dp" />
+                            </androidx.core.widget.NestedScrollView>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/create_console_lly_2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:orientation="vertical"
+                        app:cardElevation="2dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_weight="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/create_console_lly_1"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/profile_gamertags_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:text="@string/style_cg"
+                                    android:textColor="@android:color/black"
+                                    android:textStyle="bold" />
+
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <AutoCompleteTextView
+                                android:id="@+id/style_ac"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="2dp"
+                                android:background="@color/lightGrey"
+                                android:completionThreshold="1"
+                                android:imeOptions="actionDone"
+                                android:inputType="textCapWords"
+                                android:padding="2dp"
+                                android:text="@string/search"
+                                android:textColor="@android:color/black"
+                                android:textColorHint="@android:color/darker_gray" />
+
+                            <androidx.core.widget.NestedScrollView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/style_chipgroup"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@+id/entry_chip_txt"
+                                    app:chipSpacingHorizontal="10dp"
+                                    app:chipSpacingVertical="10dp">
+
+
+                                </com.google.android.material.chip.ChipGroup>
+                            </androidx.core.widget.NestedScrollView>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profile_rating_last_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/profile_reputation_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/r_putation"
+                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/profile_edit_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.174"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_city_tv" />
+
+                    <RatingBar
+                        android:id="@+id/profile_rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/lightGrey"
+                        android:layout_gravity="center"
+                        android:max="4"
+                        android:numStars="4"
+                        android:stepSize="1"
+                        android:theme="@style/RatingBar"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_edit_btn"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/profile_reputation_tv" />
+                    <TextView
+                        android:id="@+id/profile_rating_title_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/gamer_speak"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/profile_rating_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

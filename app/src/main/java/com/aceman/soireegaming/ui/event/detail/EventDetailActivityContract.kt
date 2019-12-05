@@ -15,12 +15,12 @@ interface EventDetailActivityPresenterInterface {
     fun saveEventToFirebase(eventInfos: EventInfos, eventId: String)
     fun getEventInfos(eventId: String)
     fun getUserPresentList(userPresent: MutableList<String>)
-    fun createEventDemand(eventId: String)
+    fun createEventDemand(eventId: String, uid: String)
     fun typeOfUser(eventId: String)
     fun getEventDemandInfos(eventId: String)
     fun getUserDemandList(userDemand: MutableList<String>)
-    fun removeEventDemand(eventId: String, userId: String)
-    fun acceptEventDemand(eventId: String, userId: String)
+    fun removeEventDemand(eventId: String, userId: String, uid: String)
+    fun acceptEventDemand(eventId: String, userId: String, uid: String)
     fun removeEventParticipation(eventId: String, userId: String)
 }
 

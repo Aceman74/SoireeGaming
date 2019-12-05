@@ -17,7 +17,8 @@ interface MainPresenterInterface {
     fun getCurrentUser(): FirebaseUser?
     fun saveUserLocationToFirebase(userLoc: UserLocation)
     fun updateToken(token: String?)
-        fun getLocation(onComplete: (isNew: Boolean) -> Unit)
+    fun getLocation(onComplete: (isNew: Boolean) -> Unit)
+    fun updateOrCreateTokenList(token: String, tokenMap: MutableMap<String, String>, user: String, onComplete: (isNew: Boolean) -> Unit)
 }
 
     interface MainViewInterface : BaseView

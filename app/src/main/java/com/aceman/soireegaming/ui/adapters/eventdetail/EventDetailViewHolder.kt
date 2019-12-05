@@ -41,17 +41,25 @@ class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
     ) {
         var i = 0
 
-if(isowner && user.uid != FirebaseAuth.getInstance().uid){
-    if(waitingList)
-    itemView.contact_add.visibility = View.VISIBLE
-    itemView.contact_remove.visibility = View.VISIBLE
-    itemView.contact_add.setOnClickListener {
-        listener("add",user.uid)
-    }
-    itemView.contact_remove.setOnClickListener {
-        listener("remove",user.uid)
-    }
-}
+        if (isowner && user.uid != FirebaseAuth.getInstance().uid) {
+            if (waitingList)
+                itemView.contact_add.visibility = View.VISIBLE
+            itemView.contact_remove.visibility = View.VISIBLE
+            itemView.contact_add.setOnClickListener {
+                listener("add", user.uid)
+            }
+            itemView.contact_remove.setOnClickListener {
+                listener("remove", user.uid)
+            }
+        }
+        if (user.uid == FirebaseAuth.getInstance().uid) {
+            itemView.contact_remove.visibility = View.VISIBLE
+            itemView.contact_remove.setOnClickListener {
+                listener("remove", user.uid)
+            }
+
+        }
+
         itemView.message_list_title.text = user.name
         itemView.message_list_date.text = user.userLocation.city
         Glide.with(itemView)
@@ -61,7 +69,9 @@ if(isowner && user.uid != FirebaseAuth.getInstance().uid){
         itemView.setOnClickListener {
             listener(user.uid, position.toString())
         }
-
+        itemView.message_list_picture.setOnClickListener {
+            listener("profile", user.uid)
+        }
     }
 
     override fun onClick(view: View) {

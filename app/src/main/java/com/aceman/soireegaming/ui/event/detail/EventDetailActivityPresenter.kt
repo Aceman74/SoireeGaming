@@ -22,9 +22,7 @@ class EventDetailActivityPresenter : BasePresenter(),
             .addOnSuccessListener { documentSnapshot ->
                 val currentUser = documentSnapshot.toObject<User>(User::class.java)
                 if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                    (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateUI(
-                        currentUser
-                    )
+                    (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateUI(currentUser)
                 }
             }
     }
@@ -48,7 +46,7 @@ class EventDetailActivityPresenter : BasePresenter(),
                 .collection("Users").get().addOnSuccessListener {
                     for (document in it) {
                         Timber.tag("User Presence").d("%s%s", document.id, document.data)
-                        userPresent.add(document["id"].toString())
+                        userPresent.add(document["senderId"].toString())
                     }
                 }.addOnCompleteListener {
                     (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateEvents(
@@ -69,7 +67,7 @@ class EventDetailActivityPresenter : BasePresenter(),
                 .collection("UsersDemand").get().addOnSuccessListener {
                     for (document in it) {
                         Timber.tag("User Demand").d("%s%s", document.id, document.data)
-                        userDemand.add(document["id"].toString())
+                        userDemand.add(document["senderId"].toString())
                     }
                 }.addOnCompleteListener {
                     (getView() as EventDetailActivityContract.EventDetailActivityViewInterface)
@@ -83,7 +81,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.userCollection.document(mUser.uid).collection("EventsDemand")
             .get().addOnSuccessListener {
                 for (doc in it) {
-                    if (doc["id"] == eventId) {
+                    if (doc["senderId"] == eventId) {
                         type = "Waiting"
                         (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).setUserType(
                             type
@@ -94,7 +92,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.userCollection.document(mUser.uid).collection("Events")
             .get().addOnSuccessListener {
                 for (doc in it) {
-                    if (doc["id"] == eventId) {
+                    if (doc["senderId"] == eventId) {
                         type = "Present"
                         (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).setUserType(
                             type
@@ -128,18 +126,22 @@ class EventDetailActivityPresenter : BasePresenter(),
         }
     }
 
-    override fun createEventDemand(eventId: String) {
+    override fun createEventDemand(eventId: String, uid: String) {
         firebaseRepository.userCollection.document(mUser.uid).collection("EventsDemand")
-            .add(ObjectId("eventDemand", eventId))
+            .add(ObjectId("eventDemand", eventId, uid))
         firebaseRepository.eventCollection.document(eventId).collection("UsersDemand")
-            .add(ObjectId("userDemand", mUser.uid))
+            .add(ObjectId("userDemand", mUser.uid, uid))
     }
 
-    override fun removeEventDemand(eventId: String, userId: String) {
+    override fun removeEventDemand(
+        eventId: String,
+        userId: String,
+        uid: String
+    ) {
         firebaseRepository.userCollection.document(userId).collection("EventsDemand")
             .get().addOnSuccessListener {
                 for (item in it) {
-                    if (item["id"] == eventId) {
+                    if (item["senderId"] == eventId) {
                         firebaseRepository.userCollection.document(userId)
                             .collection("EventsDemand")
                             .document(item.id).delete()
@@ -149,7 +151,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.eventCollection.document(eventId).collection("UsersDemand")
             .get().addOnSuccessListener {
                 for (item in it) {
-                    if (item["id"] == userId) {
+                    if (item["senderId"] == userId) {
                         firebaseRepository.eventCollection.document(eventId)
                             .collection("UsersDemand")
                             .document(item.id).delete()
@@ -162,7 +164,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.userCollection.document(userId).collection("Events")
             .get().addOnSuccessListener {
                 for (item in it) {
-                    if (item["id"] == eventId) {
+                    if (item["senderId"] == eventId) {
                         firebaseRepository.userCollection.document(userId)
                             .collection("Events")
                             .document(item.id).delete()
@@ -172,7 +174,7 @@ class EventDetailActivityPresenter : BasePresenter(),
         firebaseRepository.eventCollection.document(eventId).collection("Users")
             .get().addOnSuccessListener {
                 for (item in it) {
-                    if (item["id"] == userId) {
+                    if (item["senderId"] == userId) {
                         firebaseRepository.eventCollection.document(eventId)
                             .collection("Users")
                             .document(item.id).delete()
@@ -181,10 +183,14 @@ class EventDetailActivityPresenter : BasePresenter(),
             }
     }
 
-    override fun acceptEventDemand(eventId: String, userId: String) {
+    override fun acceptEventDemand(
+        eventId: String,
+        userId: String,
+        uid: String
+    ) {
         firebaseRepository.userCollection.document(userId).collection("Events")
-            .add(ObjectId("event", eventId))
+            .add(ObjectId("event", eventId, uid))
         firebaseRepository.eventCollection.document(eventId).collection("Users")
-            .add(ObjectId("user", userId))
+            .add(ObjectId("user", userId, uid))
     }
 }

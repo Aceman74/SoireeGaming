@@ -12,6 +12,7 @@ import com.aceman.soireegaming.data.models.EventInfos
 import com.aceman.soireegaming.data.models.User
 import com.aceman.soireegaming.ui.adapters.eventdetail.EventDetailAdapter
 import com.aceman.soireegaming.ui.home.main.MainActivity
+import com.aceman.soireegaming.ui.profile.ProfileActivity
 import com.aceman.soireegaming.utils.Utils
 import com.aceman.soireegaming.utils.base.BaseActivity
 import com.bumptech.glide.Glide
@@ -97,9 +98,10 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
 
     private fun onClickParticipate() {
         participate_btn.text = "En attente de l'organisateur"
-        mPresenter.createEventDemand(mEid)
+        mPresenter.createEventDemand(mEid,mEvent.uid)
         participate_btn.isClickable = false
         participate_btn.alpha = 0.5f
+        refreshView()
     }
 
     private fun getIntentId() {
@@ -198,8 +200,10 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
             when(s){
                 "remove" -> {mPresenter.removeEventParticipation(mEid,s1)
                     Utils.snackBarPreset(findViewById(android.R.id.content),
-                        "Participant retiré  :( ")
-                refreshView()}
+                        "Participation retirée  :( ")
+                refreshView()
+                participate_btn.text = "Participer"}
+                "profile" -> launchProfileDetailActivity(s1)
             }
 
         }
@@ -223,19 +227,26 @@ class EventDetailActivity(override val activityLayout : Int = R.layout.activity_
             mWaitingRecyclerView.adapter = EventDetailAdapter(waitingUserList, isOwner,true) { s: String, s1: String ->
                 Timber.tag("Event Waiting RV click").i("$s $s1")
                 when(s){
-                    "add" -> {mPresenter.acceptEventDemand(mEid,s1)
-                        mPresenter.removeEventDemand(mEid,s1)
+                    "add" -> {mPresenter.acceptEventDemand(mEid,s1, mEvent.uid)
+                        mPresenter.removeEventDemand(mEid, s1, mEvent.uid)
                         Utils.snackBarPreset(findViewById(android.R.id.content),
                             "Participant Ajouté !")
                         refreshView()}
-                    "remove" -> {mPresenter.removeEventDemand(mEid,s1)
+                    "remove" -> {mPresenter.removeEventDemand(mEid,s1, mEvent.uid)
                         Utils.snackBarPreset(findViewById(android.R.id.content),
                             "Participant refusé  :( ")
                         refreshView()}
+                    "profile" -> launchProfileDetailActivity(s1)
                 }
                 mPresenter.getEventDemandInfos(mEid)
             }
         }
+
+    private fun launchProfileDetailActivity(uid: String) {
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra("uid",uid)
+        startActivity(intent)
+    }
 
         fun addChip(chipName: String, group: String) {
             // Initialize a new chip instance
