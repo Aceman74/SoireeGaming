@@ -17,9 +17,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/notifications_menu_tb"
         app:title="Notifications" />
 
+    <include
+        android:id="@+id/notification_event_empty_list"
+        layout="@layout/empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/notifications_tb" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notifications_rv"
         android:layout_width="0dp"

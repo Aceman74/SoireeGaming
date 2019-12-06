@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.event.detail.EventDetailActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/detail_event_tb"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -51,22 +52,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         android:padding="5dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/set_by"/>
-                    <TextView
-                        android:id="@+id/detail_event_username_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/example_text_user" />
+                            android:text="@string/set_by" />
+
+                        <TextView
+                            android:id="@+id/detail_event_username_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/example_text_user" />
                     </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/detail_event_profile_pic"
                         android:layout_width="120dp"
@@ -149,8 +154,7 @@
 
                         </LinearLayout>
 
-                        <fragment
-                            xmlns:map="http://schemas.android.com/apk/res-auto"
+                        <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/address_map_detail"
                             android:layout_gravity="center"
                             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -158,12 +162,13 @@
                             android:layout_height="150dp"
                             tools:context="com.example.mapwithmarker.MapsMarkerActivity"
                             map:cameraZoom="12"
-                            map:mapType="terrain"
+                            map:mapType="normal"
                             map:liteMode="true" />
 
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/date_and_hour_cv"
                 android:layout_width="match_parent"
@@ -171,10 +176,12 @@
                 app:cardElevation="10dp"
                 app:cardCornerRadius="10dp"
                 android:layout_marginBottom="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <TextView
                         style="@style/TitleFontMainBlackTxt"
                         android:layout_width="wrap_content"
@@ -195,6 +202,8 @@
                             android:layout_height="wrap_content"
                             android:background="@color/lightGrey"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:gravity="center_vertical"
                             android:padding="5dp"
                             android:text="@string/begin"
                             android:textColor="@android:color/black"
@@ -205,12 +214,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
                             android:padding="5dp"
                             android:hint="@string/choose_date_hint"
                             android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@android:color/black" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/create_date_12_ly"
                         android:layout_width="match_parent"
@@ -223,10 +236,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/from_hour"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:gravity="center_vertical"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
 
                         <TextView
@@ -235,10 +250,14 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/choose_hour"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
                             android:padding="5dp"
                             android:textColor="@android:color/black"
                             android:textColorHint="@color/greyTextColor" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/create_date_2_ly"
                         android:layout_width="match_parent"
@@ -251,22 +270,28 @@
                             android:layout_height="wrap_content"
                             android:text="@string/end"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:gravity="center_vertical"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
                         <TextView
                             android:id="@+id/detail_event_end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
                             android:padding="5dp"
                             android:hint="@string/choose_date_hint"
                             android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@android:color/black" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/create_date_21_ly"
                         android:layout_width="match_parent"
@@ -279,10 +304,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/until_hour"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:gravity="center_vertical"
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
 
                         <TextView
@@ -290,13 +317,37 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:minWidth="150dp"
+                            android:minHeight="35dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
                             android:padding="5dp"
                             android:hint="@string/choose_hour"
                             android:textColorHint="@color/greyTextColor"
-                            android:textColor="@android:color/black"/>
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ajouter au calendrier :" />
+
+                        <ImageButton
+                            android:id="@+id/add_calendar_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_calendar"
+                            android:background="@android:color/transparent"
+                            android:padding="10dp"/>
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/create_3_cv"
                 android:layout_width="match_parent"
@@ -349,16 +400,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/console_pc_cg"
                                     android:textColor="@android:color/black"
                                     android:textStyle="bold"
-                                    android:padding="5dp"/>
+                                    android:padding="5dp" />
 
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
+
                             <androidx.core.widget.NestedScrollView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
@@ -370,7 +423,7 @@
                                     app:chipSpacingHorizontal="10dp"
                                     app:chipSpacingVertical="10dp"
                                     android:layout_margin="5dp"
-                                    android:layout_below="@+id/entry_chip_txt"/>
+                                    android:layout_below="@+id/entry_chip_txt" />
                             </androidx.core.widget.NestedScrollView>
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </androidx.cardview.widget.CardView>
@@ -388,6 +441,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/title_type"
                         app:cardElevation="2dp"
                         android:layout_margin="1dp">
+
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -397,16 +451,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="@string/style_cg"
                                     android:textColor="@android:color/black"
                                     android:textStyle="bold"
-                                    android:padding="5dp"/>
+                                    android:padding="5dp" />
 
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
+
                             <androidx.core.widget.NestedScrollView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
@@ -428,6 +484,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/create_4_cv"
                 android:layout_width="match_parent"
@@ -477,8 +534,9 @@
                             android:text="@string/detail_example"
                             android:padding="5dp"
                             android:entries="@array/private_event"
-                            android:theme="@style/ThemeOverlay.AppCompat.Light"/>
+                            android:theme="@style/ThemeOverlay.AppCompat.Light" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/create_2_param_ly"
                         android:layout_width="match_parent"
@@ -494,7 +552,7 @@
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
 
                         <TextView
@@ -505,7 +563,7 @@
                             android:text="@string/detail_example"
                             android:padding="5dp"
                             android:entries="@array/gender_alt"
-                            android:theme="@style/ThemeOverlay.AppCompat.Light"/>
+                            android:theme="@style/ThemeOverlay.AppCompat.Light" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -523,7 +581,7 @@
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
 
                         <TextView
@@ -534,8 +592,9 @@
                             android:text="@string/detail_example"
                             android:padding="5dp"
                             android:entries="@array/eat"
-                            android:theme="@style/ThemeOverlay.AppCompat.Light"/>
+                            android:theme="@style/ThemeOverlay.AppCompat.Light" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/create_4_param_ly"
                         android:layout_width="match_parent"
@@ -551,7 +610,7 @@
                             android:background="@color/lightGrey"
                             android:textStyle="bold"
                             android:textColor="@android:color/black"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
 
                         <TextView
@@ -562,10 +621,11 @@
                             android:text="@string/detail_example"
                             android:padding="5dp"
                             android:entries="@array/sleep"
-                            android:theme="@style/ThemeOverlay.AppCompat.Light"/>
+                            android:theme="@style/ThemeOverlay.AppCompat.Light" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -576,34 +636,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/create_4_cv"
                 android:layout_margin="10dp"
                 android:gravity="center">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Participants :"
                     android:textStyle="bold"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/event_detail_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="En attente :"
                     android:textStyle="bold"
-                    android:padding="5dp"/>
+                    android:padding="5dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/event_detail_waiting_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/participate_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ask_to_join"/>
+                    android:text="@string/ask_to_join" />
             </LinearLayout>
 
         </LinearLayout>

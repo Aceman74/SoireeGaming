@@ -7,13 +7,16 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
     var firebaseRepository = FirestoreOperations
 
-
+    /**
+     * Save a new user.
+     */
     override fun saveUserToFirebase(userItem: User) {
-
         firebaseRepository.getUser(userItem.uid).addOnSuccessListener { documentSnapshot ->
             if (!documentSnapshot.exists()) {
                 firebaseRepository.saveUser(userItem,userItem.uid).addOnSuccessListener {

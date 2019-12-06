@@ -140,6 +140,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:focusableInTouchMode="true"
                 android:id="@+id/cardView2"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -337,7 +338,12 @@
                         android:text="@string/gamer_speak"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
-
+                    <include
+                        android:id="@+id/profile_empty_ranking"
+                        layout="@layout/empty_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/profile_rating_rv"
                         android:layout_width="match_parent"

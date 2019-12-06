@@ -4,8 +4,9 @@ import com.aceman.soireegaming.data.models.UserChip
 
 /**
  * Created by Lionel JOFFRAY - on 25/11/2019.
+ *
+ * Used to create an empty list of Chips.
  */
-
 class ChipsManager {
     companion object{
 

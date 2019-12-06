@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.about.AboutActivity"
-    app:cardElevation="20dp"
-    app:cardCornerRadius="20dp"
-    android:layout_margin="20dp">
-
-    <androidx.cardview.widget.CardView
+    android:background="@color/greyTextColor"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/about_tb"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:minHeight="?actionBarSize"
+        app:layout_constraintBottom_toTopOf="@id/profile_nested_sv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="A propos"
+        app:titleTextColor="@color/primaryTextColor" />
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.about.AboutActivity"
+        android:layout_gravity="center"
         app:cardElevation="20dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="20dp"
+        android:layout_margin="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,5 +106,6 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

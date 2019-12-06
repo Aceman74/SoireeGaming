@@ -15,7 +15,10 @@ import org.jetbrains.anko.textColor
 import org.jetbrains.anko.wrapContent
 import java.text.SimpleDateFormat
 
-
+/**
+ * Text message binding the view to left or right if user is sender or receiver.
+ * View holder and adapter get form another source, located in ChatLogActivity.
+ */
 class TextMessageItem(val message: TextMessage,
                       val context: Context)
     : Item() {

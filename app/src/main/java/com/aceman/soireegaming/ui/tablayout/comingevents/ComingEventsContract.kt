@@ -5,6 +5,8 @@ import com.aceman.soireegaming.utils.base.BaseView
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic contract for class/fragment with all functions.
  */
 
 interface ComingEventsContract {
@@ -19,5 +21,11 @@ interface ComingEventsPresenterInterface {
         fun updateUI(eventsList: String)
         fun updateEvents(event: EventInfos)
         fun updateAllEvents(eventsId: MutableList<String>)
+        fun configureRecyclerView()
+        fun launchProfileDetailActivity(uid: String)
+        fun launchEventDetailActivity(eid: String)
+        fun filterList()
+        fun sortByDate()
+        fun noEvent()
     }
 }

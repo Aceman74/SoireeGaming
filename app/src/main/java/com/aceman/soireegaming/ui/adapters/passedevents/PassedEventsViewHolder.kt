@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.event_item_horizontal.view.*
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * The viewHolder for Estate in MainActivity and Search.
+ * The viewHolder for event in passedEvent.
  */
 class PassedEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""

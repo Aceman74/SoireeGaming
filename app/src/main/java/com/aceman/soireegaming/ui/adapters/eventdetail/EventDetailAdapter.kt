@@ -19,7 +19,7 @@ import com.aceman.soireegaming.utils.Utils
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * Adapter who shows the Estate on FragmentList in MainActivity and Search.
+ * Adapter who shows the User who wainting to join, or are already joining the Event.
  */
 class EventDetailAdapter(var userList: MutableList<User>, var isOwner: Boolean, var waitingList : Boolean, val listener: (String, String) -> Unit) : RecyclerView.Adapter<EventDetailViewHolder>() {
 
@@ -33,7 +33,7 @@ class EventDetailAdapter(var userList: MutableList<User>, var isOwner: Boolean, 
     }
 
     /**
-     * Bind the estate to the view, add animation.
+     * Bind the user to the view, add animation.
      */
     override fun onBindViewHolder(holder: EventDetailViewHolder, position: Int) {
         holder.updateWithItem(this.userList[position], position, listener, isOwner, waitingList)

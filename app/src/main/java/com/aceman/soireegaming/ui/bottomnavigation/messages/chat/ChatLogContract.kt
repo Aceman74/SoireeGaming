@@ -10,6 +10,8 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic contract for class/fragment with all functions.
  */
 
 interface ChatLogContract {
@@ -31,5 +33,7 @@ interface ChatLogPresenterInterface {
     interface ChatLogViewInterface : BaseView {
         fun updateUI(otherUser: User)
 
+        fun checkIntent()
+        fun updateRecyclerView(messages: List<Item>)
     }
 }

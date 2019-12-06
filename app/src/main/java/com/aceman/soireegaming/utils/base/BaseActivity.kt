@@ -21,8 +21,6 @@ import com.aceman.soireegaming.ui.login.LoginActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber
 
 /**
@@ -34,9 +32,7 @@ import timber.log.Timber
  */
 abstract class BaseActivity : AppCompatActivity() {
     val SIGN_OUT_TASK = 112
-    /**
-     * Load the theme from SharedPreferences.
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(this.activityLayout)
@@ -48,22 +44,6 @@ abstract class BaseActivity : AppCompatActivity() {
      * @return layout
      */
     abstract val activityLayout: Int
-
-    /**
-     * Get current user on Firebase Auth.
-     *
-     * @return current user
-     */
-    private val currentUser: FirebaseUser?
-        get() = FirebaseAuth.getInstance().currentUser
-
-    /**
-     * Check if user is logged.
-     *
-     * @return log state
-     */
-    protected val isCurrentUserLogged: Boolean?
-        get() = this.currentUser != null
 
     /**
      * Sign out user from firebase method.

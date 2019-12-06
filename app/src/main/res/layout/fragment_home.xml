@@ -78,11 +78,27 @@
                             android:text="@string/create_my_event"
                             android:textColor="@color/primaryColor" />
 
+                        <include
+                            android:id="@+id/home_event_empty_list"
+                            layout="@layout/empty_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_below="@id/my_events_title"/>
+
+                        <include
+                            android:id="@+id/home_event_loading"
+                            layout="@layout/pb_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_below="@id/create_event_tv"
+                            android:visibility="gone" />
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/main_my_events_rv"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
                             android:layout_below="@id/my_events_title" />
+
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

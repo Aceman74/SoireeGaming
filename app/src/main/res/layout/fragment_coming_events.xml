@@ -7,6 +7,12 @@
     tools:context=".ui.tablayout.comingevents.ComingEventsFragment"
     android:background="@android:color/darker_gray">
 
+    <include
+        android:id="@+id/coming_event_empty_list"
+        layout="@layout/empty_list_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/coming_events_rv"
         android:layout_width="0dp"

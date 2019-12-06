@@ -2,6 +2,8 @@ package com.aceman.soireegaming.data.models
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.
+ *
+ * The main user class, used for storing informations on firebase.
  */
 
 data class User(val uid: String, val Date: String, val name: String, val email: String, val urlPicture: String?,

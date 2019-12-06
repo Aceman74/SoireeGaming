@@ -18,27 +18,40 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import java.util.*
 
-
-class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_log) : BaseActivity(), BaseView, ChatLogContract.ChatLogViewInterface {
+/**
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Chat log activity is for chatting view. Users can discuss live.
+ */
+class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_log) :
+    BaseActivity(), BaseView, ChatLogContract.ChatLogViewInterface {
     private val mPresenter: ChatLogPresenter = ChatLogPresenter()
     private lateinit var messagesListenerRegistration: ListenerRegistration
     private lateinit var messagesSection: Section
     private var shouldInitRecyclerView = true
     private var mOtherUser: String = ""
-
+    /**
+     * Attach presenter, check intent for Uid.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
         checkIntent()
     }
 
-    private fun checkIntent() {
+    /**
+     * Get other user uid and data.
+     */
+    override fun checkIntent() {
         mOtherUser = intent.getStringExtra("uid")!!
         mPresenter.getUserDataFromFirestore(mOtherUser)
     }
 
+    /**
+     * Update the picture on toolbar, and update the chat list.
+     */
     override fun updateUI(otherUser: User) {
-        var mUser = FirebaseAuth.getInstance().currentUser!!
+        val mUser = FirebaseAuth.getInstance().currentUser!!
         Glide.with(this)
             .load(otherUser.urlPicture)
             .circleCrop()
@@ -51,15 +64,23 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
             chat_send_btn.setOnClickListener {
                 val messageToSend =
                     TextMessage(
-                        chat_log_et.text.toString(), Calendar.getInstance().time, mUser.displayName!!,
-                        mUser.uid, otherUser.uid, MessageType.TEXT
+                        chat_log_et.text.toString(),
+                        Calendar.getInstance().time,
+                        mUser.displayName!!,
+                        mUser.uid,
+                        otherUser.uid,
+                        MessageType.TEXT
                     )
                 chat_log_et.setText("")
                 mPresenter.sendMessage(messageToSend, channelId)
             }
         }
     }
-    private fun updateRecyclerView(messages: List<Item>) {
+
+    /**
+     * Update the recyclerview live.
+     */
+    override fun updateRecyclerView(messages: List<Item>) {
         fun init() {
             chat_log_rv.apply {
                 layoutManager = LinearLayoutManager(this@ChatLogActivity)
@@ -70,6 +91,7 @@ class ChatLogActivity(override val activityLayout: Int = R.layout.activity_chat_
             }
             shouldInitRecyclerView = false
         }
+
         fun updateItems() = messagesSection.update(messages)
 
         if (shouldInitRecyclerView)

@@ -9,12 +9,16 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class ExplorePresenter : BasePresenter(), ExploreContract.ExplorePresenterInterface{
     var firebaseRepository = FirestoreOperations
     val mUser = FirebaseAuth.getInstance().currentUser!!
 
-
+    /**
+     * Get user from Firebase as User model.
+     */
     override fun getUserDataFromFirestore() {
         firebaseRepository.getUser(mUser.uid)
             .addOnSuccessListener { documentSnapshot ->
@@ -24,6 +28,10 @@ class ExplorePresenter : BasePresenter(), ExploreContract.ExplorePresenterInterf
                 }
             }
     }
+
+    /**
+     * Get all events from Firebase.
+     */
     override fun getAllEvents() {
             val list = mutableListOf<String>()
             firebaseRepository.getAllEvents().addOnSuccessListener { result ->
@@ -38,6 +46,9 @@ class ExplorePresenter : BasePresenter(), ExploreContract.ExplorePresenterInterf
                 }
         }
 
+    /**
+     * Add eventsinfo to all events get.
+     */
     override fun addEventInfos(eventId: String){
         firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             val event = it.toObject(EventInfos::class.java)

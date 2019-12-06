@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.event_item_horizontal.view.*
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * The viewHolder for Estate in MainActivity and Search.
+ * The viewHolder for events in AllEvents.
  */
 class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""
@@ -59,6 +59,9 @@ class AllEventsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnCl
         }
     }
 
+    /**
+     * Add chip to itemview.
+     */
     fun addChip(chipName: String) {
         if (itemView.misc_event_item_hor.childCount < 2) {
             val chip = Chip(itemView.context)

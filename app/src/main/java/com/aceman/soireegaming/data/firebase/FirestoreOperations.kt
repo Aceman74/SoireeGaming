@@ -16,31 +16,22 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 18/11/2019.
+ * All the base opreation for Firesbase CRUD Requests.
+ * Functions are pretty explicit.
  */
 object FirestoreOperations {
 
-    val TAG = "FIREBASE_REPOSITORY"
+    const val TAG = "FIREBASE_REPOSITORY"
     private val firestoreInstance: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     val userCollection = firestoreInstance.collection("user")
     val eventCollection = firestoreInstance.collection("event")
     val chatCollection = firestoreInstance.collection("chatChannels")
     val notificationCollection = firestoreInstance.collection("notification")
-    val user = FirebaseAuth.getInstance().currentUser!!
 
-    /*    fun initCurrentUserIfFirstTime(onComplete: () -> Unit) {
-            currentUserDocRef.get().addOnSuccessListener { documentSnapshot ->
-                if (!documentSnapshot.exists()) {
-                    val newUser = User(FirebaseAuth.getInstance().currentUser?.displayName ?: "",
-                            "", null)
-                    currentUserDocRef.set(newUser).addOnSuccessListener {
-                        onComplete()
-                    }
-                }
-                else
-                    onComplete()
-            }
-        }*/
+
+    // User related //
+
     fun getUser(uid: String): Task<DocumentSnapshot> {
         return userCollection.document(uid).get()
     }
@@ -50,30 +41,31 @@ object FirestoreOperations {
     }
 
     fun updateName(name: String): Task<Void> {
-        return userCollection.document(user.uid).update("name", name)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("name", name)
     }
 
     fun updateEmail(email: String): Task<Void> {
-        return userCollection.document(user.uid).update("email", email)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("email", email)
     }
 
     fun saveUserLocation(userLoc: UserLocation): Task<Void> {
-        return userCollection.document(user.uid).update("userLocation", userLoc)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("userLocation", userLoc)
     }
 
     fun saveDate(date: String): Task<Void> {
-        return userCollection.document(user.uid).update("Date", date)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("Date", date)
     }
 
     fun updateChip(chipList: MutableList<UserChip>): Task<Void> {
-        return userCollection.document(user.uid).update("chipList", chipList)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("chipList", chipList)
     }
 
     fun updatePicture(pictureUrl: String): Task<Void> {
-        return userCollection.document(user.uid).update("urlPicture", pictureUrl)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("urlPicture", pictureUrl)
     }
+
     fun saveUserInfos(userInfos: UserInfos): Task<Void> {
-        return userCollection.document(user.uid).update("userInfos", userInfos)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("userInfos", userInfos)
     }
 
     fun getUserList(): Task<QuerySnapshot> {
@@ -85,7 +77,7 @@ object FirestoreOperations {
     }
 
     fun setEventParticipation(eventList: MutableList<String>): Task<Void> {
-        return userCollection.document(user.uid).update("eventList", eventList)
+        return userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid).update("eventList", eventList)
     }
 
     fun saveEvent(eventInfos: EventInfos, eventId: String): Task<Void> {
@@ -100,61 +92,32 @@ object FirestoreOperations {
         return eventCollection.get()
     }
 
+// Chat Related //
+
     fun getOrCreateChatChannel(
         otherUserId: String,
         onComplete: (channelId: String) -> Unit
     ) {
-        userCollection.document(user.uid)
+        userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid)
             .collection("engagedChatChannels") // current user check if other ID is present
             .document(otherUserId).get().addOnSuccessListener {
                 if (it.exists()) {
                     onComplete(it["channelId"] as String)
                     return@addOnSuccessListener
                 } else {
-                    createChatChannel(otherUserId)
-                    onComplete("channelId")
-                    return@addOnSuccessListener
-                }
-            }
-    }
-
-    fun getOrCreateTokensList(
-       token: String, tokenMap: MutableMap<String, String>, user: String,
-        onComplete: (tokenExist: Boolean) -> Unit
-    ) {
-        userCollection.document("tokens").get().addOnSuccessListener { it ->
-            if (it.exists()) {
-                    getTokenList{mutableMap: MutableMap<String, String>? ->
-                            mutableMap!![user] = token
-                            addTokenList(mutableMap)
+                    createChatChannel(otherUserId){channelId->
+                        onComplete(channelId)
                     }
-                    onComplete(true)
-                    return@addOnSuccessListener
-                } else {
-                addTokenList(tokenMap)
-                    onComplete(true)
                     return@addOnSuccessListener
                 }
             }
-    }
-
-    private fun getTokenList(onComplete: (list: MutableMap<String,String>?) -> Unit) {
-        userCollection.document("tokens").get().addOnSuccessListener {
-            var list = it.data as MutableMap<String,String>
-            onComplete( list )
-            return@addOnSuccessListener
-        }
-    }
-
-    private fun addTokenList(token: MutableMap<String, String>) {
-        userCollection.document("tokens")
-            .set(token)
     }
 
     fun createChatChannel(
-        otherId: String
+        otherId: String,
+        onComplete: (channelId: String) -> Unit
     ) {
-        userCollection.document(user.uid)
+        userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid)
             .collection("engagedChatChannels") // current user check if other ID is present
             .document(otherId).get().addOnSuccessListener {
                 val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -162,27 +125,30 @@ object FirestoreOperations {
                 val newChannel = chatCollection.document()
                 newChannel.set(ChatChannel(mutableListOf(currentUserId, otherId)))
 
-                userCollection.document(user.uid)
+                userCollection.document(FirebaseAuth.getInstance().currentUser!!.uid)
                     .collection("engagedChatChannels")
                     .document(otherId)
                     .set(mapOf("channelId" to newChannel.id))
 
-                    userCollection.document(otherId)
-                        .collection("engagedChatChannels")
-                        .document(currentUserId)
-                        .set(mapOf("channelId" to newChannel.id))
+                userCollection.document(otherId)
+                    .collection("engagedChatChannels")
+                    .document(currentUserId)
+                    .set(mapOf("channelId" to newChannel.id))
+                onComplete(newChannel.id)
             }
     }
 
     fun getEngagedUsers(eventId: String): Task<DocumentSnapshot> {
-      return  eventCollection.document(eventId)
+        return eventCollection.document(eventId)
             .collection("engagedUsers")
             .document().get()
     }
 
-    fun chatListener(channelId: String, context: Context,
-                     onListen: (List<Item>) -> Unit): ListenerRegistration {
-      return  chatCollection.document(channelId).collection("messages")
+    fun chatListener(
+        channelId: String, context: Context,
+        onListen: (List<Item>) -> Unit
+    ): ListenerRegistration {
+        return chatCollection.document(channelId).collection("messages")
             .orderBy("time")
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 if (firebaseFirestoreException != null) {
@@ -195,7 +161,7 @@ object FirestoreOperations {
                 querySnapshot?.documents?.forEach {
                     if (it["type"] == MessageType.TEXT)
                         items.add(TextMessageItem(it.toObject(TextMessage::class.java)!!, context))
-                        // later add image support
+                    // later add image support
                 }
                 onListen(items)
             }
@@ -205,11 +171,44 @@ object FirestoreOperations {
         chatCollection.document(channelId)
             .collection("messages")
             .add(message)
-        val date = DateStamp(Utils.todayDate,Utils.isTime)
+        val date = DateStamp(Utils.todayDate, Utils.isTime)
         chatCollection.document(channelId)
             .collection("last").document("last").set(date)
     }
 
+    // Token related //
+    fun getOrCreateTokensList(
+        token: String, tokenMap: MutableMap<String, String>, user: String,
+        onComplete: (tokenExist: Boolean) -> Unit
+    ) {
+        userCollection.document("tokens").get().addOnSuccessListener {
+            if (it.exists()) {
+                getTokenList { mutableMap: MutableMap<String, String>? ->
+                    mutableMap!![user] = token
+                    addTokenList(mutableMap)
+                }
+                onComplete(true)
+                return@addOnSuccessListener
+            } else {
+                addTokenList(tokenMap)
+                onComplete(true)
+                return@addOnSuccessListener
+            }
+        }
+    }
+
+    private fun getTokenList(onComplete: (list: MutableMap<String, String>?) -> Unit) {
+        userCollection.document("tokens").get().addOnSuccessListener {
+            val list = it.data as MutableMap<String, String>
+            onComplete(list)
+            return@addOnSuccessListener
+        }
+    }
+
+    private fun addTokenList(token: MutableMap<String, String>) {
+        userCollection.document("tokens")
+            .set(token)
+    }
 }
 
 

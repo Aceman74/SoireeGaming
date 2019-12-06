@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 
 /**
  * Created by Lionel JOFFRAY - on 14/11/2019.
+ * Extension for showing fragment in Pager
  */
-
-
 fun AppCompatActivity.showFragment(id: Int, name: Fragment): Boolean {
     return try {
         supportFragmentManager

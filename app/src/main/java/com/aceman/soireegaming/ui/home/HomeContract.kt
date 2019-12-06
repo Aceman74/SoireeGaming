@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseUser
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic contract for class/fragment with all functions.
  */
 
 interface HomeContract {
@@ -22,6 +24,7 @@ interface HomePresenterInterface {
 
         fun updateUI(eventId: String)
         fun updateEvents(event: EventInfos)
+        fun emptyEvent()
 
 
     }

@@ -19,12 +19,13 @@ import kotlinx.android.synthetic.main.notifications_item.view.*
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * The viewHolder for Estate in MainActivity and Search.
+ * The viewHolder for notifications.
  */
 class NotificationsViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     /**
-     * Update the view with the picture, and handle the click on it who opens DetailActivity.
+     * Update the view with the picture, and handle the click on it who opens the activity or delete
+     * notification .
      */
     fun updateWithItem(
         notif: FirestoreNotification,

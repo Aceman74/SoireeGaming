@@ -37,6 +37,11 @@ import java.io.File
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
+/**
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Edit profile is where user can edit some informations.
+ */
 class EditProfileActivity(override val activityLayout: Int = R.layout.activity_edit_profile) :
     BaseActivity(), BaseView,
     EditProfileContract.EditProfileViewInterface {
@@ -49,9 +54,12 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         listOf(Place.Field.NAME, Place.Field.LAT_LNG)
     lateinit var placesClient: PlacesClient
     var newLatLng = Location("new")
-    var mIntent : String? = null
+    var mIntent: String? = null
     var mUser = User()
-
+    /**
+     * Attach presenter, initialise Places, check for intent, set a double check for user deleting
+     * account, set profile picture change listener and change address listener.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(edit_profile_tb)
@@ -66,14 +74,19 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         onClickaddress()
     }
 
-    private fun intentCheck() {
+    /**
+     * Check if user is on his profile or come from a click on a recyclerview.
+     */
+    override fun intentCheck() {
         mIntent = intent.getStringExtra("loc")
         if (mIntent != null)
             click_here_location.visibility = View.VISIBLE
     }
 
-    private fun onClickaddress() {
-
+    /**
+     * If click address change, launch Maps autocomplete intent.
+     */
+    override fun onClickaddress() {
         edit_profile_address_tv.setOnClickListener {
             val intent = Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.OVERLAY, fields
@@ -85,8 +98,10 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         }
     }
 
-    private fun changeProfilePicture() {
-
+    /**
+     * Change profile picture on click.
+     */
+    override fun changeProfilePicture() {
         edit_profile_picture_iv.setOnClickListener {
             imagePicker()
         }
@@ -95,7 +110,9 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         }
     }
 
-
+    /**
+     * Double check for deletion.
+     */
     override fun deleteCheckBox() {
         edit_profile_checkbox.setOnClickListener {
             if (!edit_profile_checkbox.isChecked)
@@ -115,18 +132,21 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
     /**
      * This method start an image picker library for the user. Opens gallery.
      */
-    fun imagePicker() {
+    override fun imagePicker() {
         ImagePicker.with(this)
             .galleryOnly()
             .start()
     }
 
+    /**
+     * get result of imagepicker or maps.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             when (resultCode) {
                 RESULT_OK -> {
-                    var place = Autocomplete.getPlaceFromIntent(data!!)
+                    val place = Autocomplete.getPlaceFromIntent(data!!)
                     Timber.i("%s%s", "%s, ", "Place: ${place.name} , Address: ${place.latLng}")
                     edit_profile_address_tv.text = place.name
                     newLatLng.latitude = place.latLng!!.latitude
@@ -136,7 +156,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
 
-                    var status = Autocomplete.getStatusFromIntent(data!!)
+                    val status = Autocomplete.getStatusFromIntent(data!!)
                     Timber.i(status.statusMessage)
                 }
                 RESULT_CANCELED -> {
@@ -171,7 +191,10 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         }
     }
 
-    private fun saveToStorage(fileUri: Uri) {
+    /**
+     * Save picture to Firebase.
+     */
+    override fun saveToStorage(fileUri: Uri) {
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
@@ -182,6 +205,9 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         }
     }
 
+    /**
+     * Load user informations.
+     */
     override fun loadUserInfos(currentUser: User) {
         mUser = currentUser
         Glide.with(this)
@@ -228,19 +254,19 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
                 )
                 mPresenter.updateNameOnFirestore(edit_profile_name_et.text.toString())
                 mPresenter.updateEmailOnFirestore(edit_profile_email_et.text.toString())
-                if(edit_profile_address_tv.text != mUser.userLocation.city)
-                mPresenter.updateLocationOnFirestore(
-                    UserLocation(
-                        newLatLng.latitude,
-                        newLatLng.longitude,
-                        newLatLng.provider
+                if (edit_profile_address_tv.text != mUser.userLocation.city)
+                    mPresenter.updateLocationOnFirestore(
+                        UserLocation(
+                            newLatLng.latitude,
+                            newLatLng.longitude,
+                            newLatLng.provider
+                        )
                     )
-                )
                 if (changedPic)
                     saveToStorage(file.toUri())
-                Utils.snackBarPreset(findViewById(android.R.id.content),"Profil sauvegardé !")
+                Utils.snackBarPreset(findViewById(android.R.id.content), "Profil sauvegardé !")
                 Executors.newSingleThreadScheduledExecutor().schedule({
-                    intent = Intent(this,ProfileActivity::class.java)
+                    intent = Intent(this, ProfileActivity::class.java)
                     startActivity(intent)
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 }, 2, TimeUnit.SECONDS)

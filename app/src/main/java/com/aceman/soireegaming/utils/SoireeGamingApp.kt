@@ -6,6 +6,8 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.
+ *
+ * Used for Timber.
  */
 
 class SoireeGamingApp : MultiDexApplication() {

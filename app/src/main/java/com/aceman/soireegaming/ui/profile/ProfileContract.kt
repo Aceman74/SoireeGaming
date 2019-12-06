@@ -9,6 +9,8 @@ import com.google.firebase.firestore.QuerySnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic contract for class/fragment with all functions.
  */
 
 interface ProfileContract {
@@ -30,5 +32,9 @@ interface ProfileContract {
         fun updateList(currentUser: User)
         fun setRating(mutableList: QuerySnapshot?)
         fun configureRecyclerView()
+        fun userOrIntent()
+        fun chipSetting()
+        fun clearAutocomplete()
+        fun addChip(chipName: String, group: String)
     }
 }

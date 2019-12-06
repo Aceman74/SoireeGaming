@@ -20,7 +20,9 @@ import kotlinx.android.synthetic.main.fragment_messages.*
 import timber.log.Timber
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Message Fragment contains the list of user with chat engaged.
  */
 class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInterface {
     private val mPresenter: MessagesPresenter = MessagesPresenter()
@@ -35,6 +37,9 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         }
     }
 
+    /**
+     * Attach presenter.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,11 +50,17 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         return mView
     }
 
+    /**
+     * Get the engaged chat of user.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mPresenter.getEngagedChat()
     }
 
+    /**
+     * Update UD with channel ID and getting userinfo.
+     */
     override fun updateUI(
         list: MutableList<String>,
         chanList: MutableList<String>
@@ -60,13 +71,16 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         }
     }
 
+    /**
+     * Update user informations.
+     */
     override fun updateUsers(user: User) {
         userList.add(user)
         configureRecyclerView()
         var i = 0
         for (item in chanList) {
             mPresenter.getLastMessageTime(item).addOnCompleteListener {
-                var date = it.result!!.toObject(DateStamp::class.java)
+                val date = it.result!!.toObject(DateStamp::class.java)
                 dateList.add(date!!)
                 i++
                 if (i == userList.size)
@@ -77,9 +91,9 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
     }
 
     /**
-     * Initialize the recyclerview for picture preview.
+     * Initialize the recyclerview for showing users and last date.
      */
-    fun configureRecyclerView() {
+    override fun configureRecyclerView() {
         mRecyclerView = messages_rv
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)

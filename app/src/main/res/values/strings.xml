@@ -92,6 +92,21 @@
     <string name="console">Console :</string>
     <string name="choose_console">Choisis une console</string>
     <string name="city_profile">Ville :</string>
+    <string name="no_event_yet">Personne n\'à encore crée d\'events !!</string>
+    <string name="not_presece">Tu n\'es dans aucun events pour l\'instant...</string>
+    <string name="waiting_for_owner">En attente de l\'organisateur</string>
+    <string name="remove_participation">Ne plus participer</string>
+    <string name="awaiting_owner">En attente de l\'organisateur</string>
+    <string name="participate_at">Participer</string>
+    <string name="create_or_connect">Créer un compte / Se connecter</string>
+    <string name="continue_to">Continuer</string>
+    <string name="create_new_account">Créer un nouveau compte ?</string>
+    <string name="not_yet_notifi">Pas encore de notifications !</string>
+    <string name="no_one_create_event">Personne n\'à encore crée d\'events !!</string>
+    <string name="send_message_to">Envoyer un message</string>
+    <string name="no_rating_yet">Tu n\'as pas encore reçu d\'avis !</string>
+    <string name="perms_necessary">Malheureusement, ces permissions sont nécessaires :(</string>
+    <string name="permissions_needed">Hello! Soirée gaming a besoin de ta permission pour te localiser et ajouter des events a ton agenda!</string>
 
     <string-array name="gender">
         <item>Masculin</item>

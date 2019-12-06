@@ -2,7 +2,9 @@ package com.aceman.soireegaming.data.models
 
 import java.util.*
 
-
+/**
+ * Message object for Chatting.
+ */
 object MessageType {
     const val TEXT = "TEXT"
     const val IMAGE = "IMAGE"

@@ -16,7 +16,6 @@ package com.aceman.soireegaming.utils.base
  * Class with a BaseView for presenter.
  */
 abstract class BasePresenter {
-
     lateinit var mView: BaseView
 
     fun attachView(v: BaseView) {

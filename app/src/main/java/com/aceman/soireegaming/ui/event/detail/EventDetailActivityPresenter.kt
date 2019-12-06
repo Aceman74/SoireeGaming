@@ -10,32 +10,31 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class EventDetailActivityPresenter : BasePresenter(),
     EventDetailActivityContract.EventDetailActivityPresenterInterface {
     var firebaseRepository = FirestoreOperations
     val mUser = FirebaseAuth.getInstance().currentUser!!
-
-
+    /**
+     * Get the user data.
+     */
     override fun getUserDataFromFirestore() {
         firebaseRepository.getUser(mUser.uid)
             .addOnSuccessListener { documentSnapshot ->
                 val currentUser = documentSnapshot.toObject<User>(User::class.java)
                 if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                    (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateUI(currentUser)
+                    (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).updateUI(
+                        currentUser
+                    )
                 }
             }
     }
 
-    override fun saveEventToFirebase(eventInfos: EventInfos, eventId: String) {
-        firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
-            firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
-            }.addOnFailureListener {
-            }
-        }
-
-    }
-
+    /**
+     * Get the event Details.
+     */
     override fun getEventInfos(eventId: String) {
         val userPresent = mutableListOf<String>()
         var event = EventInfos()
@@ -57,6 +56,9 @@ class EventDetailActivityPresenter : BasePresenter(),
         }
     }
 
+    /**
+     * Get the event user list.
+     */
     override fun getEventDemandInfos(eventId: String) {
         val userDemand = mutableListOf<String>()
         var event = EventInfos()
@@ -69,13 +71,15 @@ class EventDetailActivityPresenter : BasePresenter(),
                         Timber.tag("User Demand").d("%s%s", document.id, document.data)
                         userDemand.add(document["senderId"].toString())
                     }
-                }.addOnCompleteListener {
                     (getView() as EventDetailActivityContract.EventDetailActivityViewInterface)
                         .updateEventsDemands(userDemand)
                 }
         }
     }
 
+    /**
+     * Check if user is accepted or waiting.
+     */
     override fun typeOfUser(eventId: String) {
         var type = ""
         firebaseRepository.userCollection.document(mUser.uid).collection("EventsDemand")
@@ -102,8 +106,11 @@ class EventDetailActivityPresenter : BasePresenter(),
             }
     }
 
+    /**
+     * Get the user waiting.
+     */
     override fun getUserDemandList(userDemand: MutableList<String>) {
-        var userDemandList = mutableListOf<User>()
+        val userDemandList = mutableListOf<User>()
         for ((i, item) in userDemand.withIndex()) {
             firebaseRepository.getUser(userDemand[i]).addOnSuccessListener {
                 userDemandList.add(userDemandList.size, it.toObject(User::class.java)!!)
@@ -114,25 +121,34 @@ class EventDetailActivityPresenter : BasePresenter(),
         }
     }
 
+    /**
+     * Get the user Present.
+     */
     override fun getUserPresentList(userPresent: MutableList<String>) {
-        var userList = mutableListOf<User>()
+        val userList = mutableListOf<User>()
         for ((i, item) in userPresent.withIndex()) {
             firebaseRepository.getUser(userPresent[i]).addOnSuccessListener {
                 userList.add(userList.size, it.toObject(User::class.java)!!)
                 (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).setUserList(
-                    userList
-                )
+                    userList)
             }
         }
     }
 
+    /**
+     * Ask to join an event function.
+     */
     override fun createEventDemand(eventId: String, uid: String) {
         firebaseRepository.userCollection.document(mUser.uid).collection("EventsDemand")
             .add(ObjectId("eventDemand", eventId, uid))
         firebaseRepository.eventCollection.document(eventId).collection("UsersDemand")
             .add(ObjectId("userDemand", mUser.uid, uid))
+        (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).refreshView()
     }
 
+    /**
+     * Remvoe event participation, from own user.
+     */
     override fun removeEventDemand(
         eventId: String,
         userId: String,
@@ -147,6 +163,7 @@ class EventDetailActivityPresenter : BasePresenter(),
                             .document(item.id).delete()
                     }
                 }
+                (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).refreshView()
             }
         firebaseRepository.eventCollection.document(eventId).collection("UsersDemand")
             .get().addOnSuccessListener {
@@ -158,8 +175,12 @@ class EventDetailActivityPresenter : BasePresenter(),
                     }
                 }
             }
+        (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).refreshView()
     }
 
+    /**
+     * Remove a user by creator.
+     */
     override fun removeEventParticipation(eventId: String, userId: String) {
         firebaseRepository.userCollection.document(userId).collection("Events")
             .get().addOnSuccessListener {
@@ -168,6 +189,7 @@ class EventDetailActivityPresenter : BasePresenter(),
                         firebaseRepository.userCollection.document(userId)
                             .collection("Events")
                             .document(item.id).delete()
+                        (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).refreshView()
                     }
                 }
             }
@@ -178,11 +200,15 @@ class EventDetailActivityPresenter : BasePresenter(),
                         firebaseRepository.eventCollection.document(eventId)
                             .collection("Users")
                             .document(item.id).delete()
+                        (getView() as EventDetailActivityContract.EventDetailActivityViewInterface).refreshView()
                     }
                 }
             }
     }
 
+    /**
+     * Accept a user to join.
+     */
     override fun acceptEventDemand(
         eventId: String,
         userId: String,

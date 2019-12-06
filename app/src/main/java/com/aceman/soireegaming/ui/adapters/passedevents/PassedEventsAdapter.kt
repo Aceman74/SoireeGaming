@@ -19,7 +19,7 @@ import com.aceman.soireegaming.utils.Utils
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * Adapter who shows the Estate on FragmentList in MainActivity and Search.
+ * Adapter who shows the event who have been passed.
  */
 class PassedEventsAdapter(var eventList: List<EventInfos>, val listener: (String) -> Unit) : RecyclerView.Adapter<PassedEventsViewHolder>() {
 
@@ -33,7 +33,7 @@ class PassedEventsAdapter(var eventList: List<EventInfos>, val listener: (String
     }
 
     /**
-     * Bind the estate to the view, add animation.
+     * Bind the event to the view, add animation.
      */
     override fun onBindViewHolder(holder: PassedEventsViewHolder, position: Int) {
         holder.updateWithItem(this.eventList[position], position, listener)

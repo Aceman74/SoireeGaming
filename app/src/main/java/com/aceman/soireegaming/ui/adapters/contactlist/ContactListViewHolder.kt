@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.contact_list_item.view.*
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * The viewHolder for Estate in MainActivity and Search.
+ * The viewHolder for users in MessagesActivity.
  */
 class ContactListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""
@@ -31,7 +31,7 @@ class ContactListViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
 
 
     /**
-     * Update the view with the picture, and handle the click on it who opens DetailActivity.
+     * Update the view with the picture, and handle the click on it who opens ChatLogActivity.
      */
     fun updateWithItem(user: User, date: MutableList<DateStamp>, position: Int, listener: (String) -> Unit) {
         var i = 0

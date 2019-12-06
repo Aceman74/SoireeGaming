@@ -15,10 +15,15 @@ import com.google.firebase.auth.FirebaseUser
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterface {
     var firebaseRepository = FirestoreOperations
 
+    /**
+     * Open Settings notification on device
+     */
     @TargetApi(Build.VERSION_CODES.O)
     override fun openAppNotifications(context: ProfileActivity, packageName: String) {
         val settingsIntent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
@@ -37,6 +42,9 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Update chip if owner.
+     */
     override fun updateChip(chipList: MutableList<UserChip>) {
         firebaseRepository.getUser(getCurrentUser()!!.uid)
             .addOnSuccessListener {
@@ -44,14 +52,20 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
             }
     }
 
-    override fun getChipList(uid: String){
-            firebaseRepository.getUser(uid)
-                .addOnSuccessListener {
-                    val currentUser = it.toObject(User::class.java)!!
-                    (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
-                }
+    /**
+     * Get the chipList.
+     */
+    override fun getChipList(uid: String) {
+        firebaseRepository.getUser(uid)
+            .addOnSuccessListener {
+                val currentUser = it.toObject(User::class.java)!!
+                (getView() as ProfileContract.ProfileViewInterface).updateList(currentUser)
+            }
     }
 
+    /**
+     * Get user data on Firebase.
+     */
     override fun getUserDataFromFirestore() {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
@@ -65,6 +79,10 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
                 }
         }
     }
+
+    /**
+     * Get intent user data when clicked from a recyclerview.
+     */
     override fun getIntentUserDataFromFirestore(uid: String) {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(uid)
@@ -77,13 +95,21 @@ class ProfilePresenter : BasePresenter(), ProfileContract.ProfilePresenterInterf
         }
     }
 
-    fun getRating(uid: String){
-        firebaseRepository.userCollection.document(uid).collection("Ratings").get().addOnSuccessListener {
-            (getView() as ProfileContract.ProfileViewInterface).setRating(it)
-        }
+    /**
+     * Get the rating of user.
+     */
+    fun getRating(uid: String) {
+        firebaseRepository.userCollection.document(uid).collection("Ratings").get()
+            .addOnSuccessListener {
+                (getView() as ProfileContract.ProfileViewInterface).setRating(it)
+            }
     }
 
+    /**
+     * let a rating to a user.
+     */
     override fun rateUser(rating: OpinionAndRating) {
         firebaseRepository.userCollection.document(rating.ratedId).collection("Ratings").add(rating)
+        (getView() as ProfileContract.ProfileViewInterface).userOrIntent()
     }
 }

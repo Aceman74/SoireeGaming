@@ -19,7 +19,7 @@ import com.aceman.soireegaming.utils.Utils
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * Adapter who shows the Estate on FragmentList in MainActivity and Search.
+ * Adapter who shows the Rating and opinion of user.
  */
 class ProfileAdapter(var opinionRating: MutableList<OpinionAndRating>, val listener: (String, String) -> Unit) : RecyclerView.Adapter<ProfileViewHolder>() {
 
@@ -33,7 +33,7 @@ class ProfileAdapter(var opinionRating: MutableList<OpinionAndRating>, val liste
     }
 
     /**
-     * Bind the estate to the view, add animation.
+     * Bind the rating to the view, add animation.
      */
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
         holder.updateWithItem(opinionRating[position], position, listener)

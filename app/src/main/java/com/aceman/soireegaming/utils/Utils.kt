@@ -15,6 +15,8 @@ import java.util.*
 
 /**
  * Created by Lionel JOFFRAY - on 18/11/2019.
+ *
+ * Utils class full of usefull stuff.
  */
 
 /**
@@ -47,7 +49,6 @@ object Utils {
         return cal.timeInMillis
     }
 
-
     /**
      * Convert date with / custom format to millis.
      */
@@ -68,7 +69,9 @@ object Utils {
             val dateFormat = SimpleDateFormat("dd/MM/yyyy")
             return dateFormat.format(Date())
         }
-
+    /**
+     * Get the simple time.
+     */
     val isTime: String
         get() {
             val time = SimpleDateFormat("HH:mm")
@@ -82,6 +85,9 @@ object Utils {
         view.startAnimation(anim)
     }
 
+    /**
+     * Set the chip color for consoles.
+     */
     fun chipColor(chip: Chip) : Int {
         return when (chip.text) {
             "PS4", "PS3" -> R.color.playstation
@@ -96,6 +102,10 @@ object Utils {
             else -> R.color.primaryLightColor
         }
     }
+
+    /**
+     * no more used
+     */
     fun getRandomColor(): Int {
         val rnd = Random()
         return Color.argb(

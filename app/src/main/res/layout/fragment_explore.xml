@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.bottomnavigation.explore.ExploreFragment">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bottomnavigation.explore.ExploreFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/explore_tb"
@@ -56,7 +56,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     map:cameraZoom="12"
-                    map:mapType="terrain"
+                    map:mapType="normal"
                     map:uiZoomControls="true"
                     tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
             </androidx.cardview.widget.CardView>
@@ -85,23 +85,22 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    >
+                    app:layout_constraintVertical_bias="0.0">
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:gravity="center"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:padding="5dp"
-                            android:text="@string/advanced_search"
-                            android:textColor="@color/primaryTextColor"
-                            android:background="@drawable/shape_blue_round"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/advanced_search"
+                        android:textColor="@color/primaryTextColor"
+                        android:background="@drawable/shape_blue_round"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -129,7 +128,7 @@
                             android:minWidth="150dp"
                             android:text="Date"
                             android:clickable="true"
-                            android:focusable="true"/>
+                            android:focusable="true" />
 
                     </LinearLayout>
 
@@ -321,6 +320,7 @@
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/explore_cv_3"
                 android:layout_width="match_parent"
@@ -334,24 +334,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/explore_cv_2"
                 app:layout_constraintVertical_weight="0.3">
-            <LinearLayout
-                android:id="@+id/explore_cv_4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="5dp"
-                app:layout_constraintVertical_weight="0.3">
 
-                    <androidx.core.widget.NestedScrollView
+                <LinearLayout
+                    android:id="@+id/explore_cv_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    app:layout_constraintVertical_weight="0.3">
+
+                    <include
+                        android:id="@+id/explore_event_empty_list"
+                        layout="@layout/empty_list"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/explore_rv"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    </androidx.core.widget.NestedScrollView>
+                        android:layout_height="300dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

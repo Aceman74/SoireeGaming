@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.
+ *
+ * Page adapter for tab layout( Home Fragment)
  */
-class PagerAdapter (fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     private val mFragmentList = ArrayList<Fragment>()
     private val mFragmentTitleList = ArrayList<String>()

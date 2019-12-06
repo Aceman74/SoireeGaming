@@ -7,14 +7,17 @@ import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class ComingEventsPresenter : BasePresenter(), ComingEventsContract.ComingEventsPresenterInterface {
     var firebaseRepository = FirestoreOperations
     val mUser = FirebaseAuth.getInstance().currentUser!!
-
-
+    /**
+     * Get all events from Firestore.
+     */
     override fun getAllEvents() {
-        var eventsId = mutableListOf<String>()
+        val eventsId = mutableListOf<String>()
         firebaseRepository.getAllEvents().addOnSuccessListener { result ->
             for (document in result) {
                 eventsId.add(document.id)
@@ -23,22 +26,31 @@ class ComingEventsPresenter : BasePresenter(), ComingEventsContract.ComingEvents
         }
     }
 
-    fun getUserEvent(eventId: String){
+    /**
+     * Get all events of user.
+     */
+    fun getUserEvent(eventId: String) {
         firebaseRepository.eventCollection.document(eventId)
             .collection("Users").get().addOnSuccessListener {
                 for (document in it) {
-                    if(document["id"] == mUser.uid)
+                    if (document["senderId"] == mUser.uid)
                         (getView() as ComingEventsContract.ComingEventsViewInterface).updateUI(eventId)
+                    else
+                        (getView() as ComingEventsContract.ComingEventsViewInterface).noEvent()
+
                 }
             }
     }
 
-    override fun getEventInfos(eventId: String){
+    /**
+     * Get events infos Firestore.
+     */
+    override fun getEventInfos(eventId: String) {
         var event = EventInfos()
         firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             event = it.toObject<EventInfos>(EventInfos::class.java)!!
         }.addOnCompleteListener {
-                    (getView() as ComingEventsContract.ComingEventsViewInterface).updateEvents(event)
-                }
+            (getView() as ComingEventsContract.ComingEventsViewInterface).updateEvents(event)
         }
     }
+}

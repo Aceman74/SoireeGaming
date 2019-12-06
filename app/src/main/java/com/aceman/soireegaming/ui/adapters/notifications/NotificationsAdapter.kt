@@ -19,7 +19,7 @@ import com.aceman.soireegaming.utils.Utils
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * Adapter who shows the Estate on FragmentList in MainActivity and Search.
+ * Adapter who shows the notification of user.
  */
 class NotificationsAdapter(var notifList: MutableList<FirestoreNotification>, val listener: (String, String) -> Unit) : RecyclerView.Adapter<NotificationsViewHolder>() {
 
@@ -33,7 +33,7 @@ class NotificationsAdapter(var notifList: MutableList<FirestoreNotification>, va
     }
 
     /**
-     * Bind the estate to the view, add animation.
+     * Bind the nitifcation to the view, add animation.
      */
     override fun onBindViewHolder(holder: NotificationsViewHolder, position: Int) {
         holder.updateWithItem(notifList[position], position, listener)

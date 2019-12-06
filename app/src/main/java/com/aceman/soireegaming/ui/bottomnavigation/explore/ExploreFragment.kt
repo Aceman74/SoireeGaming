@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.empty_list.*
 import kotlinx.android.synthetic.main.fragment_explore.*
 import timber.log.Timber
 import java.util.*
@@ -35,9 +36,11 @@ import kotlin.Comparator
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
-
 /**
- * A simple [Fragment] subclass.
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Explore fragment is the search classe, here user can search the desire event he wants, with
+ * multi criteria search, and map localisation.
  */
 class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterface,
     OnMapReadyCallback {
@@ -58,6 +61,9 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         }
     }
 
+    /**
+     * Attach presenter to view.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,7 +74,9 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         return mView
     }
 
-
+    /**
+     * Set Toolbar, configure maps and get user data.
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (activity as AppCompatActivity).setSupportActionBar(explore_tb)
@@ -77,18 +85,23 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         search_btn.setOnClickListener { onSearchClick() }
     }
 
-
-    private fun onSearchClick() {
+    /**
+     * Apply the filter to the search.
+     */
+    override fun onSearchClick() {
         filterSearch()
     }
 
-    private fun filterSearch() {
-        var food = explore_food_tv.selectedItemPosition
-        var sleep = explore_sleep_tv.selectedItemPosition
-        var gender = explore_gender_tv.selectedItemPosition
-        var console = explore_console_tv.selectedItemPosition
+    /**
+     * Filter the search with some criteria.
+     */
+    override fun filterSearch() {
+        val food = explore_food_tv.selectedItemPosition
+        val sleep = explore_sleep_tv.selectedItemPosition
+        val gender = explore_gender_tv.selectedItemPosition
+        val console = explore_console_tv.selectedItemPosition
         var distance = explore_distance_tv.selectedItemPosition
-        var stringConsole = resources.getStringArray(R.array.console)[console]
+        val stringConsole = resources.getStringArray(R.array.console)[console]
         when (distance) {
             1 -> distance = 5
             2 -> distance = 10
@@ -123,17 +136,17 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         } else {
             mFilteredList.clear()
             mFilteredList.addAll(mEventsDetailsList)
-            var userLocation = Location("user")
+            val userLocation = Location("user")
             userLocation.latitude = mUser.userLocation.latitude
             userLocation.longitude = mUser.userLocation.longitude
 
-            var eventLocation = Location("event")
+            val eventLocation = Location("event")
 
             var i = 0
             for (item in mEventsDetailsList) {
                 eventLocation.latitude = item.location.latitude
                 eventLocation.longitude = item.location.longitude
-                var distanceEvent = userLocation.distanceTo(eventLocation).roundToInt() / 1000
+                val distanceEvent = userLocation.distanceTo(eventLocation).roundToInt() / 1000
                 when {
                     mDate != "" && Utils.dateWithBSToMillis(item.dateList[0]) > Utils.dateWithBSToMillis(
                         mDate
@@ -169,7 +182,7 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
     /**
      * Set the map.
      */
-    fun configureMaps() {
+    override fun configureMaps() {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.address_map_explore) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -181,19 +194,19 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
-        val Paris = LatLng(48.864716, 2.349014)
+        val paris = LatLng(48.864716, 2.349014)
         mMarker = mMap.addMarker(
-            MarkerOptions().position(Paris)
+            MarkerOptions().position(paris)
                 .title("Paris")
         )
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Paris))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(paris))
         mMap.cameraPosition.zoom.absoluteValue
     }
 
     /**
      * Initialize the recyclerview for picture preview.
      */
-    fun configureRecyclerView() {
+   override fun configureRecyclerView() {
         mRecyclerView = explore_rv
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -205,9 +218,18 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
                 launchProfileDetailActivity(it)
         }
         configureMarkers(mFilteredList)
+        if(mFilteredList.isEmpty()){
+            explore_event_empty_list.visibility = View.VISIBLE
+            empty_list_tv.text = "Oups! Aucun event ne correspond \n à ta recherche."
+        }
+        else
+            explore_event_empty_list.visibility = View.GONE
     }
 
-    private fun configureMarkers(mFilteredList: MutableList<EventInfos>) {
+    /**
+     * Configure the marker (initialise it)
+     */
+    override fun configureMarkers(mFilteredList: MutableList<EventInfos>) {
         mMap.clear()
         mMarker = mMap.addMarker(
             MarkerOptions().position(userLoc)
@@ -217,7 +239,7 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         mMarker.showInfoWindow()
 
         for (item in mFilteredList) {
-            var itemLoc = LatLng(item.location.latitude, item.location.longitude)
+            val itemLoc = LatLng(item.location.latitude, item.location.longitude)
             mMap.addMarker(
                 MarkerOptions()
                     .position(itemLoc)
@@ -227,18 +249,25 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         }
     }
 
-    private fun launchProfileDetailActivity(uid: String) {
+    /**
+     * Launch profile activity on click item.
+     */
+    override fun launchProfileDetailActivity(uid: String) {
         val intent = Intent(requireContext(), ProfileActivity::class.java)
         intent.putExtra("uid", uid)
         startActivity(intent)
     }
-
-    private fun launchEventDetailActivity(eid: String) {
+    /**
+     * Launch eventdetail activity on click item.
+     */
+    override fun launchEventDetailActivity(eid: String) {
         val intent = Intent(requireContext(), EventDetailActivity::class.java)
         intent.putExtra("eid", eid)
         startActivity(intent)
     }
-
+    /**
+     * Update the ui with informations from Firebase.
+     */
     override fun updateUI(currentUser: User) {
         mUser = currentUser
         userLoc = LatLng(mUser.userLocation.latitude, mUser.userLocation.longitude)
@@ -253,18 +282,25 @@ class ExploreFragment : Fragment(), BaseView, ExploreContract.ExploreViewInterfa
         mPresenter.getAllEvents()
     }
 
+    /**
+     * Update event list after getting it from Firebase.
+     */
     override fun updateEventList(list: MutableList<String>) {
         mEventList = list
         for (event in list) {
             mPresenter.addEventInfos(event)
         }
     }
-
+    /**
+     * Update event details after getting it from Firebase.
+     */
     override fun updateEvents(event: EventInfos) {
         mEventsDetailsList.add(event)
     }
-
-    fun sortByDate() {
+    /**
+     * Sort item by date.
+     */
+    override fun sortByDate() {
         mEventsDetailsList.sortWith(Comparator { o1, o2 -> o1.dateList[0].compareTo(o2.dateList[0]) })
         mEventsDetailsList.reverse()
         mRecyclerView.adapter!!.notifyDataSetChanged()

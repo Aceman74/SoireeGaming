@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.contact_list_item.view.*
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * The viewHolder for Estate in MainActivity and Search.
+ * The viewHolder for Users.
  */
 class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     var title = ""
@@ -30,7 +30,8 @@ class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
 
 
     /**
-     * Update the view with the picture, and handle the click on it who opens DetailActivity.
+     * Update the view with the picture, and handle the click on it who accept, remove or delete user
+     * in an event.
      */
     fun updateWithItem(
         user: User,
@@ -41,23 +42,32 @@ class EventDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.On
     ) {
         var i = 0
 
-        if (isowner && user.uid != FirebaseAuth.getInstance().uid) {
-            if (waitingList)
+        if (isowner) {
+            if (waitingList) {
                 itemView.contact_add.visibility = View.VISIBLE
-            itemView.contact_remove.visibility = View.VISIBLE
-            itemView.contact_add.setOnClickListener {
-                listener("add", user.uid)
-            }
-            itemView.contact_remove.setOnClickListener {
-                listener("remove", user.uid)
+                itemView.contact_remove.visibility = View.VISIBLE
+                itemView.contact_add.setOnClickListener {
+                    listener("add", user.uid)
+                }
+                itemView.contact_remove.setOnClickListener {
+                    listener("remove", user.uid)
+                }
+            }else{
+                if(user.uid != FirebaseAuth.getInstance().currentUser!!.uid)
+                itemView.contact_remove.visibility = View.VISIBLE
+                itemView.contact_remove.setOnClickListener {
+                    listener("remove", user.uid)
+                }
+
             }
         }
-        if (user.uid == FirebaseAuth.getInstance().uid) {
-            itemView.contact_remove.visibility = View.VISIBLE
-            itemView.contact_remove.setOnClickListener {
-                listener("remove", user.uid)
+        if(!isowner){
+            if (user.uid == FirebaseAuth.getInstance().currentUser!!.uid){
+                itemView.contact_remove.visibility = View.VISIBLE
+                itemView.contact_remove.setOnClickListener {
+                    listener("remove", user.uid)
+                }
             }
-
         }
 
         itemView.message_list_title.text = user.name

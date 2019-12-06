@@ -8,6 +8,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic contract for class/fragment with all functions.
  */
 
 interface MessagesContract {
@@ -27,5 +29,6 @@ interface MessagesPresenterInterface {
         )
         fun updateUsers(user: User)
 
+        fun configureRecyclerView()
     }
 }

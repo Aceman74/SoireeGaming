@@ -8,6 +8,22 @@
     android:background="@android:color/darker_gray">
 
 
+    <include
+        android:id="@+id/passed_event_empty_list"
+        layout="@layout/empty_list_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <include
+        android:id="@+id/passed_event_loading"
+        layout="@layout/pb_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/passed_events_rv"
         android:layout_width="0dp"

@@ -22,12 +22,16 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/edit_first_cv"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/edit_second_cv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_profile_tb"
-        app:layout_constraintVertical_weight="0.5">
+        app:layout_constraintVertical_weight="0.5"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_cly"
@@ -237,12 +241,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_first_cv"
-        app:layout_constraintVertical_weight="0.5">
+        app:layout_constraintVertical_weight="0.5"
+        android:layout_marginBottom="10dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp">
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_cly_2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/edit_profile_title"
@@ -371,7 +383,9 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_checkbox"
-                app:layout_constraintVertical_bias="0.18"/>
+                app:layout_constraintVertical_bias="0.18"
+                android:layout_marginBottom="5dp"
+                />
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/edit_profile_checkbox"
@@ -385,6 +399,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

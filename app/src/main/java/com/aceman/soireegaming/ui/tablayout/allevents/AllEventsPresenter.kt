@@ -9,19 +9,22 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenterInterface {
     var firebaseRepository = FirestoreOperations
 
     /**
      * Getting current user check.
-     *
-     * @return actual user
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Get all events from Firestore.
+     */
     override fun getAllEvents() {
         if (getCurrentUser() != null) {
             val list = mutableListOf<String>()
@@ -38,7 +41,10 @@ class AllEventsPresenter : BasePresenter(), AllEventsContract.AllEventsPresenter
         }
     }
 
-    override fun addEventInfos(eventId: String){
+    /**
+     * Add event info from ID.
+     */
+    override fun addEventInfos(eventId: String) {
         firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             val event = it.toObject(EventInfos::class.java)
             (getView() as AllEventsContract.AllEventsViewInterface).updateEvents(event!!)

@@ -10,31 +10,43 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePresenterInterface {
     var firebaseRepository = FirestoreOperations
     val mUser = FirebaseAuth.getInstance().currentUser!!
 
-
+    /**
+     * Get the user data.
+     */
     override fun getUserDataFromFirestore() {
-            firebaseRepository.getUser(mUser.uid)
-                .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject(User::class.java)
-                    (getView() as EditProfileContract.EditProfileViewInterface).loadUserInfos(currentUser!!)
-        }
+        firebaseRepository.getUser(mUser.uid)
+            .addOnSuccessListener { documentSnapshot ->
+                val currentUser = documentSnapshot.toObject(User::class.java)
+                (getView() as EditProfileContract.EditProfileViewInterface).loadUserInfos(
+                    currentUser!!
+                )
+            }
     }
 
+    /**
+     * Save the user data.
+     */
     override fun saveUserInfosToFirebase(userInfos: UserInfos) {
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.saveUserInfos(userInfos).addOnSuccessListener {
-                    Timber.i("Infos Updated saved!")
-                }.addOnFailureListener {
-                    Timber.e("Failed to update User!")
-                }
+                Timber.i("Infos Updated saved!")
+            }.addOnFailureListener {
+                Timber.e("Failed to update User!")
+            }
         }
     }
 
-    override fun updateNameOnFirestore(name: String){
+    /**
+     * Update only name.
+     */
+    override fun updateNameOnFirestore(name: String) {
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updateName(name).addOnSuccessListener {
                 Timber.i("Name Updated saved!")
@@ -44,17 +56,26 @@ class EditProfilePresenter : BasePresenter(), EditProfileContract.EditProfilePre
         }
     }
 
-    override fun updatePictureOnFirestore(toUri: String){
+    /**
+     * Update Picture URL.
+     */
+    override fun updatePictureOnFirestore(toUri: String) {
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updatePicture(toUri)
         }
     }
 
-    override fun updateLocationOnFirestore(location: UserLocation){
+    /**
+     * Update Location of user.
+     */
+    override fun updateLocationOnFirestore(location: UserLocation) {
         firebaseRepository.userCollection.document(mUser.uid).update("userLocation", location)
     }
 
-    override fun updateEmailOnFirestore(email: String){
+    /**
+     * Update only Email.
+     */
+    override fun updateEmailOnFirestore(email: String) {
         firebaseRepository.getUser(mUser.uid).addOnSuccessListener {
             firebaseRepository.updateEmail(email).addOnSuccessListener {
                 Timber.i("Email Updated saved!")

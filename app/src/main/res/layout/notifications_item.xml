@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:cardElevation="10dp"
     app:cardCornerRadius="50dp"
-    android:layout_margin="2dp">
+    android:layout_margin="10dp">
 
         <LinearLayout
             android:orientation="horizontal" android:layout_width="match_parent"
@@ -17,7 +17,7 @@
 <LinearLayout
     android:id="@+id/not_left_ly"
     android:layout_width="0dp"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:layout_weight="0.25">
     <ImageView
         android:layout_marginStart="20dp"
@@ -64,8 +64,8 @@
             android:id="@+id/not_date_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
+            android:layout_margin="10dp"
+            android:textSize="12sp"
             android:text="DATE"
             android:textColor="@color/greyTextColor"
             android:gravity="center_horizontal"/>

@@ -11,6 +11,8 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class MessagesPresenter : BasePresenter(), MessagesContract.MessagesPresenterInterface {
     var firebaseRepository = FirestoreOperations
@@ -18,13 +20,14 @@ class MessagesPresenter : BasePresenter(), MessagesContract.MessagesPresenterInt
 
     /**
      * Getting current user check.
-     *
-     * @return actual user
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Get the engaged chat of user, return list of chat ID.
+     */
     override fun getEngagedChat() {
         val list = mutableListOf<String>()
         val chanList = mutableListOf<String>()
@@ -43,12 +46,18 @@ class MessagesPresenter : BasePresenter(), MessagesContract.MessagesPresenterInt
             }
     }
 
+    /**
+     * Get last message date of this discussion.
+     */
     override fun getLastMessageTime(chatID: String): Task<DocumentSnapshot> {
           return  firebaseRepository.chatCollection.document(chatID).collection("last")
                 .document("last").get()
 
     }
 
+    /**
+     * Get the user informations.
+     */
     override fun addUserInfos(userId: String) {
         firebaseRepository.getUser(userId).addOnSuccessListener {
             val user = it.toObject(User::class.java)

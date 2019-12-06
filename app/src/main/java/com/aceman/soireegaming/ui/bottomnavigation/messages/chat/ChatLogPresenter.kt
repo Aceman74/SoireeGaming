@@ -13,6 +13,8 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterface {
     var firebaseRepository = FirestoreOperations
@@ -20,13 +22,14 @@ class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterf
 
     /**
      * Getting current user check.
-     *
-     * @return actual user
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Get user data from Firestore.
+     */
     override fun getUserDataFromFirestore(uid: String) {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(uid)
@@ -39,18 +42,29 @@ class ChatLogPresenter : BasePresenter(), ChatLogContract.ChatLogPresenterInterf
         }
     }
 
+    /**
+     * Get chat channel.
+     */
     override fun getChannel(mOtherUser: String, onComplete: (channelId: String) -> Unit) {
-        firebaseRepository.getOrCreateChatChannel(mOtherUser){
-          onComplete(it)
-       }
+        firebaseRepository.getOrCreateChatChannel(mOtherUser) {
+            onComplete(it)
+        }
     }
 
-    override  fun addChatMessagesListener(channelId: String, context: Context,
-                                onListen: (List<Item>) -> Unit): ListenerRegistration {
-        return firebaseRepository.chatListener(channelId,context,onListen)
+    /**
+     * Get message live.
+     */
+    override fun addChatMessagesListener(
+        channelId: String, context: Context,
+        onListen: (List<Item>) -> Unit
+    ): ListenerRegistration {
+        return firebaseRepository.chatListener(channelId, context, onListen)
     }
 
-   override fun sendMessage(message: Message, channelId: String) {
-        return firebaseRepository.sendMessage(message,channelId)
+    /**
+     * Send a message, save it to Firebase.
+     */
+    override fun sendMessage(message: Message, channelId: String) {
+        return firebaseRepository.sendMessage(message, channelId)
     }
 }

@@ -177,7 +177,7 @@
                         android:layout_height="200dp"
                         tools:context="com.example.mapwithmarker.MapsMarkerActivity"
                         map:cameraZoom="12"
-                        map:mapType="terrain"
+                        map:mapType="normal"
                         map:liteMode="true" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -213,6 +213,8 @@
                         android:background="@color/lightGrey"
                         android:minWidth="150dp"
                         android:padding="5dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
                         android:text="@string/begin"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
@@ -223,6 +225,9 @@
                         android:layout_height="wrap_content"
                         android:minWidth="150dp"
                         android:padding="5dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
                         android:hint="@string/choose_date_hint"
                         android:textColorHint="@color/greyTextColor"
                         android:textColor="@android:color/black"/>
@@ -240,6 +245,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/from_hour"
                         android:minWidth="150dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
                         android:background="@color/lightGrey"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -252,6 +259,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/choose_hour"
                         android:minWidth="150dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
                         android:padding="5dp"
                         android:textColor="@android:color/black"
                         android:textColorHint="@color/greyTextColor" />
@@ -268,6 +278,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/end"
                         android:minWidth="150dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
                         android:background="@color/lightGrey"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -279,6 +291,9 @@
                         android:layout_height="wrap_content"
                         android:minWidth="150dp"
                         android:padding="5dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
                         android:hint="@string/choose_date_hint"
                         android:textColorHint="@color/greyTextColor"
                         android:textColor="@android:color/black"/>
@@ -296,6 +311,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/until_hour"
                         android:minWidth="150dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
                         android:background="@color/lightGrey"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -308,6 +325,9 @@
                         android:layout_height="wrap_content"
                         android:minWidth="150dp"
                         android:padding="5dp"
+                        android:minHeight="35dp"
+                        android:gravity="center_vertical"
+                        android:textSize="15sp"
                         android:hint="@string/choose_hour"
                         android:textColorHint="@color/greyTextColor"
                         android:textColor="@android:color/black"/>
@@ -329,7 +349,8 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:focusableInTouchMode="true">
 
                         <TextView
                             android:id="@+id/title_type"
@@ -389,6 +410,7 @@
                                     android:inputType="textCapWords"
                                     android:completionThreshold="1"
                                     android:imeOptions="actionDone"
+
                                     />
                                 <androidx.core.widget.NestedScrollView
                                     android:layout_width="wrap_content"

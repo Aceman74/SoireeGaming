@@ -11,6 +11,8 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class HomePresenter : BasePresenter(), HomeContract.HomePresenterInterface {
     var firebaseRepository = FirestoreOperations
@@ -19,13 +21,14 @@ class HomePresenter : BasePresenter(), HomeContract.HomePresenterInterface {
 
     /**
      * Getting current user check.
-     *
-     * @return actual user
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Get User data from Firestore.
+     */
     override fun getUserDataFromFirestore() {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(mUser.uid)
@@ -38,21 +41,29 @@ class HomePresenter : BasePresenter(), HomeContract.HomePresenterInterface {
         }
     }
 
+    /**
+     * Get event data from firestore.
+     */
     override fun getEventFromUser() { // GET DOC LIST
         val list = mutableListOf<String>()
         firebaseRepository.getAllEvents().addOnSuccessListener {
             for (document in it) {
                 Timber.tag("EVENTID").d(document.id)
-                if(document.data["uid"] == mUser.uid)
+                if (document.data["uid"] == mUser.uid)
                     list.add(document.id)
             }
         }.addOnCompleteListener {
-            for(item in list)
-            (getView() as HomeContract.HomeViewInterface).updateUI(item)
+            for (item in list)
+                (getView() as HomeContract.HomeViewInterface).updateUI(item)
+            if(list.size == 0)
+                (getView() as HomeContract.HomeViewInterface).emptyEvent()
         }
     }
 
-    override fun addEventInfos(eventId: String){
+    /**
+     * Add the event infos.
+     */
+    override fun addEventInfos(eventId: String) {
         firebaseRepository.getEventDetail(eventId).addOnSuccessListener {
             val event = it.toObject(EventInfos::class.java)
             if (event != null) {

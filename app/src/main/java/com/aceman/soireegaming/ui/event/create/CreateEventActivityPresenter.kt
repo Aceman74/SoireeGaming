@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseUser
 
 /**
  * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * A classic presenter class for activity/fragment with functions.
  */
 class CreateEventActivityPresenter : BasePresenter(),
     CreateEventActivityContract.CreateEventActivityPresenterInterface {
@@ -19,50 +21,50 @@ class CreateEventActivityPresenter : BasePresenter(),
 
     /**
      * Getting current user check.
-     *
-     * @return actual user
      */
     override fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
     }
 
+    /**
+     * Get user data.
+     */
     override fun getUserDataFromFirestore() {
         if (getCurrentUser() != null) {
             firebaseRepository.getUser(getCurrentUser()!!.uid)
                 .addOnSuccessListener { documentSnapshot ->
                     val currentUser = documentSnapshot.toObject(User::class.java)
                     if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                        (getView() as CreateEventActivityContract.CreateEventActivityViewInterface).updateUI(currentUser)
+                        (getView() as CreateEventActivityContract.CreateEventActivityViewInterface).updateUI(
+                            currentUser
+                        )
                     }
                 }
         }
     }
 
+    /**
+     * Save newly created event to Firebase.
+     */
     override fun saveEventToFirebase(eventInfos: EventInfos, eventId: String) {
         firebaseRepository.saveEvent(eventInfos, eventId).addOnSuccessListener {
             createEventPresence(eventId, mUser.uid)
         }
     }
 
-    fun addEventToUserList(userId: String, eventId: MutableList<String>) {
-        if (getCurrentUser() != null) {
-            firebaseRepository.getUser(userId)
-                .addOnSuccessListener { documentSnapshot ->
-                    val currentUser = documentSnapshot.toObject(User::class.java)
-                    if (currentUser != null) {    //  logout if no username set (account delete by admin )
-                        firebaseRepository.setEventParticipation(eventId)
-                    }
-                }
-        }
-    }
-
+    /**
+     * Set the presence in the event for the creator.
+     */
     override fun createEventPresence(eventId: String, uid: String) {
         firebaseRepository.userCollection.document(mUser.uid).collection("Events")
-            .add(ObjectId("event",eventId, mUser.uid))
+            .add(ObjectId("event", eventId, mUser.uid))
         firebaseRepository.eventCollection.document(eventId).collection("Users")
-            .add(ObjectId("user",mUser.uid, mUser.uid))
+            .add(ObjectId("user", mUser.uid, mUser.uid))
     }
 
+    /**
+     * Save the date of creation.
+     */
     override fun saveDate(user: FirebaseUser) {
         val date = Utils.todayDate
         firebaseRepository.getUser(user.uid).addOnSuccessListener {

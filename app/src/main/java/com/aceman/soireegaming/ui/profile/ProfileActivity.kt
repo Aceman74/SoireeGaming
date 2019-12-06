@@ -2,6 +2,7 @@ package com.aceman.soireegaming.ui.profile
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -28,11 +29,18 @@ import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.empty_list.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
-
+/**
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Profile show the user profile.
+ */
 class ProfileActivity(override val activityLayout: Int = R.layout.activity_profile) :
-    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface, RatingBar.OnRatingBarChangeListener {
+    BaseActivity(), BaseView, ProfileContract.ProfileViewInterface,
+    RatingBar.OnRatingBarChangeListener {
 
     private val mPresenter: ProfilePresenter = ProfilePresenter()
     lateinit var chipList: MutableList<UserChip>
@@ -44,18 +52,25 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
     var ratingList = mutableListOf<OpinionAndRating>()
     var mRating = 2
     lateinit var mRecyclerView: RecyclerView
-
+    /**
+     * Attach presenter, check for itent and set action bar.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
-       mIntent = intent.getStringExtra("uid")
+        mIntent = intent.getStringExtra("uid")
         userOrIntent()
         setSupportActionBar(profile_tb)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun userOrIntent() {
-        if(mIntent == null || mIntent == mVisitorId){
+    /**
+     * Function to set if owner or visitor.
+     */
+    override fun userOrIntent() {
+        profile_console_chipgroup.removeAllViews()
+        style_chipgroup.removeAllViews()
+        if (mIntent == null || mIntent == mVisitorId) {
             mPresenter.getUserDataFromFirestore()
             mPresenter.getRating(mVisitorId)
             chipSetting()
@@ -64,20 +79,24 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                 val intent = Intent(this, EditProfileActivity::class.java)
                 startActivity(intent)
             }
-        }else{
+        } else {
             mPresenter.getIntentUserDataFromFirestore(mIntent!!)
             mPresenter.getRating(mIntent!!)
             console_ac.visibility = View.GONE
             style_ac.visibility = View.GONE
-            profile_edit_btn.text = "Envoyer un message"
+            profile_edit_btn.text = getString(R.string.send_message_to)
             profile_edit_btn.setOnClickListener {
                 val intent = Intent(this, ChatLogActivity::class.java)
-                intent.putExtra("uid",mIntent)
-                startActivity(intent) }
-            profile_rating_bar.onRatingBarChangeListener = this
+                intent.putExtra("uid", mIntent)
+                startActivity(intent)
             }
+            profile_rating_bar.onRatingBarChangeListener = this
+        }
     }
 
+    /**
+     * Update ui with firebase informations.
+     */
     override fun updateUI(currentUser: User) {
         user = currentUser
         Glide.with(this)
@@ -99,6 +118,9 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         mPresenter.getChipList(user.uid)
     }
 
+    /**
+     * Update the chip list.
+     */
     override fun updateList(currentUser: User) {
         chipList = currentUser.chipList as MutableList<UserChip>
         for (item in chipList) {
@@ -107,13 +129,19 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         }
     }
 
-    fun chipSetting() {
+    /**
+     * Setings the chip for ChipGroup.
+     */
+    override fun chipSetting() {
 
         val console = Utils.ListOfString.listOfConsole()
-        val consoleAdapter = ArrayAdapter<String>(applicationContext,
+        val consoleAdapter = ArrayAdapter<String>(
+            applicationContext,
             android.R.layout.simple_dropdown_item_1line, console
         )
         console_ac.setAdapter(consoleAdapter)
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP)
+            console_ac.setDropDownBackgroundDrawable(ColorDrawable(resources.getColor(R.color.primaryLightColor)))
         console_ac.threshold = 1
         console_ac.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -159,6 +187,8 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
             style
         )
         style_ac.setAdapter(styleAdapter)
+        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP)
+            style_ac.setDropDownBackgroundDrawable(ColorDrawable(resources.getColor(R.color.primaryLightColor)))
         style_ac.threshold = 1
         style_ac.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -180,7 +210,8 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                             break
                         }
                         if (j == style_chipgroup.childCount - 1) {
-                            Toast.makeText(applicationContext, "Ajout $selectedItem",
+                            Toast.makeText(
+                                applicationContext, "Ajout $selectedItem",
                                 Toast.LENGTH_SHORT
                             ).show()
                             addChip(selectedItem, "Style")
@@ -197,6 +228,9 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         }
     }
 
+    /**
+     * hide keyboard when autocomplete closed.
+     */
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus != null) {
             hideKeyboard(console_ac)
@@ -206,7 +240,10 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         return super.dispatchTouchEvent(ev)
     }
 
-    private fun clearAutocomplete() {
+    /**
+     * Clean autocomplete hint.
+     */
+    override fun clearAutocomplete() {
         console_ac.clearFocus()
         console_ac.text.clear()
         console_ac.hint = "Rechercher"
@@ -215,18 +252,21 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         style_ac.hint = "Rechercher"
     }
 
-    fun addChip(chipName: String, group: String) {
+    /**
+     * adding chip to chipgroup.
+     */
+    override fun addChip(chipName: String, group: String) {
         // Initialize a new chip instance
         val chip = Chip(this)
         chip.text = chipName
         chip.tag = group
         chip.setChipBackgroundColorResource(Utils.chipColor(chip))
         chip.setTextColor(resources.getColor(R.color.primaryTextColor))
-        if(mIntent == null){
-        chip.isClickable = true
-        chip.isCheckable = false
-        chip.isCloseIconVisible = true
-        }else{
+        if (mIntent == null) {
+            chip.isClickable = true
+            chip.isCheckable = false
+            chip.isCloseIconVisible = true
+        } else {
             chip.isClickable = false
             chip.isCheckable = false
             chip.isCloseIconVisible = false
@@ -234,31 +274,34 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         updateAndSaveChips(chip)
     }
 
+    /**
+     * Update and save chips when change.
+     */
     override fun updateAndSaveChips(chip: Chip) {
         if (chip.tag == "Console") {
             chip.setOnCloseIconClickListener {
                 TransitionManager.beginDelayedTransition(profile_console_chipgroup)
                 profile_console_chipgroup.removeView(chip)
                 for (item in chipList) {
-                    if (item.name == chip.text){
+                    if (item.name == chip.text) {
                         chipList[chipList.indexOf(item)].check = false
                         break
                     }
                 }
-                if(mIntent == null)
-                mPresenter.updateChip(chipList)
+                if (mIntent == null)
+                    mPresenter.updateChip(chipList)
             }
             profile_console_chipgroup.addView(chip)
             for (item in chipList) {
-                if (item.name == chip.text){
+                if (item.name == chip.text) {
                     chipList[chipList.indexOf(item)].check = true
                     break
                 }
             }
-            if(mIntent == null){
-            mPresenter.updateChip(chipList)
-            clearAutocomplete()
-            hideKeyboard(console_ac)
+            if (mIntent == null) {
+                mPresenter.updateChip(chipList)
+                clearAutocomplete()
+                hideKeyboard(console_ac)
             }
         }
 
@@ -267,22 +310,22 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
                 TransitionManager.beginDelayedTransition(style_chipgroup)
                 style_chipgroup.removeView(chip)
                 for (item in chipList) {
-                    if (item.name == chip.text){
+                    if (item.name == chip.text) {
                         chipList[chipList.indexOf(item)].check = false
                         break
                     }
                 }
-                if(mIntent == null)
-                mPresenter.updateChip(chipList)
+                if (mIntent == null)
+                    mPresenter.updateChip(chipList)
             }
             style_chipgroup.addView(chip)
             for (item in chipList) {
-                if (item.name == chip.text){
+                if (item.name == chip.text) {
                     chipList[chipList.indexOf(item)].check = true
                     break
                 }
             }
-            if(mIntent == null) {
+            if (mIntent == null) {
                 mPresenter.updateChip(chipList)
                 clearAutocomplete()
                 hideKeyboard(style_ac)
@@ -316,24 +359,39 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
             else -> super.onOptionsItemSelected(item)
         }
 
+    /**
+     * Get rating and opinion and set a value for global rating.
+     */
     override fun setRating(mutableList: QuerySnapshot?) {
-        if(mutableList != null && mutableList.size()> 0){
+        if (mutableList != null && mutableList.size() > 0) {
             mRating = 0
-        for(item in mutableList)
-            ratingList.add(item.toObject(OpinionAndRating::class.java))
-            for (rate in ratingList){
+            for (item in mutableList)
+                ratingList.add(item.toObject(OpinionAndRating::class.java))
+            for (rate in ratingList) {
                 mRating += rate.rating
-                if(rate.ratingId == mVisitorId)
+                if (rate.ratingId == mVisitorId) {
                     canRate = false
-                profile_rating_bar.setIsIndicator(true)
+                    profile_rating_bar.setIsIndicator(true)
+                }
             }
-            mRating /= ratingList.size
-            profile_rating_bar.rating = mRating.toFloat()
+            val rating = mRating.toFloat() / ratingList.size
+            rating.roundToInt()
+            profile_rating_bar.rating = rating
             configureRecyclerView()
+        } else {
+            if (ratingList.isEmpty()) {
+                profile_empty_ranking.visibility = View.VISIBLE
+                empty_list_tv.text = getString(R.string.no_rating_yet)
+            } else
+                profile_empty_ranking.visibility = View.GONE
         }
     }
 
+    /**
+     * Configure the recyclerview of Opinions.
+     */
     override fun configureRecyclerView() {
+        profile_empty_ranking.visibility = View.GONE
         mRecyclerView = profile_rating_rv
         mRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -342,24 +400,34 @@ class ProfileActivity(override val activityLayout: Int = R.layout.activity_profi
         }
     }
 
+    /**
+     * Rating bar change listener.
+     */
     override fun onRatingChanged(p0: RatingBar?, p1: Float, p2: Boolean) {
-        if(p2 && canRate){
-        var edittext = EditText(this)
-        edittext.maxLines = 1
+        if (p2 && canRate) {
+            val edittext = EditText(this)
+            edittext.maxLines = 1
             edittext.maxWidth = 100
-        var dialog = AlertDialog.Builder(this)
-        dialog.setTitle("Laissez un avis pour valider la note")
-        dialog.setMessage("Vous devez laisser un avis écrit pour valider votre note!")
-        dialog.setView(edittext)
-        dialog.setPositiveButton("Valider") { _, i ->
-            profile_rating_bar.setIsIndicator(true)
-            canRate = false
-            mPresenter.rateUser(OpinionAndRating(mIntent!!,mVisitorId,edittext.text.toString(),p1.toInt()))
-        }
-        dialog.setNegativeButton("Annuler") { _, i ->
+            val dialog = AlertDialog.Builder(this)
+            dialog.setTitle("Laissez un avis pour valider la note")
+            dialog.setMessage("Vous devez laisser un avis écrit pour valider votre note!")
+            dialog.setView(edittext)
+            dialog.setPositiveButton("Valider") { _, i ->
+                profile_rating_bar.setIsIndicator(true)
+                canRate = false
+                mPresenter.rateUser(
+                    OpinionAndRating(
+                        mIntent!!,
+                        mVisitorId,
+                        edittext.text.toString(),
+                        p1.toInt()
+                    )
+                )
+            }
+            dialog.setNegativeButton("Annuler") { _, i ->
 
-        }
-        dialog.show()
+            }
+            dialog.show()
         }
     }
 

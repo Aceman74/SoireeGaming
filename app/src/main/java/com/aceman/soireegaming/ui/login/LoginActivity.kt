@@ -25,14 +25,22 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_login.*
 
+/**
+ * Created by Lionel JOFFRAY - on 19/11/2019.
+ *
+ * Login activiy is the first activity of the app. If new user, it ask to create a new account, other
+ * the btn said continue to launch app.
+ */
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class LoginActivity(override val activityLayout: Int = R.layout.activity_login) : BaseActivity(),
     LoginContract.LoginViewInterface {
 
     private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
-    val chipList:MutableList<UserChip> = mutableListOf()
-
+    val chipList: MutableList<UserChip> = mutableListOf()
+    /**
+     * Attach presenter, check for permission and logged. Init a list of chip for late use.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -41,19 +49,21 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         ChipsManager.initListOfChip(chipList)
     }
 
+    /**
+     * Check if logged.
+     */
     override fun isLoggedUser() {
         when (FirebaseAuth.getInstance().currentUser) {
             null -> {
-                signOutUserFromFirebase()
-                main_login_bt.text = "Créer un compte / Se connecter"
+                main_login_bt.text = getString(R.string.create_or_connect)
                 main_login_known_user_tv.visibility = View.INVISIBLE
                 main_login_bt.setOnClickListener {
                     startSignInActivity()
                 }
             }
             else -> {
-                main_login_bt.text = "Continuer"
-                main_login_known_user_tv.text = "Créer un nouveau compte ?"
+                main_login_bt.text = getString(R.string.continue_to)
+                main_login_known_user_tv.text = getString(R.string.create_new_account)
                 main_login_known_user_tv.setOnClickListener {
                     startSignInActivity()
                 }
@@ -99,7 +109,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     override fun askPermission() {
         val alertDialog = AlertDialog.Builder(this@LoginActivity)
         alertDialog.setTitle("Soirée Gaming")
-        alertDialog.setMessage("For fully working features, this application needs some permissions from you.")
+        alertDialog.setMessage(getString(R.string.permissions_needed))
         alertDialog.setPositiveButton(
             android.R.string.yes
         ) { dialog, _ ->
@@ -139,8 +149,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     override fun dexterInit() {
         val dialogMultiplePermissionsListener = DialogOnAnyDeniedMultiplePermissionsListener.Builder
             .withContext(this)
-            .withTitle("Permissions denied")
-            .withMessage("Unfortunately, you cannot run the application without these permissions.")
+            .withTitle("Permissions refusées")
+            .withMessage(getString(R.string.perms_necessary))
             .withButtonText(android.R.string.ok)
             .build()
         Dexter.withActivity(this)
@@ -172,12 +182,13 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
-                if (user != null ){
+                if (user != null) {
 
                     val date = Utils.todayDate
                     var photoUrl = user.photoUrl.toString()
-                    if(user.photoUrl == null)
-                         photoUrl = "https://firebasestorage.googleapis.com/v0/b/soireegaming-ccde4.appspot.com/o/profile_default%2Flogo_SG.png?alt=media&token=9e9c6564-a5c6-4759-91a0-04922e8f8840"
+                    if (user.photoUrl == null)
+                        photoUrl =
+                            "https://firebasestorage.googleapis.com/v0/b/soireegaming-ccde4.appspot.com/o/profile_default%2Flogo_SG.png?alt=media&token=9e9c6564-a5c6-4759-91a0-04922e8f8840"
                     mPresenter.saveUserToFirebase(
                         User(
                             user.uid,
@@ -193,7 +204,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                     )
                 }
                 isLoggedUser()
-                main_login_bt.text = "Continuer"
+                main_login_bt.text = getString(R.string.continue_to)
 
             } else { // ERRORS
                 if (response == null) {

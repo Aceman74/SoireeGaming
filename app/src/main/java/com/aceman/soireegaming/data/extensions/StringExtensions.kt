@@ -30,7 +30,7 @@ fun hourSetting(hour: Int, minutes: Int): String {
     return s.toString()
 }
 /**
- * Use to save event.
+ * Use as part of unique ID for event.
  */
 fun customTimeStamp(): String {
     val dateFormat = SimpleDateFormat("HHmmssdd")

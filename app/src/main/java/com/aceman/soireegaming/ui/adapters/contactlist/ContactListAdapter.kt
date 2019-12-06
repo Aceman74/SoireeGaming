@@ -20,7 +20,7 @@ import com.aceman.soireegaming.utils.Utils
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  *
- * Adapter who shows the Estate on FragmentList in MainActivity and Search.
+ * Adapter who shows the contact on MessagesActivity.
  */
 class ContactListAdapter(var userList: MutableList<User>, var dateList: MutableList<DateStamp>, val listener: (String) -> Unit) : RecyclerView.Adapter<ContactListViewHolder>() {
 

@@ -27,6 +27,9 @@ import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 13/11/2019.
+ *
+ * The main activity handle the view with bottom navigation, shows home fragment in same time and
+ * locate the user if new.
  */
 
 class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(),
@@ -34,7 +37,9 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     private val mPresenter: MainPresenter =
         MainPresenter()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
+    /**
+     * Attach presenter, set bottom navigation and check location of user, also save device token.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("Main Activity onCreate()")
@@ -48,15 +53,18 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         getTokenFCM()
     }
 
-    private fun checkLocation() {
+    /**
+     * Check location and ask for changing.
+     */
+    override fun checkLocation() {
         mPresenter.getLocation {
             if (it) {
                 val mDialog = AlertDialog.Builder(this)
                 mDialog.setTitle("Localisation")
                 mDialog.setMessage("Veux-tu renseigner ta ville dans le profil pour une utilisation optimal de Soirée Gaming?")
                 mDialog.setPositiveButton("Oui ! ") { _: DialogInterface, i: Int ->
-                    var intent = Intent(this, EditProfileActivity::class.java)
-                    intent.putExtra("loc","loc")
+                    val intent = Intent(this, EditProfileActivity::class.java)
+                    intent.putExtra("loc", "loc")
                     startActivity(intent)
                 }
                 mDialog.setNegativeButton("Plus tard", null)
@@ -67,20 +75,23 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         pb_layout_include.visibility = View.GONE
     }
 
-    private fun getTokenFCM() {
-        var token : String = ""
+    /**
+     * Get the device token.
+     */
+    override fun getTokenFCM() {
+        var token: String = ""
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     return@OnCompleteListener
                 }
                 // Get new Instance ID token
-                 token = task.result?.token!!
+                token = task.result?.token!!
                 mPresenter.updateToken(token)
-                var tokenMap = mutableMapOf<String,String>()
-                var user = FirebaseAuth.getInstance().currentUser!!.uid
+                val tokenMap = mutableMapOf<String, String>()
+                val user = FirebaseAuth.getInstance().currentUser!!.uid
                 tokenMap[user] = token
-                mPresenter.updateOrCreateTokenList(token,tokenMap, user) {
+                mPresenter.updateOrCreateTokenList(token, tokenMap, user) {
                 }
                 // Log and toast
                 val msg = "FCM $token"
@@ -89,7 +100,10 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
 
     }
 
-    private val mOnNavigationItemSelectedListener =
+    /**
+     * Set the bottom navigation and change view.
+     */
+    override val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.title.toString()) {
                 "Accueil" -> showFragment(
