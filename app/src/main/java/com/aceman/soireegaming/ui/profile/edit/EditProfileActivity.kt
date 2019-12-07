@@ -216,7 +216,7 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
             .into(edit_profile_picture_iv)
         edit_profile_name_et.setText(currentUser.name)
         edit_profile_email_et.setText(currentUser.email)
-        edit_member_since_tv.text = currentUser.Date
+        edit_member_since_tv.text = currentUser.date
         edit_profile_address_tv.text = currentUser.userLocation.city
         if (currentUser.userInfos.showAge) {
             edit_profile_age_switch.isChecked = true

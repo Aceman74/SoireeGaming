@@ -93,11 +93,13 @@
                             android:layout_height="150dp"
                             android:layout_below="@id/create_event_tv"
                             android:visibility="gone" />
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/main_my_events_rv"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
-                            android:layout_below="@id/my_events_title" />
+                            android:layout_below="@id/my_events_title"
+                            android:scrollbars="horizontal"/>
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -127,7 +129,6 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_ly"
             style="@style/AppThemeSG"
-            android:background="@color/lightGrey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/primaryColor"

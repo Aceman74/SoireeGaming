@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:backgroundTint="@color/primaryColor"
     app:cardElevation="5dp"
     app:cardCornerRadius="5dp"
+    android:layout_margin="2dp"
     >
 <LinearLayout
     android:layout_width="match_parent"

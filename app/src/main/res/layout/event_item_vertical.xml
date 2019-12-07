@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     app:cardElevation="5dp"
-    app:cardCornerRadius="5dp">
+    app:cardCornerRadius="5dp"
+    android:layout_margin="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/const_ly_vert"
@@ -14,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@color/primaryColor"
-        android:padding="1dp">
+        android:padding="2dp">
 
         <ImageView
             android:id="@+id/event_main_pic_vert"

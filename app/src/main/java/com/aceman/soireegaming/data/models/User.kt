@@ -6,7 +6,7 @@ package com.aceman.soireegaming.data.models
  * The main user class, used for storing informations on firebase.
  */
 
-data class User(val uid: String, val Date: String, val name: String, val email: String, val urlPicture: String?,
+data class User(val uid: String, val date: String, val name: String, val email: String, val urlPicture: String?,
                 val userLocation: UserLocation, val userInfos: UserInfos, val chipList: List<UserChip>,
                 val eventList: MutableList<String>)
 {
