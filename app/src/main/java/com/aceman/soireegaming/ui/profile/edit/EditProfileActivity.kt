@@ -199,9 +199,21 @@ class EditProfileActivity(override val activityLayout: Int = R.layout.activity_e
         val storageRef = storage.reference
         val uid = FirebaseAuth.getInstance().currentUser!!.uid
         val spaceRef = storageRef.child("$uid/profile_picture.jpg")
-        spaceRef.putFile(fileUri)
-        spaceRef.downloadUrl.addOnCompleteListener {
-            mPresenter.updatePictureOnFirestore((it.result.toString()))
+        val uploadTask = spaceRef.putFile(fileUri)
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            spaceRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                mPresenter.updatePictureOnFirestore((downloadUri.toString()))
+            } else {
+                Timber.e("Error Upload Picture")
+            }
         }
     }
 

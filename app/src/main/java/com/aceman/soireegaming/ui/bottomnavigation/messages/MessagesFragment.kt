@@ -81,7 +81,9 @@ class MessagesFragment : Fragment(), BaseView, MessagesContract.MessagesViewInte
         for (item in chanList) {
             mPresenter.getLastMessageTime(item).addOnCompleteListener {
                 val date = it.result!!.toObject(DateStamp::class.java)
-                dateList.add(date!!)
+                if (date != null) {
+                    dateList.add(date)
+                }
                 i++
                 if (i == userList.size)
                     mRecyclerView.adapter!!.notifyDataSetChanged()

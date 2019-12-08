@@ -8,4 +8,5 @@ object AppConstants {
     const val USER_NAME = "USER_NAME"
     const val USER_ID = "USER_ID"
     const val BODY_TYPE = "BODY_TYPE"
+    const val CREATOR_ID = "CREATOR_ID"
 }

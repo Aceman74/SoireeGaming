@@ -99,6 +99,8 @@ class ComingEventsFragment : Fragment(), BaseView, ComingEventsContract.ComingEv
     override fun updateAllEvents(eventsId: MutableList<String>) {
         for (item in eventsId)
             mPresenter.getUserEvent(item)
+        if(eventsId.isEmpty())
+            noEvent()
     }
 
     /**

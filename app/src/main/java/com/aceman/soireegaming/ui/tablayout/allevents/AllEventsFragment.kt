@@ -64,6 +64,7 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
      * Initialize the recyclerview for picture preview.
      */
     override fun configureRecyclerView() {
+        all_event_loading.visibility = View.GONE
         mRecyclerView = all_events_rv
         mRecyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -103,6 +104,12 @@ class AllEventsFragment : Fragment(), BaseView, AllEventsContract.AllEventsViewI
         for (event in eventsList) {
             mPresenter.addEventInfos(event)
         }
+        if(eventsList.isEmpty()){
+            all_event_empty_list.visibility = View.VISIBLE
+            empty_list_tab_tv.text = getString(R.string.no_event_yet)
+        }
+        else
+            all_event_empty_list.visibility = View.GONE
     }
 
     /**

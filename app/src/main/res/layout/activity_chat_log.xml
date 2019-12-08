@@ -24,6 +24,17 @@
             android:src="@color/lightGrey"
             />
     </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/gamer"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/chat_log_tb"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_tv"
         android:layout_width="0dp"
@@ -31,6 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chat_send_btn"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chat_log_rv"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         android:layout_margin="10dp"
@@ -38,7 +50,7 @@
     <EditText
         android:id="@+id/chat_log_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:inputType="text"
         android:hint="@string/mesages_hint"
         android:layout_marginStart="5dp"
@@ -53,18 +65,8 @@
         android:text="@string/envoyer"
         app:layout_constraintBottom_toBottomOf="@+id/cardview_tv"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardview_tv"
         app:layout_constraintTop_toTopOf="@+id/cardview_tv" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/gamer"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@+id/chat_log_tb"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_log_rv"

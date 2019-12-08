@@ -13,6 +13,7 @@ import com.aceman.soireegaming.data.firebase.FirestoreOperations
 import com.aceman.soireegaming.data.models.FirestoreNotification
 import com.aceman.soireegaming.ui.home.main.MainActivity
 import com.aceman.soireegaming.utils.AppConstants.BODY_TYPE
+import com.aceman.soireegaming.utils.AppConstants.CREATOR_ID
 import com.aceman.soireegaming.utils.AppConstants.USER_ID
 import com.aceman.soireegaming.utils.AppConstants.USER_NAME
 import com.aceman.soireegaming.utils.Utils
@@ -53,7 +54,7 @@ class NotificationsService : FirebaseMessagingService() {
      * Chat/ New event demand / Event demand accepted / Rating receive.
      */
     private fun sendVisualNotification(messageBody: RemoteMessage) { // 1 - Create an Intent that will be shown when user will click on the Notification
-        if (messageBody.data[BODY_TYPE] == "Accept" && messageBody.data[USER_NAME] == mUser!!.uid) {
+        if (messageBody.data[BODY_TYPE] == "Accept" && messageBody.data[USER_NAME] == messageBody.data[CREATOR_ID]) {
             Timber.tag("notification").i("user who created the event.")
         } else {
             val intent = Intent(this, MainActivity::class.java)

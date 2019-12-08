@@ -103,6 +103,12 @@ class PassedEventsFragment : Fragment(), BaseView, PassedEventsContract.PassedEv
         for (event in eventsList) {
             mPresenter.addEventInfos(event)
         }
+        if(eventsList.isEmpty()){
+            passed_event_empty_list.visibility = View.VISIBLE
+            empty_list_tab_tv.text = getString(R.string.no_one_create_event)
+        }
+        else
+            passed_event_empty_list.visibility = View.GONE
     }
 
     /**

@@ -174,7 +174,7 @@ class CreateEventActivity(override val activityLayout: Int = R.layout.activity_c
                     month,
                     day
                 )
-                picker2.datePicker.minDate = Utils.dateWithBSToMillis(dateMin)
+                picker2.datePicker.minDate = Utils.dateWithBSToMillis(dateMin) - 1000
                 picker2.show()
 
             } else
