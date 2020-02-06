@@ -28,7 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField 'String', 'GOOGLE_MAPS_API', "\"$System.env.GOOGLE_MAPS_API\""
+            it.buildConfigField 'String', 'GOOGLE_MAPS_API', "\"$System.env.SOIREEGAMING_GOOGLE_API\""
         }
     }
 }
